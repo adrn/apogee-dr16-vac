@@ -10,7 +10,7 @@ NAME = dr16vac
 
 all: ${NAME}.pdf
 
-${NAME}.pdf: ${NAME}.tex ms.bib
+${NAME}.pdf: ${NAME}.tex ${NAME}.bib
 	${LATEX} ${NAME}
 	bibtex ${NAME}
 	${LATEX} ${NAME}
