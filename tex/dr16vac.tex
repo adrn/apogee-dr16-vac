@@ -3,6 +3,75 @@
 \documentclass[modern]{aastex62}
 \usepackage{amsmath}
 
+% Load common packages
+% \usepackage{microtype}  % ALWAYS!
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{booktabs}
+
+\usepackage{graphicx}
+\usepackage{color}
+
+% \definecolor{cbblue}{HTML}{3182bd}
+% \usepackage{hyperref}
+% \definecolor{linkcolor}{rgb}{0.02,0.35,0.55}
+% \definecolor{citecolor}{rgb}{0.45,0.45,0.45}
+% \hypersetup{colorlinks=true,linkcolor=linkcolor,citecolor=citecolor,
+%             filecolor=linkcolor,urlcolor=linkcolor}
+% \hypersetup{pageanchor=true}
+
+\newcommand{\documentname}{\textsl{Article}}
+\newcommand{\sectionname}{Section}
+\renewcommand{\figurename}{Figure}
+\newcommand{\equationname}{Equation}
+\renewcommand{\tablename}{Table}
+
+% Missions
+\newcommand{\project}[1]{\textsl{#1}}
+
+% Packages / projects / programming
+\newcommand{\package}[1]{\textsl{#1}}
+\newcommand{\acronym}[1]{{\small{#1}}}
+\newcommand{\github}{\package{GitHub}}
+\newcommand{\python}{\package{Python}}
+\newcommand{\emcee}{\project{emcee}}
+\newcommand{\thejoker}{\project{The Joker}}
+
+% For referee
+\newcommand{\changes}[1]{{\color{red} #1}}
+
+% Stats / probability
+\newcommand{\given}{\,|\,}
+\newcommand{\norm}{\mathcal{N}}
+
+% Maths
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\transpose}[1]{{#1}^{\mathsf{T}}}
+\newcommand{\inverse}[1]{{#1}^{-1}}
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\newcommand{\mean}[1]{\left< #1 \right>}
+
+% Unit shortcuts
+\newcommand{\msun}{\ensuremath{\mathrm{M}_\odot}}
+\newcommand{\kms}{\ensuremath{\mathrm{km}~\mathrm{s}^{-1}}}
+\newcommand{\mps}{\ensuremath{\mathrm{m}~\mathrm{s}^{-1}}}
+\newcommand{\pc}{\ensuremath{\mathrm{pc}}}
+\newcommand{\kpc}{\ensuremath{\mathrm{kpc}}}
+\newcommand{\kmskpc}{\ensuremath{\mathrm{km}~\mathrm{s}^{-1}~\mathrm{kpc}^{-1}}}
+
+% Misc.
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+
+% Astronomy
+\newcommand{\DM}{{\rm DM}}
+\newcommand{\feh}{\ensuremath{{[{\rm Fe}/{\rm H}]}}}
+\newcommand{\df}{\acronym{DF}}
+
+% TO DO
+\newcommand{\todo}[1]{{\color{red} TODO: #1}}
+
+
 \shorttitle{Stuff}
 \shortauthors{Price-Whelan et al.}
 
@@ -11,9 +80,10 @@
 \title{A large catalog of stellar and substellar companions from the APOGEE surveys}
 
 \author[0000-0003-0872-7098]{Adrian~M.~Price-Whelan}
+\affiliation{TODO: Flatiron}
 \affiliation{Department of Astrophysical Sciences,
              Princeton University, Princeton, NJ 08544, USA}
-\email{adrn@astro.princeton.edu}
+\email{aprice-whelan@flatironinstitute.org}
 \correspondingauthor{Adrian M. Price-Whelan}
 
 
@@ -26,22 +96,80 @@ Stuff!
 
 \section{Introduction} \label{sec:intro}
 
-Blah.
+Big surveys (APOGEE, Gaia, LAMOST, etc.) have the capacity to deliver huge samples of binary stars, stellar companions - much larger than samples upon which binary star evolution is pinned.
 
+But a challenge is sparsity of data: traditional methods cannot easily use most data to do population studies if orbital parameters of each source not determined uniquely.
+
+We have machinery to generate full samplings over orbital parameters for radial velocity data, under the assumptions listed in The Joker paper (SB1, etc.).
+
+We run this sampler on all of APOGEE DR16 with some quality cuts.
+
+We release the resulting catalog of posterior samples, along with some summary metadata for unimodal / uniquely determined orbts.
+
+Here we also use these samples to infer the companion period-eccentricity distribution over the HR diagram.
 
 \section{Data} \label{sec:data}
 
+Data from APOGEE surveys, DR16 - briefly summarize improvements over DR14 that are directly relevant to RVs (main sequence stars). Caveat: SB1 will be bad assumption for many MS systems.
+
+Figure: DR16 logg-Teff diagram for all star we run on
+Figure: N visit plot like in previous paper
+
 \subsection{Visit velocity error calibration} \label{sec:visitcalib}
+
+Visit velocity errors underestimated, so we perform our own calibration.
+
+Describe exoplanet survey crossmatch and calibration bullshit.
+
+This ends up being conservative: we effectively force low SNR visit to a SNR-dependent threshold rv err, high SNR stars get adjusted too with a global floor to RV error.
+
+Figure: raw visit errors vs. SNR and then adjusted visit errors
 
 
 \section{Methods} \label{sec:methods}
 
+Describe The Joker.
 
+Describe robust constant fit.
 
 \section{A catalog of binary stars} \label{sec:catalog}
 
+Any catalog will have some arbitrary cuts. Here we cut on likelihood ratio of binary star model vs. constant model (not fully marginal likelihoods, so cut won't be at 0!).
 
-\section{Science demonstration} \label{sec:science}
+We find XX stars with companions - show simple plots over HR diagram for cuteness.
+
+Gold sample: phase coverage statistics?
+
+TODO: what about bimodal samplings, or samplings with small range in ln-period?
+
+Figure: Some cute examples
+
+Figure: Fraction of stars with companions over HR diagram
+
+\section{Inferring shit with a hierarchical model} \label{sec:Pe}
+
+\begin{align}
+    z &= \ln\,P\\
+    \bs{\theta} &= (z, e)\\
+    \bs{\alpha} &= (k, z_0, a, b)\\
+    p(\bs{\theta} \given \bs{\alpha}) &= p(z) \, p(e \given z)\\
+    p(z) &= \norm\left(z \given \mu_z, \sigma_z^2 \right)\\
+    p(e \given z) &= \alpha(z) \, p_1(e) + (1-\alpha(z)) \, p_2(e)\\
+    f(z\,;\,k,z_0) &= \frac{1}{1 + e^{-k\,(z - z_0)}}\\
+    \alpha(z \,;\, k, z_0, a, b) &= a \, f(z \,;\, k, z_0) + b\\
+    p_1(e) &= B(e \given \text{fixed})\\
+    p_2(e) &= B(e \given \text{fixed})
+\end{align}
+
+\begin{align}
+    p(D \given \bs{\alpha}) &= \int \dd\bs{\theta} \,
+        p(D \given \bs{\theta}) \, p(\bs{\theta} \given \bs{\alpha})\\
+    &\approx \frac{\mathcal{Z}}{K} \sum_k^K
+        \frac{p(\bs{\theta}_k \given \bs{\alpha})}
+            {p(\bs{\theta}_k \given \bs{\alpha}_0)}\\
+    \bs{\theta}_k &\sim p(\bs{\theta} \given D, \bs{\alpha}_0)
+\end{align}
+
 % Note: some or all of these may be broken out into separate papers!
 
 % \subsection{Companions along the RGB}
@@ -61,7 +189,7 @@ Blah.
 
 
 \software{
-    Astropy \citep{astropy, astropy:2018}
+    Astropy \citep{astropy, astropy:2018},
     emcee \citep{emcee},
     gala \citep{gala},
     IPython \citep{ipython}
