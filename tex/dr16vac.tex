@@ -36,7 +36,6 @@
 \newcommand{\github}{\package{GitHub}}
 \newcommand{\python}{\package{Python}}
 \newcommand{\emcee}{\project{emcee}}
-\newcommand{\thejoker}{\project{The Joker}}
 
 % For referee
 \newcommand{\changes}[1]{{\color{red} #1}}
@@ -67,9 +66,17 @@
 \newcommand{\DM}{{\rm DM}}
 \newcommand{\feh}{\ensuremath{{[{\rm Fe}/{\rm H}]}}}
 \newcommand{\df}{\acronym{DF}}
+\newcommand{\logg}{\ensuremath{\log g}}
+\newcommand{\Teff}{\ensuremath{T_{\textrm{eff}}}}
 
 % TO DO
 \newcommand{\todo}[1]{{\color{red} TODO: #1}}
+
+\newcommand{\DR}{\acronym{DR}16}
+\newcommand{\apogee}{\project{\acronym{APOGEE}}}
+\newcommand{\sdssiv}{\project{\acronym{SDSS-IV}}}
+\newcommand{\thejoker}{\project{The~Joker}}
+
 
 
 \shorttitle{Stuff}
@@ -87,6 +94,25 @@
 \email{aprice-whelan@flatironinstitute.org}
 \correspondingauthor{Adrian M. Price-Whelan}
 
+% \author[0000-0003-2866-9403]{David~W.~Hogg}
+% \affiliation{Max-Planck-Institut f\"ur Astronomie,
+%              K\"onigstuhl 17, D-69117 Heidelberg, Germany}
+% \affiliation{Center for Cosmology and Particle Physics,
+%              Department of Physics,
+%              New York University, 726 Broadway,
+%              New York, NY 10003, USA}
+% \affiliation{Center for Data Science,
+%              New York University, 60 Fifth Ave,
+%              New York, NY 10011, USA}
+% \affiliation{Flatiron Institute,
+%              Simons Foundation,
+%              162 Fifth Avenue,
+%              New York, NY 10010, USA}
+
+% \author[0000-0003-4996-9069]{Hans-Walter~Rix}
+% \affiliation{Max-Planck-Institut f\"ur Astronomie,
+%              K\"onigstuhl 17, D-69117 Heidelberg, Germany}
+
 \author{Others}
 
 \begin{abstract}
@@ -98,26 +124,32 @@ Stuff!
 
 \section{Introduction} \label{sec:intro}
 
-Most of astrophysics depends on a better understanding of stellar companions \citep[e.g.,][]{Breivik:2019, Rix:2019}: From interpretation of LIGO events to stellar populations in high-redshift galaxies.
-Current and near-future stellar surveys have the capacity to deliver samples of binary stars and stellar companions orders of magnitude larger than are presently known, throughout all stages of stellar evolution.
+A better understanding the formation and evolution of the popoulation of binary stars is important for all aspects of astrophysics, ... stellar-mass binary black hole mergers to stellar populations in high-redshift galaxies \citep[e.g.,][]{Breivik:2019, Rix:2019}.
+This problem spans a wide range of timescales, wavelengths, and many current and near-future stellar surveys (Gaia, APOGEE, LAMOST, SDSS-V, etc.) have the capacity to deliver samples of binary stars and stellar companions orders of magnitude larger than are presently known, throughout all stages of stellar evolution.
+The dream: combine all if this and learn about stellar evolution.
+This has only been comprehensively done for a sample of a few hundred stars in solar neighborhood.
 
-The dream: combine it all and learn about stellar evolution.
-The challenge: data are often sparse
-
-
-Big surveys (APOGEE, Gaia, LAMOST, etc.) have the capacity to deliver huge samples of binary stars, stellar companions - much larger than samples upon which binary star evolution is pinned.
-
-But a challenge is sparsity of data: traditional methods cannot easily use most data to do population studies if orbital parameters of each source not determined uniquely.
-
+As a step towards large-scale population inference, we focus here on multi-epoch spectroscopic data from the APOGEE surveys.
+The challenge: data are often sparse, most individual systems are not determined uniquely.
 We have machinery to generate full samplings over orbital parameters for radial velocity data, under the assumptions listed in The Joker paper (SB1, etc.).
+We run this sampler on all of APOGEE DR16 with some quality cuts and release the resulting catalog of posterior samples, along with some summary metadata for unimodal / uniquely determined orbits.
 
-We run this sampler on all of APOGEE DR16 with some quality cuts.
-
-We release the resulting catalog of posterior samples, along with some summary metadata for unimodal / uniquely determined orbts.
-
-Here we also use these samples to infer the companion period-eccentricity distribution over the HR diagram.
+We use these samples to infer the companion period-eccentricity distribution over the HR diagram as an initial demonstration of hierarchical inference.
 
 \section{Data} \label{sec:data}
+
+We primarily use spectroscopic data from data release 16 (\DR) of the \apogee\ surveys (\citealt{Majewski:2017, Abolfathi:2017, XXXX:2019}).
+\apogee\ is a component of the Sloan Digital Sky Survey IV (\sdssiv; \citealt{Gunn:2006, Blanton:2017}) and the main survey is designed to map stars across much of the Milky Way disk by obtaining high-resolution ($R \sim 22,500$) infrared ($H$-band) spectroscopy of stars selected in a homogenous way.
+
+Targets are selected with simple color and brightness cuts, but the survey uses
+fiber-plugged plates with a maximum of 300 fibers per each $\approx
+1.5~\textrm{deg}^2$ field of view, leading to ``pencil-beam''-like sampling of
+the Galactic stellar distribution.
+In order to meet signal-to-noise ratio requirements, most \apogee\ stars are
+observed multiple times in a series of ``visits,'' typically with at least one
+visit separated by a month or more in order to help identify binary stars.
+
+
 
 Data from APOGEE surveys, DR16 - briefly summarize improvements over DR14 that are directly relevant to RVs (main sequence stars). Caveat: SB1 will be bad assumption for many MS systems.
 
