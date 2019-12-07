@@ -13,6 +13,8 @@
 \usepackage{graphicx}
 \usepackage{color}
 
+\graphicspath{{figures/}}
+
 % \definecolor{cbblue}{HTML}{3182bd}
 % \usepackage{hyperref}
 % \definecolor{linkcolor}{rgb}{0.02,0.35,0.55}
@@ -72,8 +74,9 @@
 % TO DO
 \newcommand{\todo}[1]{{\color{red} TODO: #1}}
 
-\newcommand{\DR}{\acronym{DR}16}
+\newcommand{\dr}[1]{\acronym{DR}#1}
 \newcommand{\apogee}{\project{\acronym{APOGEE}}}
+\newcommand{\sdss}{\project{\acronym{SDSS}}}
 \newcommand{\sdssiv}{\project{\acronym{SDSS-IV}}}
 \newcommand{\thejoker}{\project{The~Joker}}
 
@@ -139,25 +142,109 @@ We run this sampler on all of APOGEE DR16 with some quality cuts and release the
 
 We use these samples to infer the companion period-eccentricity distribution over the HR diagram as an initial demonstration of hierarchical inference.
 
+
 \section{Data} \label{sec:data}
 
-We primarily use spectroscopic data from data release 16 (\DR) of the \apogee\ surveys (\citealt{Majewski:2017, Abolfathi:2017, XXXX:2019}).
-\apogee\ is a component of the Sloan Digital Sky Survey IV (\sdssiv; \citealt{Gunn:2006, Blanton:2017}) and the main survey is designed to map stars across much of the Milky Way disk by obtaining high-resolution ($R \sim 22,500$) infrared ($H$-band) spectroscopy of stars selected in a homogenous way.
+We primarily use spectroscopic data from data release 16 (\dr{16}) of the
+\apogee\ surveys (\citealt{Majewski:2017, Abolfathi:2017, DR16}).
+\apogee\ is a component of the Sloan Digital Sky Survey IV (\sdssiv;
+\citealt{Gunn:2006, Blanton:2017}) and the main goal is to survey the chemical
+and dynamical properties of stars across much of the Milky Way disk by obtaining
+high-resolution ($R \sim 22,500$) infrared ($H$-band) spectroscopy of hundreds
+of thousands of stars.
+The primary survey targets are selected with simple color and magnitude cuts,
+but the survey uses fiber-plugged plates that leads to extremely nonuniform
+coverage of the Galactic stellar distribution (see, e.g., Figure~1 in \citealt{DR16}).
 
-Targets are selected with simple color and brightness cuts, but the survey uses
-fiber-plugged plates with a maximum of 300 fibers per each $\approx
-1.5~\textrm{deg}^2$ field of view, leading to ``pencil-beam''-like sampling of
-the Galactic stellar distribution.
-In order to meet signal-to-noise ratio requirements, most \apogee\ stars are
-observed multiple times in a series of ``visits,'' typically with at least one
-visit separated by a month or more in order to help identify binary stars.
+\dr{16} is the first \sdss\ data release to contain \apogee\ data observed with
+a clone of the \apogee\ spectrograph on the 2.5m du Point telescope at Las
+Campanas Observatory, providing access to targets in the southern hemisphere.
+For the first time, this data release also contains calibrated stellar
+parameters for dwarf stars.
+These two facts mean that \dr{16} contains nearly $3\times$ more sources with
+calibrated stellar parameters than the previous public data release, \dr{14}
+(see Section~4 of \citealt{DR16} for many more details about \apogee\ \dr{16}).
 
+Most \apogee\ stars are observed multiple times in a set of time-resolved
+``visits'' that are combined before determining stellar parameters and chemical
+abundances.
+While the visit spectra naturally provide time-domain velocity information about
+sources, studying stellar multiplicity is not the primary goal of the survey:
+The cadence and time baseline for a typical \apogee\ source is primarily
+governed by trying to schedule a set number of visits determined by
+signal-to-noise thresholds for the faintest targets in a given field.
+A consequence of this strategy is that the time resolution and number of visits
+for the vast majority of \apogee\ sources in \dr{16} is not sufficient for fully
+determining companion orbital properties, as illustrated below.
 
+\subsection{Quality cuts and defining a parent sample}
 
-Data from APOGEE surveys, DR16 - briefly summarize improvements over DR14 that are directly relevant to RVs (main sequence stars). Caveat: SB1 will be bad assumption for many MS systems.
+The primary goal of the catalog released with this \documentname\ is to provide
+posterior samplings in Keplerian orbital parameters for all high-quality
+\apogee\ sources in \dr{16} with multiple, well-measured radial velocities.
+We therefore impose a set of quality cuts to sub-select \apogee\ \dr{16} sources
+by rejecting sources or visits using the following \apogee\
+bitmasks\footnote{https://www.sdss.org/dr16/algorithms/bitmasks/}:
+\begin{itemize}
+    \item Source-level (\texttt{allStar}) \texttt{STARFLAG} must not contain \texttt{VERY\_BRIGHT\_NEIGHBOR}, \texttt{SUSPECT\_RV\_COMBINATION} (bitmask value: 65544)
+    \item Source-level (\texttt{allStar}) \texttt{ASPCAPFLAG} must not contain \texttt{TEFF\_BAD}, \texttt{LOGG\_BAD}, \texttt{VMICRO\_BAD}, \texttt{ROTATION\_BAD}, \texttt{VSINI\_BAD} (bitmask value: 1141309440)
+    \item Visit-level (\texttt{allVisit}) \texttt{STARFLAG} must not contain \texttt{VERY\_BRIGHT\_NEIGHBOR}, \texttt{SUSPECT\_RV\_COMBINATION}, \texttt{LOW\_SNR}, \texttt{PERSIST\_HIGH}, \texttt{PERSIST\_JUMP\_POS}, \texttt{PERSIST\_JUMP\_NEG} (bitmask value: 78360)
+\end{itemize}
+These bitmasks are designed to remove the most obvious data reduction or calibration failures that would directly impact the visit-level radial velocity determinations.
+However, we later impose a stricter set of quality masks when showing results in \sectionname~\ref{sec:TODO}.
+After applying the above masks, we additionally reject any source with $<3$
+visits.
+Our final parent sample contains $232,531$ unique sources, cut down from the
+$437,485$ unique sources in all of \apogee\ \dr{16}.
+Of the $\approx$$200,000$ removed sources, the vast majority were removed because they had $<3$ visits ($\approx$$17,000$ were removed by the quality cuts).
 
-Figure: DR16 logg-Teff diagram for all star we run on
-Figure: N visit plot like in previous paper
+% Notebook: Figure-DR16-statistics.ipynb
+\begin{figure}[th]
+\begin{center}
+\includegraphics[width=0.7\textwidth]{specHR.pdf}
+\end{center}
+\caption{%
+Two spectroscopic stellar parameters---effective temperature, $T_{\rm eff}$, and
+log-surface gravity, $\log g$---of \apogee\ \dr{16} sources that pass our
+quality cuts; These sources represent our ``parent sample.''
+The pixel coloring indicates the number of sources in each bin of stellar
+parameters.
+The outlined regions roughly identify the red giant branch (upper polygon,
+blue), subgiant branch (middle polygon, black), and (FGK-type) main sequence
+(lower polygon, green).
+The numbers next to each selection polygon indicate the number of sources in
+each.
+\label{fig:specHR}
+}
+\end{figure}
+
+% Notebook: Figure-DR16-statistics.ipynb
+\begin{figure}[th]
+\begin{center}
+\includegraphics[width=1\textwidth]{visitstats.pdf}
+\end{center}
+\caption{%
+Derp derp derp.
+\label{fig:visitstats}
+}
+\end{figure}
+
+Figure~\ref{fig:specHR} shows the number of sources in our parent sample---i.e.
+\apogee\ sources with 3 or more visits that pass the quality cuts described
+above---as a function of spectroscopic stellar parameters $T_{\rm eff}$,
+effective temperature, and $\log g$, log-surface gravity.
+While the majority of sources appear to be giant-branch stars ($>150,000$), a
+substantial number of main sequence stars are present ($>60,000$) thanks to the
+\apogee\ data reduction pipeline improvements for \dr{16}.
+Figure~\ref{fig:visitstats} shows some statistics about the time coverage of the
+visits for sources in our parent sample.
+In the parent sample:
+\begin{itemize}
+    \item $\approx$70\% ($\approx$92\%) of sources have $<5$ ($<10$) visits, and
+    $17,786$ sources have 10 or more visits,
+    \item $\approx$50\% ($\approx$84\%) of sources have time baselines $<56~{\rm days}$ ($<1~{\rm year}$), and $9,743$ sources have time baselines $>1000~{\rm days}$.
+\end{itemize}
+
 
 \subsection{Visit velocity error calibration} \label{sec:visitcalib}
 
@@ -175,6 +262,14 @@ Figure: raw visit errors vs. SNR and then adjusted visit errors
 Describe The Joker.
 
 Describe robust constant fit.
+
+\subsection{Caveats} \label{sec:caveats}
+
+Where we will fail:
+
+Systems with large systemic velocity (dwarf satellites)
+
+Triple systems
 
 \section{A catalog of binary stars} \label{sec:catalog}
 
