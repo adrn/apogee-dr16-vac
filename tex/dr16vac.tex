@@ -1,6 +1,7 @@
 % e.g., http://adsabs.harvard.edu/abs/2014ApJ...790..127B
 
 \documentclass[modern]{aastex62}
+% \documentclass[twocolumn]{aastex62}
 \usepackage{amsmath}
 
 % Load common packages
@@ -99,7 +100,8 @@ high-resolution ($R \sim 22,500$) infrared ($H$-band) spectroscopy of hundreds
 of thousands of stars.
 The primary survey targets are selected with simple color and magnitude cuts,
 but the survey uses fiber-plugged plates that leads to extremely nonuniform
-coverage of the Galactic stellar distribution (see, e.g., Figure~1 in \citealt{DR16}).
+coverage of the Galactic stellar distribution (see, e.g., Figure~1 in
+\citealt{DR16}).
 
 \dr{16} is the first \sdss\ data release to contain \apogee\ data observed with
 a clone of the \apogee\ spectrograph on the 2.5m du Point telescope at Las
@@ -135,16 +137,21 @@ bitmasks\footnote{https://www.sdss.org/dr16/algorithms/bitmasks/}:
     \item Source-level (\texttt{allStar}) \texttt{ASPCAPFLAG} must not contain \texttt{TEFF\_BAD}, \texttt{LOGG\_BAD}, \texttt{VMICRO\_BAD}, \texttt{ROTATION\_BAD}, \texttt{VSINI\_BAD} (bitmask value: 1141309440)
     \item Visit-level (\texttt{allVisit}) \texttt{STARFLAG} must not contain \texttt{VERY\_BRIGHT\_NEIGHBOR}, \texttt{SUSPECT\_RV\_COMBINATION}, \texttt{LOW\_SNR}, \texttt{PERSIST\_HIGH}, \texttt{PERSIST\_JUMP\_POS}, \texttt{PERSIST\_JUMP\_NEG} (bitmask value: 78360)
 \end{itemize}
-These bitmasks are designed to remove the most obvious data reduction or calibration failures that would directly impact the visit-level radial velocity determinations.
-However, we later impose a stricter set of quality masks when showing results in \sectionname~\ref{sec:TODO}.
+These bitmasks are designed to remove the most obvious data reduction or
+calibration failures that would directly impact the visit-level radial velocity
+determinations.
+However, we later impose a stricter set of quality masks when showing results in
+\sectionname~\ref{sec:TODO}.
 After applying the above masks, we additionally reject any source with $<3$
 visits.
-Our final parent sample contains $232,531$ unique sources, cut down from the
+Our final parent sample contains $232,531$ unique sources, selected from the
 $437,485$ unique sources in all of \apogee\ \dr{16}.
-Of the $\approx$$200,000$ removed sources, the vast majority were removed because they had $<3$ visits ($\approx$$17,000$ were removed by the quality cuts).
+Of the $\approx$$200,000$ sources removed, the vast majority were dropped
+because they had $<3$ visits ($\approx$$17,000$ were removed by the quality
+cuts).
 
 % Notebook: Figure-DR16-statistics.ipynb
-\begin{figure}[th]
+\begin{figure}[!t]
 \begin{center}
 \includegraphics[width=0.7\textwidth]{specHR.pdf}
 \end{center}
@@ -164,12 +171,21 @@ each.
 \end{figure}
 
 % Notebook: Figure-DR16-statistics.ipynb
-\begin{figure}[th]
+\begin{figure}[!t]
 \begin{center}
 \includegraphics[width=1\textwidth]{visitstats.pdf}
 \end{center}
 \caption{%
-Derp derp derp.
+Some statistics of \apogee\ \dr{16} visits.
+\textbf{Left:} The number of sources with more than a given number of visits,
+$n_{\rm vis}$.
+While $\approx$$50\%$ of sources have 3 visits, ($114,263$, $57,593$, $15,862$)
+sources have $> (3, 5, 10)$ visits, respectively.
+A very small number of sources have $>50$ visits.
+\textbf{Right:} The number of sources with a time baseline, $\tau$, longer than
+given (on the horizontal axis).
+While $\approx$$50\%$ of sources have a time baseline $\tau \lesssim 56~{\rm
+day}$, ($88,737$, $9,743$) sources have $\tau > (100, 1000)~{\rm days}$.
 \label{fig:visitstats}
 }
 \end{figure}
@@ -182,17 +198,27 @@ While the majority of sources appear to be giant-branch stars ($>150,000$), a
 substantial number of main sequence stars are present ($>60,000$) thanks to the
 \apogee\ data reduction pipeline improvements for \dr{16}.
 Figure~\ref{fig:visitstats} shows some statistics about the time coverage of the
-visits for sources in our parent sample:
-\begin{itemize}
-    \item $\approx$70\% ($\approx$92\%) of sources have $<5$ ($<10$) visits, and
-    $17,786$ sources have 10 or more visits,
-    \item $\approx$50\% ($\approx$84\%) of sources have time baselines $<56~{\rm days}$ ($<1~{\rm year}$), and $9,743$ sources have time baselines $>1000~{\rm days}$.
-\end{itemize}
+visits for sources in our parent sample.
+About half of the sources have a small number of visits spread over a small time
+baseline: $50\%$ of sources have $<5$ visits over $<100~{\rm days}$.
+About $7\%$ of sources ($15,366$) have $\geq 10$ visits over $\geq 100~{\rm
+days}$.
 
 
-\subsection{Visit velocity error calibration} \label{sec:visitcalib}
+\subsection{Visit velocity uncertainty calibration} \label{sec:visitcalib}
 
-Visit velocity errors are known to be underestimated (e.g., \citealt{}), so we perform our own calibration.
+The significance of radial velocity variations, especially for low-mass or
+long-period companions, will depend strongly on the correctness of the visit
+velocity measurement errors.
+However, the catalog-level \apogee\ visit velocity errors (\texttt{VRELERR} in
+the \texttt{allVisit} file) are known to be underestimated (e.g.,
+\citealt{Cottaar:2014}, Nidever et al., in prep.).
+By comparing the visit velocity scatter ...
+Globally, the visit uncertainties are roughly underestimated by a factor of
+$\approx$2.5, with a noise floor of $\approx 72~\mps$.
+
+For example,
+In what follows, we therefore scale (up) the visit velocity errors according to the
 
 Describe exoplanet survey crossmatch and calibration bullshit.
 
@@ -203,19 +229,53 @@ Figure: raw visit errors vs. SNR and then adjusted visit errors
 
 \section{Methods} \label{sec:methods}
 
-Describe The Joker.
+As illustrated above, a large number of sources in \apogee\ \dr{16} have few
+visits that span a short time baseline.
+For most sources, we therefore expect that even if visit-level radial velocity
+variations are detected with high significance, the companion orbital parameters
+will be very uncertain---i.e. the posterior probability distribution function
+(\textsl{pdf}) over orbital parameters will generally be very multi-modal
+\citep[e.g.,][]{TODO, thejoker}.
+Still, in unison, or within the context of a hierarchical model that utilizes
+the individual posterior samplings, the combination of all of these individually
+weakly-constrained binary star orbits should still provide information about the
+population of binary stars.
+We have previously designed and implemented a custom Monte Carlo sampler for
+precisely this problem: \thejoker\ \citep{thejoker}.
+\thejoker\ is designed to deliver converged posterior samplings over Keplerian
+orbital parameters given radial velocity observations, even when the
+observations are sparse or very noisy.
+We have previously applied \thejoker\ to \apogee\ \dr{14}
+\citep{Price-Whelan:2018} and, by making some conservative selections with the
+returned samplings, released a catalog of over $5,000$ binary star systems;
+This \documentname\ and companion catalog is a successor to this previous work.
 
-The bug: the fix. The new prior on K.
+\subsection{Updates to \thejoker}
 
-Describe robust constant fit.
+Major improvements:
+- new prior on K - kind of a bug fix
+- MCMC with pymc3 + exoplanet (NUTS)
+- random indices
 
-\subsection{Caveats} \label{sec:caveats}
+Describe robust constant fit stuff.
+
+
+\subsection{Caveats and assumptions} \label{sec:caveats}
 
 Where we will fail:
 
 Systems with large systemic velocity (dwarf satellites)
 
 Triple systems
+
+
+\subsection{Running on all of \apogee\ \dr{16}} \label{sec:rundr16}
+
+Parameter choices
+
+Implementation details
+
+Some statistics about the run: how many unimodal, bimodal.
 
 \section{A catalog of binary stars} \label{sec:catalog}
 
