@@ -1,4 +1,6 @@
-% e.g., http://adsabs.harvard.edu/abs/2014ApJ...790..127B
+% TODO:
+% - decide whether to submit a companion JOSS paper
+% - huh? http://adsabs.harvard.edu/abs/2014ApJ...790..127B
 
 \documentclass[modern]{aastex62}
 % \documentclass[twocolumn]{aastex62}
@@ -94,7 +96,7 @@ We use these samples to infer the companion period-eccentricity distribution ove
 We primarily use spectroscopic data from data release 16 (\dr{16}) of the
 \apogee\ surveys (\citealt{Majewski:2017, Abolfathi:2017, DR16}).
 \apogee\ is a component of the Sloan Digital Sky Survey IV (\sdssiv;
-\citealt{Gunn:2006, Blanton:2017}) and the main goal is to survey the chemical
+\citealt{Gunn:2006, Blanton:2017}) and its main goal is to survey the chemical
 and dynamical properties of stars across much of the Milky Way disk by obtaining
 high-resolution ($R \sim 22,500$) infrared ($H$-band) spectroscopy of hundreds
 of thousands of stars.
@@ -104,7 +106,7 @@ coverage of the Galactic stellar distribution (see, e.g., Figure~1 in
 \citealt{DR16}).
 
 \dr{16} is the first \sdss\ data release to contain \apogee\ data observed with
-a clone of the \apogee\ spectrograph on the 2.5m du Point telescope at Las
+a duplicate of the \apogee\ spectrograph on the 2.5m du Point telescope at Las
 Campanas Observatory, providing access to targets in the southern hemisphere.
 For the first time, this data release also contains calibrated stellar
 parameters for dwarf stars.
@@ -113,22 +115,34 @@ calibrated stellar parameters than the previous public data release, \dr{14}
 (see Section~4 of \citealt{DR16} for many more details about \apogee\ \dr{16}).
 
 Most \apogee\ stars are observed multiple times in a set of time-resolved
-``visits'' that are combined before determining stellar parameters and chemical
-abundances.
+``visits'' that are combined before the \apogee\ \todo{ASPCAP} determines
+stellar parameters and chemical abundances for each source.
 While the visit spectra naturally provide time-domain velocity information about
-sources, studying stellar multiplicity is not the primary goal of the survey:
+sources (thus enabling searches for massive companions), studying stellar
+multiplicity is not the primary goal of the survey:
 The cadence and time baseline for a typical \apogee\ source is primarily
 governed by trying to schedule a set number of visits determined by
 signal-to-noise thresholds for the faintest targets in a given field.
 A consequence of this strategy is that the time resolution and number of visits
 for the vast majority of \apogee\ sources in \dr{16} is not sufficient for fully
 determining companion orbital properties, as illustrated below.
+Still, the large number of targets in \apogee\ and the dynamic range in stellar
+and chemical properties offers an exciting opportunity to study the
+\emph{population} of binary star systems as a function of these intrinsic
+properties, even if most individual systems are poorly constrained.
+We have previously developed tools to enable such studies \citep{thejoker}, as
+summarized in \sectionname~\ref{sec:methods} below.
+Here, we describe quality cuts we apply to the \apogee\ \dr{16} catalogs before
+proceeding, and modifications to the visit-level velocity uncertainties to
+account for the fact that they are generally underestimated by the \apogee\ data
+reduction pipeline.
+
 
 \subsection{Quality cuts and defining a parent sample}
 
-The primary goal of the catalog released with this \documentname\ is to provide
-posterior samplings in Keplerian orbital parameters for all high-quality
-\apogee\ sources in \dr{16} with multiple, well-measured radial velocities.
+The primary goal of this \documentname\ is to produce a catalog of posterior
+samplings in Keplerian orbital parameters for all high-quality \apogee\ sources
+in \dr{16} with multiple, well-measured radial velocities.
 We therefore impose a set of quality cuts to sub-select \apogee\ \dr{16} sources
 by rejecting sources or visits using the following \apogee\
 bitmasks\footnote{https://www.sdss.org/dr16/algorithms/bitmasks/}:
@@ -207,26 +221,21 @@ days}$.
 
 \subsection{Visit velocity uncertainty calibration} \label{sec:visitcalib}
 
-TODO: cite out to (Brown et al., in prep.)
-
-The significance of radial velocity variations, especially for low-mass or
-long-period companions, will depend strongly on the correctness of the visit
-velocity measurement errors.
+The significance of apparent radial velocity variations, especially when
+considering low-mass or long-period companions, will depend strongly on the
+correctness of the visit velocity measurement errors.
 However, the catalog-level \apogee\ visit velocity errors (\texttt{VRELERR} in
-the \texttt{allVisit} file) are known to be underestimated (e.g.,
-\citealt{Cottaar:2014}, Nidever et al., in prep.).
-By comparing the visit velocity scatter ...
-Globally, the visit uncertainties are roughly underestimated by a factor of
-$\approx$2.5, with a noise floor of $\approx 72~\mps$.
-
-For example,
-In what follows, we therefore scale (up) the visit velocity errors according to the
-
-Describe exoplanet survey crossmatch and calibration bullshit.
-
-This ends up being conservative: we effectively force low SNR visit to a SNR-dependent threshold rv err, high SNR stars get adjusted too with a global floor to RV error.
-
-Figure: raw visit errors vs. SNR and then adjusted visit errors
+the \texttt{allVisit} file) are known to be underestimated
+\citep[e.g.,][]{Cottaar:2014}.
+Here, we adopt the relation defined in Brown et al. (in prep.) to scale up the
+visit velocity errors
+\begin{equation}
+    \sigma_v^2 = (3.5\,(\texttt{VRELERR})^{1.2})^2 + (0.072~\kms)^2
+\end{equation}
+where $\sigma_v$ is the adopted visit velocity error for a given visit, and
+\texttt{VRELERR} is the uncertainty reported in the \apogee\ \dr{16} catalog.
+This effectively applies a floor to the visit velocity errors of $72~\mps$ and
+globally increases the error values by a multiplicative factor.
 
 
 \section{Methods} \label{sec:methods}
@@ -236,13 +245,13 @@ visits that span a short time baseline.
 For most sources, we therefore expect that even if visit-level radial velocity
 variations are detected with high significance, the companion orbital parameters
 will be very uncertain---i.e. the posterior probability distribution function
-(\textsl{pdf}) over orbital parameters will generally be very multi-modal
-\citep[e.g.,][]{TODO, thejoker}.
+(\textsl{pdf}) over orbital parameters will generally be multi-modal with many
+modes of comparable integrated probability \citep[e.g.,][]{TODO, thejoker}.
 Still, in unison, or within the context of a hierarchical model that utilizes
 the individual posterior samplings, the combination of all of these individually
 weakly-constrained binary star orbits should still provide information about the
 population of binary stars.
-We have previously designed and implemented a custom Monte Carlo sampler for
+We have previously defined and implemented a custom Monte Carlo sampler for
 precisely this problem: \thejoker\ \citep{thejoker}.
 \thejoker\ is designed to deliver converged posterior samplings over Keplerian
 orbital parameters given radial velocity observations, even when the
@@ -252,32 +261,69 @@ We have previously applied \thejoker\ to \apogee\ \dr{14}
 returned samplings, released a catalog of over $5,000$ binary star systems;
 This \documentname\ and companion catalog is a successor to this previous work.
 
+
 \subsection{Updates to \thejoker}
 
-Major improvements:
-- new prior on K - kind of a bug fix
-- MCMC with pymc3 + exoplanet (NUTS)
-- random indices
+Since our initial paper defining \thejoker, we identified a minor error in the
+assumptions made about the prior over the linear parameters ($K$, $v_0$) in
+\citet{thejoker}.
+We previously (incorrectly) assumed that adopting a sufficiently broad, Gaussian
+prior over the linear parameters meant that we could ignore an explicit
+definition of this prior.
+\todo{In particular, \equationname~XX should ...}
+TODO: cite Hogg et al. arxiv note.
 
-Describe robust constant fit stuff.
+Another issue with the assumption in the original implementation of \thejoker\
+is that the prior over the velocity semi-amplitude, $K$, was identical at all
+period and eccentricity values.
+This implicitly implies vastly different prior beliefs about the companion mass
+as a function of orbital period: For example, a zero-mean Gaussian prior on $K$
+with a standard-deviation of $30~\kms$ transforms to reasonable prior beliefs
+about companion mass at periods around $1~{\rm year}$, but gives substantial
+prior probability to companion masses $>100~\msun$ at periods $>10^4~\dayd$.
+We therefore, by default, adopt a new (also Gaussian) prior on the
+semi-amplitude with a standard-deviation, $\sigma_K$, that scales with the
+period and eccentricity such that
+\begin{equation}
+    \sigma_K = \sigma_{K, 0} \, \left(\frac{P}{P_0}\right)^{-1/3} \,
+        \left(1 - e^2\right)^{-1/2}
+\end{equation}
+where $\sigma_{K, 0}$ and $P_0$ are additional hyperparameters that must be
+specified.
+This new prior on $K$ has the advantage that it, at fixed primary mass, has a
+fixed form in companion mass that does not depend on period or eccentricity.
+
+We have also made a number of improvements to the Python implementation of the
+sampler.\footnote{https://github.com/adrn/thejoker}
+For example, the prior distributions over all parameters are now specified as
+\texttt{pymc3} \citep{Salvatier2016} distribution objects, meaning that the
+priors over the nonlinear Keplerian parameters ($P$, $e$, $\omega$, and $M_0$;
+see \citealt{thejoker}) are now fully customizable.
+Using \texttt{pymc3} also enables compatibility with more efficient Markov Chain
+Monte Carlo methods such as Hamiltonian Monte Carlo (HMC), which is useful for
+seamlessly transitioning from generating posterior orbit samples with \thejoker\
+to HMC when the system parameters are highly constrained (as discussed below).
 
 
-\subsection{Caveats and assumptions} \label{sec:caveats}
+\section{Running \thejoker\ on all of \apogee\ \dr{16}} \label{sec:rundr16}
+
+TODO: intro
+
+Caveats and assumptions
 
 Where we will fail:
-
-Systems with large systemic velocity (dwarf satellites)
-
-Triple systems
-
-
-\subsection{Running on all of \apogee\ \dr{16}} \label{sec:rundr16}
+- Systems with large systemic velocity (dwarf satellites)
+- Triple systems
+- SB2, or any contamniated data
 
 Parameter choices
 
 Implementation details
 
+Describe robust constant fit stuff.
+
 Some statistics about the run: how many unimodal, bimodal.
+
 
 \section{A catalog of binary stars} \label{sec:catalog}
 
@@ -295,37 +341,52 @@ Figure: Some cute examples
 
 Figure: Fraction of stars with companions over HR diagram
 
-\section{Inferring shit with a hierarchical model} \label{sec:Pe}
 
-\begin{align}
-    z &= \ln\,P\\
-    \bs{\theta} &= (z, e)\\
-    \bs{\alpha} &= (k, z_0, \alpha_0)\\
-    p(\bs{\theta} \given \bs{\alpha}) &= p(z) \, p(e \given z)\\
-    p(z) &= \norm\left(z \given \mu_z, \sigma_z^2 \right)\\
-    p(e \given z) &= \alpha(z) \, p_1(e) + (1-\alpha(z)) \, p_2(e)\\
-    f(z\,;\,k,z_0) &= \frac{1}{1 + e^{-k\,(z - z_0)}}\\
-    \alpha(z \,;\, k, z_0, \alpha_0) &= (1-\alpha_0) \, f(z \,;\, k, z_0) + \alpha_0\\
-    p_1(e) &= B(e \given a_1, b_1)\\
-    p_2(e) &= B(e \given a_2, b_2)
-\end{align}
+\section{Results} \label{sec:results}
 
-\begin{align}
-    p(D \given \bs{\alpha}) &= \int \dd\bs{\theta} \,
-        p(D \given \bs{\theta}) \, p(\bs{\theta} \given \bs{\alpha})\\
-    &\approx \frac{\mathcal{Z}}{K} \sum_k^K
-        \frac{p(\bs{\theta}_k \given \bs{\alpha})}
-            {p(\bs{\theta}_k \given \bs{\alpha}_0)}\\
-    \bs{\theta}_k &\sim p(\bs{\theta} \given D, \bs{\alpha}_0)
-\end{align}
-
-- Period, eccentricity distributions
-- Mass-ratio distribution
-     - Use C,N abundances for RGB and logg, teff, fe/h for main sequence
-     - Calibrate against asteroseismology / APOKASC
+\subsection{Interesting low and high mass companions}
 
 
-Lars: "Any idea of the incidence of stars which did an engulfment on their way UP the RGB from the Luminosity of the clump to that of the RGB TIP? "
+\subsection{Hierarchical inference of the long-period eccentricity distribution}
+
+
+\subsection{Circularization}
+
+
+\subsection{Engulfment}
+
+
+% \section{Inferring shit with a hierarchical model} \label{sec:Pe}
+
+% \begin{align}
+%     z &= \ln\,P\\
+%     \bs{\theta} &= (z, e)\\
+%     \bs{\alpha} &= (k, z_0, \alpha_0)\\
+%     p(\bs{\theta} \given \bs{\alpha}) &= p(z) \, p(e \given z)\\
+%     p(z) &= \norm\left(z \given \mu_z, \sigma_z^2 \right)\\
+%     p(e \given z) &= \alpha(z) \, p_1(e) + (1-\alpha(z)) \, p_2(e)\\
+%     f(z\,;\,k,z_0) &= \frac{1}{1 + e^{-k\,(z - z_0)}}\\
+%     \alpha(z \,;\, k, z_0, \alpha_0) &= (1-\alpha_0) \, f(z \,;\, k, z_0) + \alpha_0\\
+%     p_1(e) &= B(e \given a_1, b_1)\\
+%     p_2(e) &= B(e \given a_2, b_2)
+% \end{align}
+
+% \begin{align}
+%     p(D \given \bs{\alpha}) &= \int \dd\bs{\theta} \,
+%         p(D \given \bs{\theta}) \, p(\bs{\theta} \given \bs{\alpha})\\
+%     &\approx \frac{\mathcal{Z}}{K} \sum_k^K
+%         \frac{p(\bs{\theta}_k \given \bs{\alpha})}
+%             {p(\bs{\theta}_k \given \bs{\alpha}_0)}\\
+%     \bs{\theta}_k &\sim p(\bs{\theta} \given D, \bs{\alpha}_0)
+% \end{align}
+
+% - Period, eccentricity distributions
+% - Mass-ratio distribution
+%      - Use C,N abundances for RGB and logg, teff, fe/h for main sequence
+%      - Calibrate against asteroseismology / APOKASC
+
+
+% Lars: "Any idea of the incidence of stars which did an engulfment on their way UP the RGB from the Luminosity of the clump to that of the RGB TIP? "
 
 % Note: some or all of these may be broken out into separate papers!
 
