@@ -1,13 +1,15 @@
 % TODO:
 % - decide whether to submit a companion JOSS paper
 % - huh? http://adsabs.harvard.edu/abs/2014ApJ...790..127B
+% - When Hogg's Gaussian Product Refactor note is on Arxiv, check the referenced
+%   equation numbers in the Appendix against the submitted version!
 
-\documentclass[modern]{aastex62}
-% \documentclass[twocolumn]{aastex62}
+\documentclass[modern]{aastex63}
+% \documentclass[twocolumn]{aastex63}
 \usepackage{amsmath}
 
 % Load common packages
-% \usepackage{microtype}  % ALWAYS!
+\usepackage{microtype}  % ALWAYS!
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -22,7 +24,7 @@
 \shorttitle{Stuff}
 \shortauthors{Price-Whelan et al.}
 
-\begin{document}
+\begin{document}\sloppy\sloppypar\raggedbottom\frenchspacing % trust!
 
 \title{Stellar and substellar companions in APOGEE DR16: \\
        Catalog of XX systems}
@@ -75,7 +77,7 @@ We find interesting low-mass and high-mass systems...
 
 \section{Introduction} \label{sec:intro}
 
-A better understanding the population of binary stars throughout our galaxy is important for all aspects of astrophysics. For example, ... stellar-mass binary black hole mergers to stellar populations in high-redshift galaxies \citep[e.g.,][]{Breivik:2019, Rix:2019}.
+A better understanding the population of binary stars throughout our galaxy is important for all aspects of astrophysics. For example, ... stellar-mass binary black hole mergers to stellar populations in high-redshift galaxies \citep[e.g.,][]{Breivik:BAAS, Rix:BAAS}.
 
 We need to understand the population statistics of stellar multiplicity and their variations with stellar type, chemistry, and dynamical environment.
 
@@ -245,8 +247,8 @@ visits that span a short time baseline.
 For most sources, we therefore expect that even if visit-level radial velocity
 variations are detected with high significance, the companion orbital parameters
 will be very uncertain---i.e. the posterior probability distribution function
-(\textsl{pdf}) over orbital parameters will generally be multi-modal with many
-modes of comparable integrated probability \citep[e.g.,][]{TODO, thejoker}.
+(\pdf) over orbital parameters will generally be multi-modal with many
+modes of comparable integrated probability \citep[e.g.,][]{thejoker}.
 Still, in unison, or within the context of a hierarchical model that utilizes
 the individual posterior samplings, the combination of all of these individually
 weakly-constrained binary star orbits should still provide information about the
@@ -261,17 +263,39 @@ We have previously applied \thejoker\ to \apogee\ \dr{14}
 returned samplings, released a catalog of over $5,000$ binary star systems;
 This \documentname\ and companion catalog is a successor to this previous work.
 
+In this \documentname, as with previous work, we use a parametrization of the
+two-body problem in which the radial velocity, $v$, of an observed star in a
+binary system (referred to as the \emph{primary}, even if it is less massive
+than its companion) can be expressed as:
+\begin{equation}
+    v(t) = K \, h(t \,;\, P, e, \omega, M_0, t_0) + v_0 \label{eq:kepler}
+\end{equation}
+where $K$ and $v_0$ are linear parameters (in time $t$).
+The other parameters---period $P$, eccentricity $e$, argument of periastron
+$\omega$, reference time $t_0$, and mean anomaly at reference time $M_0$---enter
+through the nonlinear function
+\begin{equation}
+    h(t \,;\, P, e, \omega, M_0, t_0) = \cos\left(f + \omega\right) + e\,\cos\omega
+\end{equation}
+where $f$ is the true anomaly, and we always set the reference time, $t_0$, to
+the minimum observation time for a given set of radial velocity observations.
 
 \subsection{Updates to \thejoker}
+\label{sec:joker-update}
 
-Since our initial paper defining \thejoker, we identified a minor error in the
-assumptions made about the prior over the linear parameters ($K$, $v_0$) in
+Since our initial paper defining \thejoker, we identified a conceptual error in
+the assumptions made about the prior over the linear parameters ($K$, $v_0$) in
 \citet{thejoker}.
-We previously (incorrectly) assumed that adopting a sufficiently broad, Gaussian
-prior over the linear parameters meant that we could ignore an explicit
-definition of this prior.
-\todo{In particular, \equationname~XX should ...}
-TODO: cite Hogg et al. arxiv note.
+We previously assumed that adopting a sufficiently broad, Gaussian prior over
+the linear parameters meant that we could ignore an explicit definition of this
+prior.
+In particular, this allowed us to drop any terms related to the prior over these
+parameters in the marginal likelihood expression \citep[\equationname~11
+in][]{thejoker}.
+This assumption is not correct, and can lead to unexpected behavior when applied
+to data that are very noisy or have a small time baseline compared to the
+samples of interest.
+We have rewritten the expression for the marginal likelihood that underlies \thejoker\ in Appendix~\ref{app:marginal-likelihood}, based on the notation in \cite{Hogg:2020}.
 
 Another issue with the assumption in the original implementation of \thejoker\
 is that the prior over the velocity semi-amplitude, $K$, was identical at all
@@ -453,6 +477,86 @@ Wisconsin, Vanderbilt University, and Yale University.
     scipy \citep{scipy},
     thejoker \citep{thejoker}
 }
+
+
+\appendix
+
+\section{Update to the marginal likelihood expression for \thejoker}
+\label{app:marginal-likelihood}
+
+As noted above (see \sectionname~\ref{sec:joker-update}), the assumptions in
+\cite{thejoker} that lead to the simplified form of the marginal likelihood
+(\equationname~11 in \citealt{thejoker}) are not valid.
+We therefore here re-derive the marginal likelihood that forms the basis of the
+implementation of \thejoker\ used in this work.
+
+For each \apogee\ source, we have a set of $N$ radial velocity measurements
+(visits) $v_n$ at times $t_n$ with uncertainties $\sigma_n$.
+Under the assumption that the source is in a binary star system, our model for
+the true radial velocity of the source at any time is given by
+\equationname~\ref{eq:kepler} above.
+Our goal (as in \citealt{thejoker}) is to analytically marginalize over the
+linear parameters in \equationname~\ref{eq:kepler}---$(K, v_0)$---under the
+assumption that the uncertainties on each radial velocity measurement are
+Gaussian and independent.
+To do this, we must write down expressions for the likelihood, and for the prior
+probability distribution over the parameters that we will be marginalizing over
+(i.e., the linear parameters).
+We have already made the assumption that our likelihood has a Gaussian form, so
+to do this marginalization conveniently and analytically, we additionally assume
+that the prior \pdf\ also has a Gaussian form.
+Under these assumptions, the solution to this marginalization is given in
+\cite{Hogg:2020}.
+
+To see the relation between the specific problem solved by \thejoker\ and the
+derivation in \cite{Hogg:2020}, it will be convenient to repackage our data and
+linear parameters as
+\begin{align}
+    \vec{y} &= \transpose{(v_1, v_2, \ldots, v_N)}\\
+    \vec{x} &= \transpose{(K, v_0)}\\
+    \mat{C} &=
+        \begin{pmatrix}
+            \sigma_1^2 & 0 & \cdots & 0\\
+            0 & \sigma_2^2 & \cdots & 0\\
+             &  & \ddots & \\
+            0 & 0 & \cdots & \sigma_N^2\\
+        \end{pmatrix}
+\end{align}
+and to assume that the mean and covariance matrix of the prior over the linear
+parameters are given by $\vec{\mu}, \mat{\Lambda}$, respectively.
+Given a set of nonlinear parameters $\vec{\theta} = (P, e, \omega, M_0)$, we
+will also need to define a design matrix, $\mat{M}$,
+\begin{equation}
+    \mat{M} =
+        \begin{pmatrix}
+            h(t_1 \,;\, \vec{\theta}) & 1\\
+            h(t_2 \,;\, \vec{\theta}) & 1\\
+            \vdots & \vdots\\
+            h(t_N \,;\, \vec{\theta}) & 1
+        \end{pmatrix} \quad .
+\end{equation}
+With these assumptions, the marginalized likelihood, $Q$, for a source, given
+nonlinear parameters $\vec{\theta}$, can be written
+\begin{align}
+    Q &= \int \dd \vec{x} \,
+        \norm(\vec{y} \given \mat{M}\cdot \vec{x}, \mat{C}) \,
+        \norm(\vec{x} \given \vec{\mu}, \mat{\Lambda}) \\
+    &= \int \dd \vec{x} \,
+        \norm(\vec{x} \given \vec{a}, \mat{A}) \,
+        \norm(\vec{y} \given \vec{b}, \mat{B})\\
+    &= \norm(\vec{y} \given \vec{b}, \mat{B})\\
+    \vec{b} &= \mat{M} \cdot \vec{\mu}\\
+    \mat{B} &= \mat{C} + \mat{M} \cdot \mat{\Lambda} \cdot \transpose{\mat{M}}
+\end{align}
+where the integral becomes trivial because the second normal distribution,
+$\norm(\vec{y} \given \vec{b}, \mat{B})$, does not depend on the integration
+variables, $\vec{x}$, and the integral over the first normal distribution is 1
+\citep{Hogg:2020}.
+A final point that is relevant to additional enhancements discussed in
+\sectionname~\ref{sec:joker-update} (and is exploited in this \documentname) is
+to note that $\vec{\mu}$ and $\mat{\Lambda}$ \emph{can} depend on the nonlinear
+parameters.
+
 
 \bibliographystyle{aasjournal}
 \bibliography{dr16vac}
