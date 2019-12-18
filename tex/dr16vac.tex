@@ -18,15 +18,20 @@
 \usepackage{graphicx}
 \usepackage{color}
 
+% Numbers:
+\newcommand{\nsources}{\ensuremath{232,531}}
+\newcommand{\Kmin}{K_{\rm min}}
+\newcommand{\Kminval}{512}
+
 \graphicspath{{figures/}}
 \input{preamble.tex}
 
-\shorttitle{Stuff}
+\shorttitle{Stellar companions in APOGEE}
 \shortauthors{Price-Whelan et al.}
 
 \begin{document}\sloppy\sloppypar\raggedbottom\frenchspacing % trust!
 
-\title{Stellar and substellar companions in APOGEE DR16: \\
+\title{Stellar and substellar companions to APOGEE DR16 stars: \\
        Catalog of XX systems}
 
 \author[0000-0003-0872-7098]{Adrian~M.~Price-Whelan}
@@ -160,7 +165,7 @@ However, we later impose a stricter set of quality masks when showing results in
 \sectionname~\ref{sec:TODO}.
 After applying the above masks, we additionally reject any source with $<3$
 visits.
-Our final parent sample contains $232,531$ unique sources, selected from the
+Our final parent sample contains \nsources\ unique sources, selected from the
 $437,485$ unique sources in all of \apogee\ \dr{16}.
 Of the $\approx$$200,000$ sources removed, the vast majority were dropped
 because they had $<3$ visits ($\approx$$17,000$ were removed by the quality
@@ -310,7 +315,7 @@ semi-amplitude with a standard-deviation, $\sigma_K$, that scales with the
 period and eccentricity such that
 \begin{equation}
     \sigma_K = \sigma_{K, 0} \, \left(\frac{P}{P_0}\right)^{-1/3} \,
-        \left(1 - e^2\right)^{-1/2}
+        \left(1 - e^2\right)^{-1/2} \label{eq:sigK}
 \end{equation}
 where $\sigma_{K, 0}$ and $P_0$ are additional hyperparameters that must be
 specified.
@@ -331,27 +336,133 @@ to HMC when the system parameters are highly constrained (as discussed below).
 
 \section{Running \thejoker\ on all of \apogee\ \dr{16}} \label{sec:rundr16}
 
-TODO: intro
+For each of the \nsources\ sources in the parent catalog of sources selected
+from \apogee\ \dr{16} (\sectionname~\ref{sec:data}), we run \thejoker\
+\citep{thejoker} generate posterior samplings over the Keplerian orbital
+parameters, plus an additional per-source uncertainty or ``jitter'' parameter
+that is added in quadrature to the (adjusted) \apogee\ visit velocity
+uncertainties (see above).
+We start by generating a cache of $100,000,000$ prior samples for the nonlinear
+parameters generated from the prior \pdf\ summarized in
+\tablename~\ref{tbl:prior} (top rows).
+For each source, we iteratively read random blocks of samples out of this cache,
+evaluate the marginal likelihood, and rejection sample to produce posterior
+samplings in the nonlinear parameters.
+We repeat this iterative process until we reach the total number of samples in
+the cache, or until we obtain a requested number of prior samples, $\Kmin$; This
+is an arbitrary parameter that we set to $K_{\rm min} = \Kminval$ for this work.
+In practice, this is done by parallelizing the sampling (over sources) and takes
+about 8 hours to run on 720 cores on our local compute cluster (at the Flatiron
+Institute).
 
-Caveats and assumptions
+After the procedure described above, the sources have one of two stages of
+completion: Sources either have $\Kmin = \Kminval$ posterior samples (\todo{XX}
+sources) and are complete, or $\Kmin < \Kminval$ posterior samples (\todo{XX}
+sources) and more samples are needed.
+For sources that require more samples, these can be split again into two
+classes: Sources with unimodal samplings in period, and sources with multi-modal
+samplings (following the criteria described in \citealt{thejoker}).
+For incomplete sources with unimodal samplings (\todo{XX} sources), we use the
+samples returned from \thejoker\ to initialize Hamiltonian Monte Carlo (HMC) to
+continue generating posterior samples.
+We use \texttt{pymc3} with the \emph{No-U-Turn Sampler} (NUTS; \citealt{NUTS}),
+using the dense mass matrix tuning prescription implemented in
+\texttt{exoplanet} \citep{exoplanet:exoplanet} and run 4 chains in parallel,
+each for 1000 tuning steps and 4000 steps subsequently.
+We use these 4 chains and \texttt{pymc3} to compute the Gelman-Rubin convergence
+statistic, $\hat{R}$ \citep{Gelman:1992}, for each parameter for each source; If
+$\hat{R} < 1.1$ for all parameters, we down-sample to \Kminval\ samples and mark
+that source as MCMC-completed.
+If the HMC sampling fails (e.g., chains diverge substantially), we fall back to
+the sampling from \thejoker---this generally only happens for data with serious
+systematic issues (e.g., one outlier visit velocity with an unreasonable
+velocity measurement).
 
-Where we will fail:
-- Systems with large systemic velocity (dwarf satellites)
-- Triple systems
-- SB2, or any contamniated data
+At this point, we now have \Kminval\ posterior samples in the parameters listed
+in \tablename~\ref{tbl:prior} for \todo{XX} \apogee\ sources; These are released
+as a component of the \sdss\ Value-Added Catalog (VAC).
 
-Parameter choices
+\begin{table}[h]
+    \centering
+    \setlength{\tabcolsep}{0.75em} % for the horizontal padding
+    \begin{tabular}{ r l p{6cm} }
+    \toprule
+    \textbf{parameter} & \textbf{prior} & \textbf{description} \\
+    \toprule
+    \multicolumn{3}{l}{\footnotesize \textsl{nonlinear parameters}}\\
+    \hline
+    $P$ & $\ln P \sim \mathcal{U}(2, 16384)~\textrm{day}$ & period \\
+    $e$ & $e \sim \textrm{Beta}(0.867, 3.03)$ & eccentricity \\
+    $t_0$ & fixed (minimum time) & reference time \\
+    $M_0$ & $M_0 \sim \mathcal{U}(0, 2\pi)~\textrm{rad}$ & mean anomaly at reference time \\
+    $\omega$ & $\omega \sim \mathcal{U}(0, 2\pi)~\textrm{rad}$ & argument of pericenter \\
+    $s$ & $\ln s \sim \mathcal{N}(\mu_y, \sigma_y^2)$ & extra ``jitter'' added in quadrature to each visit velocity error \\
+    \hline
+    \multicolumn{3}{l}{\footnotesize \textsl{linear parameters}}\\
+    \hline
+    % $K$ & $K \sim \mathcal{N}(0, \sigma_{K}^2)~\kms$ & velocity semi-amplitude, where $\sigma_K$ is given by \equationname~\ref{eq:sigK} with $\sigma_{K,0} = 30~\kms$ and $P_0 = 365~\dayd$. \\
+    $K$ & $K \sim \mathcal{N}(0, \sigma_{K}^2)~\kms$ & velocity semi-amplitude, where $\sigma_K$ is given by \equationname~\ref{eq:sigK}\\
+    & $\sigma_{K,0} = 30~\kms$ & (see \equationname~\ref{eq:sigK})\\
+    & $P_0 = 365~\dayd$ & (see \equationname~\ref{eq:sigK})\\
+    $v_0$ & $v_0 \sim \mathcal{N}(0, \sigma_{v_0}^2)~\kms$ & system barycentric velocity \\
+    & $\sigma_{v_0} = 100~\kms$ & \\
+    \bottomrule
+    \end{tabular}
+    \caption{Summary and description of parameters and prior \pdf s. $\textrm{Beta}(a, b)$ is the
+    beta distribution with shape parameters $(a, b)$, $\mathcal{U}(a, b)$ the
+    uniform distribution over the domain $(a, b)$, and $\mathcal{N}(\mu,
+    \sigma^2)$ is the normal distribution with mean $\mu$ and variance
+    $\sigma^2$.}
+    \label{tbl:prior}
+\end{table}
 
-Implementation details
+\subsection{Assumptions, caveats, and known failures}
+\label{sec:caveats}
 
-Describe robust constant fit stuff.
+The assumptions that underlie the sampling procedure described above are
+enumerated in \sectionname~3.1 in \cite{Price-Whelan:2018}.
+We therefore briefly rephrase the most important implications of these
+assumptions as a set of caveats and points of caution for any users of the
+posterior samplings generated here.
 
-Some statistics about the run: how many unimodal, bimodal.
+First, despite allowing for a per-source, additive (in variance) extra
+uncertainty parameter ($s$ in \tablename~\ref{tbl:prior}), we are very sensitive
+to outliers, or, more generally, any visit velocities with strongly non-Gaussian
+noise properties.
+In \apogee, this might occur for blended sources, multiple-star systems with
+more than one star that contribute significantly to infrared flux, or sources
+with stellar parameters very beyond the grid of template spectra
+\citep{Nidever:2015}.
+Second, the adopted prior \pdf\ over systemic velocities, $v_0$, is reasonable
+for considering all \apogee\ sources (i.e., for a mixture of kinematically
+disk-like and halo-like sources), but may lead to biased posterior samplings for
+sources in globular clusters or dwarf galaxies.
+For such systems, it would be safer to re-run \thejoker\ with specialized priors
+over systemic velocity for each individual host system.
+Finally, in this work, we assume that all systems are binary systems, so triples
+or higher-order stellar multiplets will generally have incorrect samplings.
+In future work, we will generate samplings for systems that are consistent with
+being hierarchical triple-star systems, but this is beyond the scope of this
+general-use catalog.
 
 
 \section{A catalog of binary stars} \label{sec:catalog}
 
-Any catalog will have some arbitrary cuts. Here we cut on likelihood ratio of binary star model vs. constant model (not fully marginal likelihoods, so cut won't be at 0!).
+For some science cases and exploration (such as those demonstrated below), it is
+useful to filter these stars to generate catalogs of systems with likely
+companions, but this requires making decisions and hard cuts based on the
+samplings.
+However, most of the orbital parameter samplings returned from the procedure
+above are highly uncertain and multi-modal, and it is therefore not possible to
+define simple cuts on physical parameters like companion mass.
+
+One way of ... likelihood ratio or evidence ratio ...
+
+Describe robust constant fit stuff.
+
+Here we cut on likelihood ratio of binary star model vs. constant model (not fully marginal likelihoods, so cut won't be at 0!).
+
+Other ways one could define a catalog: like we did in paper 1, based on percentiles of, e.g., K
 
 We find XX stars with companions - show simple plots over HR diagram for cuteness.
 
@@ -475,6 +586,7 @@ Wisconsin, Vanderbilt University, and Yale University.
     pymc3 \citep{Salvatier2016},
     schwimmbad \citep{schwimmbad:2017},
     scipy \citep{scipy},
+    theano \citep{theano},
     thejoker \citep{thejoker}
 }
 
