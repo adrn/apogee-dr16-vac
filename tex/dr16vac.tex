@@ -462,10 +462,20 @@ cuts based on percentiles computed from the distribution of $\ln K$ values after
 comparing to running the same pipeline on a control sample of data generated
 with purely Gaussian noise properties and time information taken from the
 \apogee\ \dr{14} visits.
-Here, we instead compute a marginal likelihood ratio comparing the two-body
-orbit model assuming in \thejoker\ to a constant-velocity fit to the data.
+Here, we instead compute a marginal likelihood ratio and define a cut
 
-In addition to producing
+In addition to producing posterior samplings in Keplerian orbital parameters for each \apogee\ source, we also
+
+
+comparing the two-body
+orbit model (assumed by \thejoker) to a constant-velocity fit to each \apogee\
+source's visit velocity data.
+
+
+sig2 = 1 / np.sum(1 / sn**2)
+mu = sig2 * np.sum(vn / sn**2)
+Z2 = -0.5 * (N*np.log(2*np.pi) + 2*np.sum(np.log(sn)) -
+                np.log(sig2) + np.sum(vn**2 / sn**2) - mu**2 / sig2)
 
 One way of ... likelihood ratio or evidence ratio ...
 
