@@ -450,16 +450,22 @@ general-use catalog.
 
 For some science cases and exploration (such as those demonstrated below), it is
 useful to filter these stars to generate catalogs of systems with likely
-companions, but this requires making decisions and hard cuts based on the
-samplings.
+companions.
+This requires making some decisions and imposing hard cuts on the samplings
+returned.
 However, most of the orbital parameter samplings returned from the procedure
 above are highly uncertain and multi-modal, and it is therefore not possible to
-define simple cuts on physical parameters like companion mass.
-In the previous iteration of this effort, we defined cuts based on percentiles
-computed on the distribution of $\ln K$ values after comparing to running the
-same pipleline on a control sample of data generated with purely Gaussian noise
-properties and time information taken from the \apogee\ \dr{14} visits.
-Here, we instead ...
+define simple cuts on physical parameters like companion mass to produce a
+simple catalog.
+In the previous iteration of this work \citep{Price-Whelan:2018}, we defined
+cuts based on percentiles computed from the distribution of $\ln K$ values after
+comparing to running the same pipeline on a control sample of data generated
+with purely Gaussian noise properties and time information taken from the
+\apogee\ \dr{14} visits.
+Here, we instead compute a marginal likelihood ratio comparing the two-body
+orbit model assuming in \thejoker\ to a constant-velocity fit to the data.
+
+In addition to producing
 
 One way of ... likelihood ratio or evidence ratio ...
 
