@@ -524,7 +524,7 @@ We define a catalog of binary star systems based on the posterior samplings
 generated from \thejoker\ by selecting sources for which
 \begin{align}
     P_{1\%}(\ln K) &> 0\\
-    (\ln \hat{L}_1 - \ln \hat{L}_2) > 4.6 \quad .
+    (\ln \hat{L}_1 - \ln \hat{L}_2) > 4.6 \quad . \label{eq:binary-cuts}
 \end{align}
 The cut on the log-likelihood ratio comes from the (arbitrary) constraint that
 the maximum Kepler model likelihood should be $>100$ times the maximum robust
@@ -532,9 +532,67 @@ constant-velocity likelihood value.
 Of the \nsources\ total sources in our parent sample, \nbinary\ sources pass the
 selection above.
 
+% Notebook: Figure-binary-catalog.ipynb
+% \begin{figure}[!t]
+%     \begin{center}
+%     \includegraphics[width=1\textwidth]{binary-examples.pdf}
+%     \end{center}
+%     \caption{%
+%     TODO:
+%     \label{fig:binary-examples}
+%     }
+% \end{figure}
+
 Figure: Some cute examples, but show RGB vs. MS primaries differently?
 
-Figure: Fraction of stars with companions over HR diagram
+
+\figurename~\ref{fig:binary-CMD} (right) shows a near-infrared, binned
+color-magnitude diagram for all \apogee\ sources in the sample considered here.
+Each pixel is colored by the ratio of the number of binary star systems
+identified by the selections defined above (\equationname~\ref{eq:binary-cuts})
+over the total number of sources in the parent sample; Pixels with fewer than
+four stars in the parent sample are nulled.
+The two solid lines show $5~\mathrm{Gyr}$ \acronym{MIST} isochrones \citep{MIST}
+with metallicities indicated in the figure legend.
+The dashed lines show the equal-mass binary sequences for these two isochrones,
+$0.75~\mathrm{mag}$ above the main sequence: Note that, as expected, the binary
+fraction is higher in this region of the CMD, and is higher towards younger /
+more massive main sequence stars.
+Note also that the red clump (around $(J-K)_0 \approx 0.6$, $H_0 \approx -1.8$)
+has a \emph{low} binary fraction: This is likely a manifestation of engulfment,
+as these stars have already been up the giant branch and would therefore have
+consumed any companions with periods less than a few hundred days.
+The dearth of binary systems near the red clump is also apparent when
+visualizing the total binary fraction as a function of surface gravity, as shown
+in the top left panel of \figurename~\ref{fig:binary-CMD}.
+The bottom left panel shows the same as a function of effective temperature
+(as a proxy for the mass of the primary): The binary fraction appears to
+increase for more massive stars.
+
+This ignores survey selection effects, inclination, and selection biases
+introduced by the cuts we made to identify binary star systems.
+
+% Notebook: Figure-binary-catalog.ipynb
+\begin{figure}[!t]
+    \begin{center}
+    \includegraphics[width=1\textwidth]{binary-fraction.pdf}
+    \end{center}
+    \caption{%
+    \textbf{Upper left:} TODO
+    \textbf{Lower left:} TODO
+    \textbf{Right:} The extinction-corrected \acronym{2MASS} color-magnitude
+    diagram (CMD) for all \apogee\ sources, colored by the fraction of sources
+    identified as binary-star systems (\sectionname~\ref{sec:catalog}).
+    Solid lines show \acronym{MIST} isochrones for a $5~\mathrm{Gyr}$ with
+    $\feh = -0.5$ (orange) and $\feh = 0.5$ (red), to bracket the range of
+    metallicities of typical \apogee\ sources; Dashed lines (with the same
+    coloring) indicate the equal-mass binary sequence for main sequence stars,
+    %
+    The panels in this figure are meant to be illustrative and should only be
+    compared in a relative sense.
+    \label{fig:binary-CMD}
+    }
+\end{figure}
 
 % TODO: what about bimodal samplings, or samplings with small range in ln-period?
 
