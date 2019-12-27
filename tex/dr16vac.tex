@@ -569,9 +569,9 @@ under this model is given by
 \end{equation}
 where $f$ is the outlier fraction, $\mu_v$ is the constant-velocity value, and
 $\Sigma$ is the variance of the outlier model component (assumed to be large).
-We optimize this likelihood using the BFGS \citep{BFGS} algorithm with bounds on
-the parameters such that $f \in (0, 0.2)$, $\mu_v \in (-500, 500)~\kms$, and
-$\Sigma \in (0, 3000)~(\kms)^2$.
+We optimize this likelihood using the BFGS algorithm \citep{Nocedal:2006} with
+bounds on the parameters such that $f \in (0, 0.2)$, $\mu_v \in (-500,
+500)~\kms$, and $\Sigma \in (0, 3000)~(\kms)^2$.
 We store the optimized log-likehihood value of the robust constant-velocity
 model and refer to this as $\ln \hat{L}_2$
 
@@ -634,7 +634,7 @@ The right column of panels show the same posterior samples (blue markers), but
 in a projection of the parameter space (period $P$ and minimum companion mass,
 \mtwomin).
 To compute \mtwomin, we use the posterior samplings from \thejoker\ along with
-primary stellar masses computed by \citet{starhorse2019} by sampling over the
+primary stellar masses computed by \citet{Queiroz:2019} by sampling over the
 reported uncertainties on prior mass (assuming a Gaussian noise distribution on
 primary mass).
 
@@ -667,8 +667,9 @@ Each pixel is colored by the ratio of the number of binary star systems
 identified by the selections defined above (\equationname~\ref{eq:binary-cuts})
 over the total number of sources in the parent sample; Pixels with fewer than
 four stars in the parent sample are white.
-The two solid lines show $5~\mathrm{Gyr}$ \acronym{MIST} isochrones \citep{MIST}
-with metallicities indicated in the figure legend.
+The two solid lines show $5~\mathrm{Gyr}$ \acronym{MIST} isochrones
+\cite{Dotter:2016, Choi:2016, Paxton:2011, Paxton:2013, Paxton:2015} with
+metallicities indicated in the figure legend.
 The dashed lines show the equal-mass binary sequences for these two isochrones,
 $0.75~\mathrm{mag}$ above the main sequence: Note that, as expected, the binary
 fraction is higher in this region of the CMD, and is higher towards younger /
