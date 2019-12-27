@@ -33,8 +33,8 @@
 \begin{document}\sloppy\sloppypar\raggedbottom\frenchspacing % trust!
 
 \title{Binary companions to APOGEE DR16 stars: \\
-       Catalog of XX systems and constraints on the long-period eccentricity
-       distribution for binary stars}
+       Catalog of $\sim$20,000 binary star systems and constraints on the
+       long-period eccentricity distribution}
 
 \author[0000-0003-0872-7098]{Adrian~M.~Price-Whelan}
 \affiliation{Center for Computational Astrophysics, Flatiron Institute,
@@ -63,20 +63,43 @@
 
 \author{Others}
 
+% Binary star systems provide key context and constraints for nearly all subfields in astrophysics, yet
+% Precise inferences about binary star populations --- which provide key context
+% for all subfields of astrophysics --- typically rely on just hundreds of stars
+% nearest to the sun.
+
 \begin{abstract}
 % Context
-Binary star systems provide key context and constraints for nearly all subfields in astrophysics, yet precise inferences about binary star populations typically rely on just hundreds of stars nearest to the sun.
-Detailed knowledge of binary star population properties is therefore
+Most present challenges in astrophysics, from understanding the formation and
+occurrence rates of stellar-mass black holes to untangling the chemical
+evolution of galaxies, require precise inferences about binary star populations.
+These inferences depend on characterizing binary star orbital properties for
+large numbers of stars across a range of environments using, e.g., time-domain
+spectroscopic observations of stars.
+Contemporary stellar spectroscopic surveys already observe hundreds of thousands
+to millions of stars across a range of chemical and dynamical environments, but
+often with few, sparse (in time) observations that make orbital characterization
+challenging.
 % Aims
-Contemporary stellar surveys already observe large numbers of stars
+Here, we generate posterior samplings in Keplerian orbital parameters for
+\nsources\ sources observed as a part of the \apogee\ surveys and released in
+the recent Data Release 16 (\dr{16}).
+These samplings are useful for performing hierarchical inference about binary
+star population properties, but we also make cuts on these samplings to create
+catalogs of binary star systems.
 % Methods
-We have a big hammer
+We use a custom Monte Carlo sampler to generate the orbital parameter samples
+that was designed to generate samplings even for few, sparse, or noisy
+time-domain radial velocity measurements
 % Results
-We produce posterior samplings assuming...SB1 and two-body systems...
-We also produce a catalog of binary systems...we select on evidence or parameter estimation...
+We generate and release the posterior samplings (512 samples per source,
+assuming each source is a single-lined spectroscopic binary).
+We also produce a catalog of $\nbinary$ binary star systems by making selections
+on the posterior samplings ... using a likelihood ratio...
+As a demonstration, we ...
+We also find interesting low-mass and high-mass systems...
 % Conclusions
-Binaries all over HR diagram...but we find ??
-We find interesting low-mass and high-mass systems...
+Binaries all over HR diagram...
 \end{abstract}
 
 \keywords{}
@@ -84,20 +107,35 @@ We find interesting low-mass and high-mass systems...
 
 \section{Introduction} \label{sec:intro}
 
-A better understanding the population of binary stars throughout our galaxy is important for all aspects of astrophysics. For example, ... stellar-mass binary black hole mergers to stellar populations in high-redshift galaxies \citep[e.g.,][]{Breivik:BAAS, Rix:BAAS}.
+A better understanding the population of binary stars throughout our galaxy is
+important for all aspects of astrophysics.
+For example, ... stellar-mass binary black hole mergers to stellar populations
+in high-redshift galaxies \citep[e.g.,][]{Breivik:BAAS, Rix:BAAS}.
 
-We need to understand the population statistics of stellar multiplicity and their variations with stellar type, chemistry, and dynamical environment.
+We need to understand the population statistics of stellar multiplicity and
+their variations with stellar type, chemistry, and dynamical environment.
 
-This problem spans a wide range of timescales, wavelengths, and many current and near-future stellar surveys (Gaia, APOGEE, LAMOST, SDSS-V, etc.) have the capacity to deliver samples of binary stars and stellar companions orders of magnitude larger than are presently known, throughout all stages of stellar evolution.
+This problem spans a wide range of timescales, wavelengths, and many current and
+near-future stellar surveys (Gaia, APOGEE, LAMOST, SDSS-V, etc.) have the
+capacity to deliver samples of binary stars and stellar companions orders of
+magnitude larger than are presently known, throughout all stages of stellar
+evolution.
 The dream: combine all if this and learn ...
-This has only been comprehensively done for a sample of a few hundred stars in solar neighborhood.
+This has only been comprehensively done for a sample of a few hundred stars in
+solar neighborhood.
 
-As a step towards large-scale population inference, we focus here on multi-epoch spectroscopic data from the APOGEE surveys.
-The challenge: data are often sparse, most individual systems are not determined uniquely.
-We have machinery to generate full samplings over orbital parameters for radial velocity data, under the assumptions listed in The Joker paper (SB1, etc.).
-We run this sampler on all of APOGEE DR16 with some quality cuts and release the resulting catalog of posterior samples, along with some summary metadata for unimodal / uniquely determined orbits.
+As a step towards large-scale population inference, we focus here on multi-epoch
+spectroscopic data from the APOGEE surveys.
+The challenge: data are often sparse, most individual systems are not determined
+uniquely.
+We have machinery to generate full samplings over orbital parameters for radial
+velocity data, under the assumptions listed in The Joker paper (SB1, etc.).
+We run this sampler on all of APOGEE DR16 with some quality cuts and release the
+resulting catalog of posterior samples, along with some summary metadata for
+unimodal / uniquely determined orbits.
 
-We use these samples to infer the companion period-eccentricity distribution over the HR diagram as an initial demonstration of hierarchical inference.
+We use these samples to infer the companion period-eccentricity distribution
+over the HR diagram as an initial demonstration of hierarchical inference.
 
 
 \section{Data} \label{sec:data}
