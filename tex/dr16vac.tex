@@ -3,7 +3,9 @@
 % - huh? http://adsabs.harvard.edu/abs/2014ApJ...790..127B
 % - When Hogg's Gaussian Product Refactor note is on Arxiv, check the referenced
 %   equation numbers in the Appendix against the submitted version!
-
+% - Check and cite https://pdfs.semanticscholar.org/64cf/b422cbefe0239fd25ae39cf13833d60a4901.pdf
+%   The observed distribution of spectroscopic binaries from the Anglo-Australian Planet Search
+% -
 \documentclass[modern]{aastex63}
 % \documentclass[twocolumn]{aastex63}
 \usepackage{amsmath}
@@ -662,6 +664,17 @@ primary mass).
     }
 \end{figure}
 
+% Notebook: Figure-binary-fraction.ipynb
+\begin{figure}[!t]
+    \begin{center}
+    \includegraphics[width=0.5\textwidth]{fraction_M_H.pdf}
+    \end{center}
+    \caption{%
+    TODO
+    \label{fig:binfrac-mh}
+    }
+\end{figure}
+
 % TODO: left panels use the selections from figure 1
 \figurename~\ref{fig:binary-CMD} (right) shows a near-infrared, binned
 color-magnitude diagram for all \apogee\ sources in the sample considered here.
@@ -738,15 +751,21 @@ Figure: ...
 \subsection{Interesting low and high mass companions}
 
 
-\subsection{Trends with chemistry}
-
-TODO: binary fraction as a function of M/H
-
-
 \subsection{Hierarchical inference of the long-period eccentricity distribution}
 
+% Notebook: Figure-Long-P-eccentricity.ipynb
+\begin{figure}[!t]
+    \begin{center}
+    \includegraphics[width=0.6\textwidth]{eccentricity-distr.pdf}
+    \end{center}
+    \caption{%
+    TODO
+    \label{fig:eccdist}
+    }
+\end{figure}
 
-% \section{Inferring shit with a hierarchical model} \label{sec:Pe}
+
+Caveat: this is a demonstration. Selection effects, rigid model, etc.
 
 % \begin{align}
 %     z &= \ln\,P\\
@@ -770,32 +789,15 @@ TODO: binary fraction as a function of M/H
 %     \bs{\theta}_k &\sim p(\bs{\theta} \given D, \bs{\alpha}_0)
 % \end{align}
 
-% - Period, eccentricity distributions
-% - Mass-ratio distribution
-%      - Use C,N abundances for RGB and logg, teff, fe/h for main sequence
-%      - Calibrate against asteroseismology / APOKASC
+
+% Lars: "Any idea of the incidence of stars which did an engulfment on their way
+% UP the RGB from the Luminosity of the clump to that of the RGB TIP? "
 
 
-% Lars: "Any idea of the incidence of stars which did an engulfment on their way UP the RGB from the Luminosity of the clump to that of the RGB TIP? "
+\section{Discussion}
 
-% Note: some or all of these may be broken out into separate papers!
+Stuff
 
-% \subsection{Companions along the RGB}
-% Compare RGB vs. RC - see engulfment?
-%
-% \subsection{Brown dwarfs}
-% So many!
-%
-% \subsection{Binary population statistics}
-% Simple hierarchical inference?
-%
-% \subsection{TRGB asteroseismology}
-%
-% \subsection{Binary star populations in open clusters}
-%
-% \subsection{Binary star populations in globular clusters}
-
-% Ack: Lars Bildsten
 
 \acknowledgements
 
