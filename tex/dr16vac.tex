@@ -40,8 +40,8 @@
 \begin{document}
 
 \title{Binary companions to APOGEE DR16 stars: \\
-       Catalog of 20\,000 binary star systems and constraints on the
-       long-period eccentricity distribution}
+       Catalog of 20\,000 binary-star systems
+       across the color--magnitude diagram}
 
 \author[0000-0003-0872-7098]{Adrian~M.~Price-Whelan}
 \affiliation{Center for Computational Astrophysics, Flatiron Institute,
@@ -50,16 +50,14 @@
 \correspondingauthor{Adrian M. Price-Whelan}
 
 \author[0000-0003-2866-9403]{David~W.~Hogg}
-\affiliation{Max-Planck-Institut f\"ur Astronomie,
-             K\"onigstuhl 17, D-69117 Heidelberg, Germany}
+\affiliation{Center for Computational Astrophysics, Flatiron Institute,
+             Simons Foundation, 162 Fifth Avenue, New York, NY 10010, USA}
 \affiliation{Center for Cosmology and Particle Physics,
              Department of Physics,
              New York University, 726 Broadway,
              New York, NY 10003, USA}
-\affiliation{Flatiron Institute,
-             Simons Foundation,
-             162 Fifth Avenue,
-             New York, NY 10010, USA}
+\affiliation{Max-Planck-Institut f\"ur Astronomie,
+             K\"onigstuhl 17, D-69117 Heidelberg, Germany}
 
 \author[0000-0003-4996-9069]{Hans-Walter~Rix}
 \affiliation{Max-Planck-Institut f\"ur Astronomie,
@@ -71,44 +69,43 @@
 
 \begin{abstract}\noindent
 % Context
-Most present challenges in astrophysics---from understanding the formation and
-occurrence rate of stellar-mass black holes to untangling the chemical
-evolution of galaxies---require precise inferences about binary star populations.
-These inferences depend on characterizing binary star orbital properties for
-large numbers of stars across a range of environments using, e.g., time-domain
-spectroscopic observations of stars.
-Contemporary stellar spectroscopic surveys already observe hundreds of thousands
-to millions of stars across a range of chemical and dynamical environments, but
-often with few, sparse (in time) observations that make orbital characterization
-challenging.
+Most problems in contemporary astrophysics---from understanding the formation
+of black holes to untangling the chemical
+evolution of galaxies---relies on knowledge about binary stars.
 % Aims
-Here, we generate posterior samplings in Keplerian orbital parameters for
+This, in turn, depends on discovery and characterization of binary companions for
+large numbers of different kinds of stars across a range of environments.
+Contemporary stellar spectroscopic surveys observe hundreds of thousands
+to millions of stars, but
+often with few observational epochs, which makes binary discovery
+and orbital characterization challenging.
+% Methods
+We use a custom Monte Carlo sampler (\thejoker) to perform discovery and characterization
+of binary systems by the radial-velocity method, in the regime of
+sparse, noisy, and poorly sampled data.
+We use it to generate posterior samplings in Keplerian parameters for
 \nsources\ sources observed as a part of the \apogee\ surveys and released in
 the recent Data Release 16 (\dr{16}).
-These samplings are useful for performing hierarchical inference about binary
-star population properties, but we also make cuts on these samplings to create
-catalogs of binary star systems.
-% Methods
-We use a custom Monte Carlo sampler to generate the orbital parameter samples
-that was designed to generate samplings even for few, sparse, or noisy
-time-domain radial velocity measurements
+These samplings can be used to perform hierarchical inference about binary-star
+populations, and we also use them to create catalogs of binary-star systems.
 % Results
-We generate and release the posterior samplings (512 samples per source,
-assuming each source is a single-lined spectroscopic binary).
-We also produce a catalog of $\nbinary$ binary star systems by making selections
-on the likelihood ratio comparing a Keplerian model to a constant-velocity model
-for each source.
-As a demonstration, we use these samplings within a hierarchical inference to
-measure the long-period binary star eccentricity distribution.
-We also find interesting systems with low-mass (i.e., brown dwarf) and high-mass
-(i.e., compact object) candidate companions.
-% Conclusions
-Binaries all over HR diagram...
+Our final catalog contains \nbinary\ systems.
+It shows interesting relationships between
+binary occurence rate and location in the color--magnitude diagram.
+We find notable
+faint companions at high masses (black-hole candidates), at low masses (planet candidates),
+and at close separations (mass-transfer candidates).
+We also use the posterior  samplings in a (simple, toy) hierarchical inference to
+measure the long-period binary-star eccentricity distribution.
+We release the full set of posterior samplings (512 samples per source,
+assuming each source is a single-lined spectroscopic binary) for the entire parent
+sample of \nsources\ stars; this set of samplings involves no heuristic ``discovery''
+threshold and therefore can be used for myriad statistical inferences.
 \end{abstract}
 
 \keywords{}
 
-
+\section*{~}\clearpage
 \section{Introduction} \label{sec:intro}
 
 Binary star systems provide key context and constraints for nearly all subfields
