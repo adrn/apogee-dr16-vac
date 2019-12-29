@@ -69,38 +69,37 @@
 
 \begin{abstract}\noindent
 % Context
-Most problems in contemporary astrophysics---from understanding the formation and
-occurrence rate of stellar-mass black holes to untangling the chemical
-evolution of galaxies---relies on inferences about binary-star populations.
+Most problems in contemporary astrophysics---from understanding the formation
+of black holes to untangling the chemical
+evolution of galaxies---relies on knowledge about binary stars.
 % Aims
-These inferences depend on discovery and characterization of binary companions for
+This, in turn, depends on discovery and characterization of binary companions for
 large numbers of different kinds of stars across a range of environments.
-Contemporary stellar spectroscopic surveys already observe hundreds of thousands
+Contemporary stellar spectroscopic surveys observe hundreds of thousands
 to millions of stars, but
-often with few, sparse (in time) observations that make companion
-discovery and orbital characterization challenging.
+often with few observational epochs, which makes binary discovery
+and orbital characterization challenging.
 % Methods
 We use a custom Monte Carlo sampler (\thejoker) to perform discovery and characterization
-of binary systems by the radial-velocity method.
-The method works with sparse, noisy, and poorly sampled radial-velocity information.
-We use it to generate posterior samplings in Keplerian orbital parameters for
+of binary systems by the radial-velocity method, in the regime of
+sparse, noisy, and poorly sampled data.
+We use it to generate posterior samplings in Keplerian parameters for
 \nsources\ sources observed as a part of the \apogee\ surveys and released in
 the recent Data Release 16 (\dr{16}).
 These samplings can be used to perform hierarchical inference about binary-star
 populations, and we also use them to create catalogs of binary-star systems.
 % Results
-Our final catalog contains \nbinary\ systems, with large numbers on both the main
-sequence and the red-giant branch.
-The catalog shows interesting relationships between
-binary occurence rate and location in the color-magnitude diagram.
+Our final catalog contains \nbinary\ systems.
+It shows interesting relationships between
+binary occurence rate and location in the color--magnitude diagram.
 We find notable
-faint companions at high masses (black hole candidates), at low masses (planet candidates),
+faint companions at high masses (black-hole candidates), at low masses (planet candidates),
 and at close separations (mass-transfer candidates).
-We also use these samplings in a (simple, toy) hierarchical inference to
+We also use the posterior  samplings in a (simple, toy) hierarchical inference to
 measure the long-period binary-star eccentricity distribution.
-We also release the full set of posterior samplings (512 samples per source,
+We release the full set of posterior samplings (512 samples per source,
 assuming each source is a single-lined spectroscopic binary) for the entire parent
-sample of \nsources stars; this set of samplings involves no heuristic ``discovery''
+sample of \nsources\ stars; this set of samplings involves no heuristic ``discovery''
 threshold and therefore can be used for myriad statistical inferences.
 \end{abstract}
 
