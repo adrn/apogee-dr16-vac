@@ -21,8 +21,8 @@
 
 % Hogg's issues need to be addressed.
 \setlength{\parindent}{1.1\baselineskip}
-\addtolength{\topmargin}{-0.3in}
-\addtolength{\textheight}{0.7in}
+\addtolength{\topmargin}{-0.2in}
+\addtolength{\textheight}{0.4in}
 \sloppy\sloppypar\raggedbottom\frenchspacing
 
 % Numbers:
@@ -30,6 +30,9 @@
 \newcommand{\Kmin}{K_{\rm min}}
 \newcommand{\Kminval}{512}
 \newcommand{\nbinary}{\ensuremath{19\,635}}
+
+\newcommand{\ngold}{\ensuremath{1\,032}}
+\newcommand{\nbimodal}{\ensuremath{492}}
 
 \graphicspath{{figures/}}
 \input{preamble.tex}
@@ -179,8 +182,9 @@ calibrated stellar parameters than the previous public data release, \dr{14}
 about \apogee\ \dr{16}).
 
 Most \apogee\ stars are observed multiple times in a set of time-resolved
-``visits'' that are combined before the \apogee\ \todo{ASPCAP} determines
-stellar parameters and chemical abundances for each source.
+``visits'' that are combined before the \apogee\ data reduction pipeline
+\citep{ASPCAP} determines stellar parameters and chemical abundances for each
+source.
 While the visit spectra naturally provide time-domain velocity information about
 sources (thus enabling searches for massive companions), studying stellar
 multiplicity is not the primary goal of the survey:
@@ -399,56 +403,7 @@ Monte Carlo methods such as Hamiltonian Monte Carlo (HMC), which is useful for
 seamlessly transitioning from generating posterior orbit samples with \thejoker\
 to HMC when the system parameters are highly constrained (as discussed below).
 
-
-\section{Running \thejoker\ on all of \apogee\ \dr{16}} \label{sec:rundr16}
-
-For each of the \nsources\ sources in the parent catalog of sources selected
-from \apogee\ \dr{16} (\sectionname~\ref{sec:data}), we run \thejoker\
-\citep{thejoker} generate posterior samplings over the Keplerian orbital
-parameters, plus an additional per-source uncertainty or ``jitter'' parameter
-that is added in quadrature to the (adjusted) \apogee\ visit velocity
-uncertainties (see above).
-We start by generating a cache of $100,000,000$ prior samples for the nonlinear
-parameters generated from the prior \pdf\ summarized in
-\tablename~\ref{tbl:prior} (top rows).
-For each source, we iteratively read random blocks of samples out of this cache,
-evaluate the marginal likelihood, and rejection sample to produce posterior
-samplings in the nonlinear parameters.
-We repeat this iterative process until we reach the total number of samples in
-the cache, or until we obtain a requested number of prior samples, $\Kmin$; This
-is an arbitrary parameter that we set to $K_{\rm min} = \Kminval$ for this work.
-In practice, this is done by parallelizing the sampling (over sources) and takes
-about 8 hours to run on 720 cores on our local compute cluster (at the Flatiron
-Institute).
-
-After the procedure described above, the sources have one of two stages of
-completion: Sources either have $\Kmin = \Kminval$ posterior samples (\todo{XX}
-sources) and are complete, or $\Kmin < \Kminval$ posterior samples (\todo{XX}
-sources) and more samples are needed.
-For sources that require more samples, these can be split again into two
-classes: Sources with unimodal samplings in period, and sources with multi-modal
-samplings (following the criteria described in \citealt{thejoker}).
-For incomplete sources with unimodal samplings (\todo{XX} sources), we use the
-samples returned from \thejoker\ to initialize Hamiltonian Monte Carlo (HMC) to
-continue generating posterior samples.
-We use \texttt{pymc3} with the \emph{No-U-Turn Sampler} (NUTS; \citealt{NUTS}),
-using the dense mass matrix tuning prescription implemented in
-\texttt{exoplanet} \citep{exoplanet:exoplanet} and run 4 chains in parallel,
-each for 1000 tuning steps and 4000 steps subsequently.
-We use these 4 chains and \texttt{pymc3} to compute the Gelman-Rubin convergence
-statistic, $\hat{R}$ \citep{Gelman:1992}, for each parameter for each source; If
-$\hat{R} < 1.1$ for all parameters, we down-sample to \Kminval\ samples and mark
-that source as MCMC-completed.
-If the HMC sampling fails (e.g., chains diverge substantially), we fall back to
-the sampling from \thejoker---this generally only happens for data with serious
-systematic issues (e.g., one outlier visit velocity with an unreasonable
-velocity measurement).
-
-At this point, we now have \Kminval\ posterior samples in the parameters listed
-in \tablename~\ref{tbl:prior} for \todo{XX} \apogee\ sources; These are released
-as a component of the \sdss\ Value-Added Catalog (VAC).
-
-\begin{table}[h]
+\begin{table}[t]
     \centering
     \setlength{\tabcolsep}{0.75em} % for the horizontal padding
     \begin{tabular}{ r l p{6cm} }
@@ -481,6 +436,56 @@ as a component of the \sdss\ Value-Added Catalog (VAC).
     $\sigma^2$.}
     \label{tbl:prior}
 \end{table}
+
+
+\section{Running \thejoker\ on all of \apogee\ \dr{16}} \label{sec:rundr16}
+
+For each of the \nsources\ sources in the parent catalog of sources selected
+from \apogee\ \dr{16} (\sectionname~\ref{sec:data}), we run \thejoker\
+\citep{thejoker} generate posterior samplings over the Keplerian orbital
+parameters, plus an additional per-source uncertainty or ``jitter'' parameter
+that is added in quadrature to the (adjusted) \apogee\ visit velocity
+uncertainties (see above).
+We start by generating a cache of $100,000,000$ prior samples for the nonlinear
+parameters generated from the prior \pdf\ summarized in
+\tablename~\ref{tbl:prior} (top rows).
+For each source, we iteratively read random blocks of samples out of this cache,
+evaluate the marginal likelihood, and rejection sample to produce posterior
+samplings in the nonlinear parameters.
+We repeat this iterative process until we reach the total number of samples in
+the cache, or until we obtain a requested number of prior samples, $\Kmin$; This
+is an arbitrary parameter that we set to $\Kmin = \Kminval$ for this work.
+In practice, this is done by parallelizing the sampling (over sources) and takes
+about 8 hours to run on 720 cores on our local compute cluster (at the Flatiron
+Institute).
+
+After the procedure described above, the sources have one of two stages of
+completion: Sources either have $\Kmin = \Kminval$ posterior samples (\todo{XX}
+sources) and are complete, or $\Kmin < \Kminval$ posterior samples (\todo{XX}
+sources) and more samples are needed.
+For sources that require more samples, these can be split again into two
+classes: Sources with unimodal samplings in period, and sources with multi-modal
+samplings (following the criteria described in \citealt{thejoker}).
+For incomplete sources with unimodal samplings (\todo{XX} sources), we use the
+samples returned from \thejoker\ to initialize Hamiltonian Monte Carlo (HMC) to
+continue generating posterior samples.
+We use \texttt{pymc3} with the \emph{No-U-Turn Sampler} (NUTS; \citealt{NUTS}),
+using the dense mass matrix tuning prescription implemented in
+\texttt{exoplanet} \citep{exoplanet:exoplanet} and run 4 chains in parallel,
+each for 1000 tuning steps and 4000 steps subsequently.
+We use these 4 chains and \texttt{pymc3} to compute the Gelman-Rubin convergence
+statistic, $\hat{R}$ \citep{Gelman:1992}, for each parameter for each source; If
+$\hat{R} < 1.1$ for all parameters, we down-sample to \Kminval\ samples and mark
+that source as MCMC-completed.
+If the HMC sampling fails (e.g., chains diverge substantially), we fall back to
+the sampling from \thejoker---this generally only happens for data with serious
+systematic issues (e.g., one outlier visit velocity with an unreasonable
+velocity measurement).
+
+At this point, we now have \Kminval\ posterior samples in the parameters listed
+in \tablename~\ref{tbl:prior} for \todo{XX} \apogee\ sources; These are released
+as a component of the \sdss\ Value-Added Catalog (VAC).
+
 
 \subsection{Assumptions, caveats, and known failures}
 \label{sec:caveats}
@@ -557,37 +562,6 @@ where $\sigma_n$ are the adjusted visit velocity errors
 \equationname~\ref{eq:kepler} and is evaluated using the parameters for the
 maximum likelihood posterior sample, $\bs{\theta}_{\mathrm{max}}$.
 
-For each source, we then also compute the maximum log-likelihood value for the
-visit data under a model that assumes that the visit velocities are drawn from a
-constant velocity with Gaussian uncertainties but allowing for up to a $20\%$
-outlier fraction (over visits); We refer to this model as a \emph{robust
-constant-velocity} model for the visit velocities.
-Using the same notation for the visit velocity data as above, the likelihood
-under this model is given by
-\begin{equation}
-    L_2 = \prod_n^N \left[(1-f) \, \mathcal{N}(v_n \given \mu_v, \sigma_n^2)
-        + f\, \mathcal{N}(v_n \given \mu_v, \sigma_n^2 + \Sigma) \right]
-\end{equation}
-where $f$ is the outlier fraction, $\mu_v$ is the constant-velocity value, and
-$\Sigma$ is the variance of the outlier model component (assumed to be large).
-We optimize this likelihood using the BFGS algorithm \citep{Nocedal:2006} with
-bounds on the parameters such that $f \in (0, 0.2)$, $\mu_v \in (-500,
-500)~\kms$, and $\Sigma \in (0, 3000)~(\kms)^2$.
-We store the optimized log-likehihood value of the robust constant-velocity
-model and refer to this as $\ln \hat{L}_2$
-
-We define a catalog of binary star systems based on the posterior samplings
-generated from \thejoker\ by selecting sources for which
-\begin{align}
-    P_{1\%}(\ln K) &> 0\\
-    (\ln \hat{L}_1 - \ln \hat{L}_2) &> 4.6 \quad . \label{eq:binary-cuts}
-\end{align}
-The cut on the log-likelihood ratio comes from the (arbitrary) constraint that
-the maximum Kepler model likelihood should be $>100$ times the maximum robust
-constant-velocity likelihood value.
-Of the \nsources\ total sources in our parent sample, \nbinary\ sources pass the
-selection above.
-
 % Notebook: Figure-binary-examples.ipynb
 \begin{figure}[!t]
     \begin{center}
@@ -621,6 +595,37 @@ selection above.
     }
 \end{figure}
 
+For each source, we then also compute the maximum log-likelihood value for the
+visit data under a model that assumes that the visit velocities are drawn from a
+constant velocity with Gaussian uncertainties but allowing for up to a $20\%$
+outlier fraction (over visits); We refer to this model as a \emph{robust
+constant-velocity} model for the visit velocities.
+Using the same notation for the visit velocity data as above, the likelihood
+under this model is given by
+\begin{equation}
+    L_2 = \prod_n^N \left[(1-f) \, \mathcal{N}(v_n \given \mu_v, \sigma_n^2)
+        + f\, \mathcal{N}(v_n \given \mu_v, \sigma_n^2 + \Sigma) \right]
+\end{equation}
+where $f$ is the outlier fraction, $\mu_v$ is the constant-velocity value, and
+$\Sigma$ is the variance of the outlier model component (assumed to be large).
+We optimize this likelihood using the BFGS algorithm \citep{Nocedal:2006} with
+bounds on the parameters such that $f \in (0, 0.2)$, $\mu_v \in (-500,
+500)~\kms$, and $\Sigma \in (0, 3000)~(\kms)^2$.
+We store the optimized log-likehihood value of the robust constant-velocity
+model and refer to this as $\ln \hat{L}_2$
+
+We define a catalog of binary star systems based on the posterior samplings
+generated from \thejoker\ by selecting sources for which
+\begin{align}
+    P_{1\%}(\ln K) &> 0\\
+    (\ln \hat{L}_1 - \ln \hat{L}_2) &> 4.6 \quad . \label{eq:binary-cuts}
+\end{align}
+The cut on the log-likelihood ratio comes from the (arbitrary) constraint that
+the maximum Kepler model likelihood should be $>100$ times the maximum robust
+constant-velocity likelihood value.
+Of the \nsources\ total sources in our parent sample, \nbinary\ sources pass the
+selection above.
+
 \figurename s~\ref{fig:binary-examples-short} and
 \ref{fig:binary-examples-long} show some examples of systems that passed the
 selection above and are considered binary star systems.
@@ -645,8 +650,12 @@ primary mass).
     \includegraphics[width=0.85\textwidth]{binary-fraction.pdf}
     \end{center}
     \caption{%
-    \textbf{Upper left:} TODO
-    \textbf{Lower left:} TODO
+    \textbf{Upper left:} The observed binary fraction as a function of
+    spectroscopic surface gravity, $\log g$, for all stars that pass the
+    giant branch selection indicated in \figurename~\ref{fig:specHR}.
+    \textbf{Lower left:} The observed binary fraction as a function of
+    spectroscopic effective temperature, $T_{\rm eff}$, for all stars that pass
+    the main sequence selection indicated in \figurename~\ref{fig:specHR}.
     \textbf{Right:} The extinction-corrected \acronym{2MASS} color-magnitude
     diagram (CMD) for all \apogee\ sources, colored by the fraction of sources
     identified as binary-star systems (\sectionname~\ref{sec:catalog}).
@@ -661,18 +670,11 @@ primary mass).
     }
 \end{figure}
 
-% Notebook: Figure-binary-fraction.ipynb
-\begin{figure}[!t]
-    \begin{center}
-    \includegraphics[width=0.5\textwidth]{fraction_M_H.pdf}
-    \end{center}
-    \caption{%
-    TODO
-    \label{fig:binfrac-mh}
-    }
-\end{figure}
 
-% TODO: left panels use the selections from figure 1
+\section{Results} \label{sec:results}
+
+\subsection{Binary fraction trends with stellar properties}
+
 \figurename~\ref{fig:binary-CMD} (right) shows a near-infrared, binned
 color-magnitude diagram for all \apogee\ sources in the sample considered here.
 Each pixel is colored by the ratio of the number of binary star systems
@@ -690,12 +692,18 @@ Note also that the red clump (around $(J-K) \approx 0.6$, $H \approx -1.8$) has
 a \emph{low} binary fraction: This is likely a manifestation of engulfment, as
 these stars have already been up the giant branch and would therefore have
 consumed any companions with periods less than a few hundred days.
-The top left panel shows the total binary fraction as a function of surface
-gravity for stars in the giant branch selection region shown in
-\figurename~\ref{fig:specHR}.
+
+The top left panel of \figurename~\ref{fig:binary-CMD} shows the total binary
+fraction as a function of surface gravity for stars in the giant branch
+selection region shown in \figurename~\ref{fig:specHR}.
 The dearth of binary systems near the red clump and a trend of lower binary
-fraction with decreasing surface gravity (i.e., increased size) is apparent in
-this sample.
+fraction with decreasing surface gravity (i.e., increased size) is apparent here
+as well.
+This is a possible signature of companion engulfment: As red giant stars evolve
+up the giant branch, any companions with orbital semi-major axes smaller than a
+few times the surface size of the primary star could be consumed \citep{TODO},
+therefore leading to an overall decrease in the binary fraction for larger
+stars.
 The bottom left panel shows the same, but as a function of effective temperature
 (as a proxy for the mass of the primary) for stars in the main sequence
 selection region shown in \figurename~\ref{fig:specHR}.
@@ -704,9 +712,68 @@ Note that the estimates in this figure ignore survey selection effects,
 inclination, and selection biases introduced by the cuts we made to identify
 binary star systems.
 
-\section{Results} \label{sec:results}
+\figurename~\ref{fig:binfrac-mh}, Similar to the left panels of
+\figurename~\ref{fig:binary-CMD}, shows the total binary fraction for main
+sequence stars as a function of bulk metallicity.
+As has been recently emphasized, we find that the binary fraction is detectably
+anti-correlated with bulk metallicity \citep[e.g.,][]{Moe:2019}.
+We find a shallower dependence of these properties with a slope of $\approx
+-0.1$ as compared to the previously determined slope of $-0.2$ \citep{Moe:2019}.
+However, while we do not expect there to be strong selection biases that imprint
+on this particular measurement, we have not corrected for detection efficiency
+or completeness with our sample.
+\todo{Implications / theoretical understanding of this. See Moe paper.}
 
-\subsection{Gold sample}
+% Notebook: Figure-binary-fraction.ipynb
+\begin{figure}[!t]
+    \begin{center}
+    \includegraphics[width=0.65\textwidth]{fraction_M_H.pdf}
+    \end{center}
+    \caption{%
+    The observed binary fraction as a function of bulk metallicity, $[{\rm
+    M}/{\rm H}$.
+    The binary fraction is anti-correlated with metallicity, here measured with
+    a slope of $-0.1$.
+    \label{fig:binfrac-mh}
+    }
+\end{figure}
+
+
+\subsection{Gold Sample}
+
+The majority of binary star systems that comprise the catalog defined above have
+strongly multi-modal samplings in orbital properties.
+While this is still useful for comparing occurrence rates, it is more difficult
+to summarize the system orbital properties and their trends with stellar
+properties as it is not possible to summarize the samplings in a compact way.
+We therefore construct an additional catalog of sources, sub-selected from the
+full catalog of binary-star systems, that pass a more stringent set of quality
+cuts and have converged, unimodal or bimodal posterior samplings.
+We define this \textit{Gold Sample} as sources that pass the following cuts:
+\begin{itemize}
+    \item No additional \gaia\ sources within $2~\textrm{arcsec}$ with a
+          $G$-band magnitude difference $\Delta G > -5$ (to remove sources that
+          would lie within the \apogee\ fiber and appreciably contaminate the
+          spectrum),
+    \item No additional \gaia\ sources within $10~\textrm{arcsec}$ with a
+          $G$-band magnitude difference $\Delta G > 2.5$ (to remove brighter,
+          on-sky neighbors),
+    \item $-0.5 < \logg < 5.5$ (reasonable stellar parameters),
+    \item $3500 < \Teff < 8000$ (reasonable stellar parameters),
+    \item $-2.5 < \mh < 0.5$ (reasonable stellar parameters),
+    \item $s_{\textrm{MAP}} < 0.5~\kms$ (a small inferred excess variance),
+    \item $n_{\textrm{vis}} > 5$ (more than 5 visit spectra).
+\end{itemize}
+
+We identify sources with unimodal posterior samplings as sources for which the
+MCMC procedure succeeded (see \sectionname~\ref{sec:methods}).
+We identify sources with bimodal samplings using the same procedure as
+\cite{Price-Whelan:2018}: Briefly, we use a $k$-means clustering algorithm with
+$k=2$ to identify clusters of samples in period, and assess whether the
+samplings in each cluster are unimodal by assessing whether all samples in each
+cluster lie within the mode size defined in \cite{thejoker}.
+In total, the \textit{Gold Sample} contains \ngold\ systems with unimodal
+samplings, and \nbimodal\ systems with bimodal samplings.
 
 % Notebook: Figure-gold-sample.ipynb
 \begin{figure}[!t]
@@ -714,14 +781,41 @@ binary star systems.
     \includegraphics[width=0.85\textwidth]{Plogg_Pe.pdf}
     \end{center}
     \caption{%
-    TODO
+    \textbf{Left:} Inferred orbital periods, $P$, and \apogee\ surface gravity
+    measurements, \logg, for sources in the \textit{Gold Sample}.
+    The circular markers indicate the \ngold\ sources with unimodal samplings,
+    and the square markers indicate the \nbimodal\ sources with bimodal
+    samplings, where the mean of each mode is plotted and connected by a
+    horizontal gray line.
+    The relative sizes of the square markers indicate the fraction of the
+    samples that lie in each mode.
+    The diagonal (blue) lines show the orbital period of a $0.3~\msun$ companion
+    with an orbital pericentric radius equal to the surface size of a
+    $1.3~\msun$ star with the given surface gravity and labeled eccentricity,
+    $e$.
+    \textbf{Right:} The same as the left panel but showing inferred orbital
+    period and orbital eccentricity, and only for systems with unimodal
+    samplings.
     \label{fig:Plogg}
     }
 \end{figure}
 
+\figurename~\ref{fig:Plogg} shows inferred orbital periods for all stars in the
+\textit{Gold Sample} as a function of surface gravity (left) and plotted against
+inferred orbital eccentricity (right).
+TODO: Left panel:
+- point out that all of those main sequence companions at $P < 100$ will apparently get consumed
+- asteroseismic pulsations as contamination
+- can see in the color gradients that companions on the left edge tend to be more circular
+- red clump has sources that are circular at long period: duh, they already went up the RGB!
+TODO: Right panel:
+- another look at circularization
+- color gradient here also
+- eccentric, short-period stuff at low logg is mostly contamination
+
 
 % Notebook: Figure-gold-sample.ipynb
-\begin{figure}[!t]
+\begin{figure}[t]
     \begin{center}
     \includegraphics[width=0.85\textwidth]{m2_m1_roche.pdf}
     \end{center}
@@ -731,38 +825,63 @@ binary star systems.
     }
 \end{figure}
 
+\figurename~\ref{fig:m2m1} shows...
+TODO:
+- Many companions that could be brown dwarfs
+- Note the sources above the M2=M1 line!
+- Most systems are non-interacting, except...
+- Highlight the ASAS-SN source with a nice light curve in right panel
+- The 8 red ones in left panel are the same as in later figures \figurename~\ref{fig:brown-dwarfs} and \ref{fig:compact-objects}
 
-Figure: ...
 
-% No Gaia sources within 2" and 5 mags
-% No Gaia sources within 4" and brighter
-% & (meta['LOGG'] > -0.5) & (meta['LOGG'] < 5.5)
-% & (meta['TEFF'] > 3500) & (meta['TEFF'] < 8000)
-% & (meta['M_H'] > -2.5) & (meta['M_H'] < 0.5)
-% & (meta['ALPHA_M'] > -2.) & (meta['ALPHA_M'] < 2.)
-% & (meta['MAP_s'] < 0.5)
-% & (meta['n_visits'] > 5)
-% & (llr > 25)
-% TODO: what about bimodal samplings, or samplings with small range in ln-period?
 
 \subsection{Interesting low and high mass companions}
 
-
-\subsection{Hierarchical inference of the long-period eccentricity distribution}
-
-% Notebook: Figure-Long-P-eccentricity.ipynb
+% Notebook: Figure-highmass-lowmass.ipynb
 \begin{figure}[!t]
     \begin{center}
-    \includegraphics[width=0.6\textwidth]{eccentricity-distr.pdf}
+    % \includegraphics[width=1\textwidth]{example-brown-dwarfs.pdf}
+    \includegraphics[width=0.8\textwidth]{example-brown-dwarfs-placeholder.png}
     \end{center}
     \caption{%
-    TODO
-    \label{fig:eccdist}
+    Example binary star systems...
+    \label{fig:brown-dwarfs}
+    }
+\end{figure}
+
+% Notebook: Figure-highmass-lowmass.ipynb
+\begin{figure}[!t]
+    \begin{center}
+    % \includegraphics[width=1\textwidth]{example-compact-objects.pdf}
+    \includegraphics[width=0.8\textwidth]{example-compact-objects-placeholder.png}
+    \end{center}
+    \caption{%
+    Example binary star systems...
+    \label{fig:compact-objects}
     }
 \end{figure}
 
 
+\subsection{Hierarchical inference of the long-period eccentricity distribution}
+
 Caveat: this is a demonstration. Selection effects, rigid model, etc.
+
+TODO:
+- You really need to quantify selection effects
+- Could do something non-parametric
+- Could study as a function of stellar parameters
+
+% Notebook: Figure-Long-P-eccentricity.ipynb
+\begin{figure}[!t]
+    \begin{center}
+    \includegraphics[width=0.85\textwidth]{eccentricity-distr.pdf}
+    \end{center}
+    \caption{%
+    TODO: \citep{Kipping:2013}, \citep{Jeans:1919}
+    \label{fig:eccdist}
+    }
+\end{figure}
+
 
 % \begin{align}
 %     z &= \ln\,P\\
@@ -794,6 +913,18 @@ Caveat: this is a demonstration. Selection effects, rigid model, etc.
 \section{Discussion}
 
 Stuff
+
+
+\section{Conclusions}
+
+\begin{enumerate}
+    \item Engulfment: at the red clump, and with decreasing logg
+    \item Confirmed anti-correlation with metallicity
+    \item Brown dwarfs
+    \item Non-interacting compact object candidates
+    \item Eccentricity distribution
+    \item Huge sample of binary star systems
+\end{enumerate}
 
 
 \acknowledgements
