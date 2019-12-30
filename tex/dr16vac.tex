@@ -4,7 +4,9 @@
 %   equation numbers in the Appendix against the submitted version!
 % - Check and cite https://pdfs.semanticscholar.org/64cf/b422cbefe0239fd25ae39cf13833d60a4901.pdf
 %   The observed distribution of spectroscopic binaries from the Anglo-Australian Planet Search
-% -
+% - What fraction of present-day RGB stars should have eaten a companion star?
+% - Send to: Evan Bauer, Lars Bildsten, Adam Jermyn, Max Moe,
+
 \documentclass[modern]{aastex63}
 % \documentclass[twocolumn]{aastex63}
 \usepackage{amsmath}
@@ -30,6 +32,7 @@
 \newcommand{\Kminval}{512}
 \newcommand{\nbinary}{\ensuremath{19\,635}}
 
+\newcommand{\goldsample}{\textit{Gold Sample}}
 \newcommand{\ngold}{\ensuremath{1\,032}}
 \newcommand{\nbimodal}{\ensuremath{492}}
 
@@ -283,41 +286,41 @@ visits.
 Our final parent sample contains \nsources\ unique sources, selected from the
 $437,485$ unique sources in all of \apogee\ \dr{16}.
 Of the $\approx$$200,000$ sources removed, the vast majority were dropped
-because they had $<3$ visits ($\approx$$17,000$ were removed by the quality
+because they had $<3$ visits ($\approx$$17\,000$ were removed by the quality
 cuts).
 
 % Notebook: Figure-DR16-statistics.ipynb
 \begin{figure}[!t]
 \begin{center}
-\includegraphics[width=1\textwidth]{visitstats.pdf}
+\includegraphics[width=0.9\textwidth]{visitstats.pdf}
 \end{center}
 \caption{%
 Some statistics of \apogee\ \dr{16} visits.
 \textbf{Left:} The number of sources with more than a given number of visits,
 $n_{\rm vis}$.
-While $\approx$$50\%$ of sources have 3 visits, ($114,263$, $57,593$, $15,862$)
-sources have $> (3, 5, 10)$ visits, respectively.
+While $\approx$$50\%$ of sources have 3 visits, ($114\,263$, $57\,593$,
+$15\,862$) sources have $> (3, 5, 10)$ visits, respectively.
 A very small number of sources have $>50$ visits.
 \textbf{Right:} The number of sources with a time baseline, $\tau$, longer than
 given (on the horizontal axis).
 While $\approx$$50\%$ of sources have a time baseline $\tau \lesssim 56~{\rm
-day}$, ($88,737$, $9,743$) sources have $\tau > (100, 1000)~{\rm days}$.
+day}$, ($88\,737$, $9\,743$) sources have $\tau > (100, 1\,000)~{\rm days}$.
 \label{fig:visitstats}
 }
 \end{figure}
 
-Figure~\ref{fig:specHR} shows the number of sources in our parent sample---i.e.
-\apogee\ sources with 3 or more visits that pass the quality cuts described
-above---as a function of spectroscopic stellar parameters $T_{\rm eff}$,
-effective temperature, and $\log g$, log-surface gravity.
-While the majority of sources appear to be giant-branch stars ($>150,000$), a
-substantial number of main sequence stars are present ($>60,000$) thanks to the
+\figurename~\ref{fig:specHR} shows the number of sources in our parent
+sample---i.e. \apogee\ sources with 3 or more visits that pass the quality cuts
+described above---as a function of spectroscopic stellar parameters $T_{\rm
+eff}$, effective temperature, and $\log g$, log-surface gravity.
+While the majority of sources appear to be giant-branch stars ($>150\,000$), a
+substantial number of main sequence stars are present ($>60\,000$) thanks to the
 \apogee\ data reduction pipeline improvements for \dr{16}.
 Figure~\ref{fig:visitstats} shows some statistics about the time coverage of the
 visits for sources in our parent sample.
 About half of the sources have a small number of visits spread over a small time
 baseline: $50\%$ of sources have $<5$ visits over $<100~{\rm days}$.
-About $7\%$ of sources ($15,366$) have $\geq 10$ visits over $\geq 100~{\rm
+About $7\%$ of sources ($15\,366$) have $\geq 10$ visits over $\geq 100~{\rm
 days}$.
 
 
@@ -375,7 +378,8 @@ The other parameters---period $P$, eccentricity $e$, argument of periastron
 $\omega$, reference time $t_0$, and mean anomaly at reference time $M_0$---enter
 through the nonlinear function
 \begin{equation}
-    \zeta(t \,;\, P, e, \omega, M_0, t_0) = \cos\left(f + \omega\right) + e\,\cos\omega \label{eq:zeta}
+    \zeta(t \,;\, P, e, \omega, M_0, t_0) =
+        \cos\left(f + \omega\right) + e\,\cos\omega \label{eq:zeta}
 \end{equation}
 where $f$ is the true anomaly, and we always set the reference time, $t_0$, to
 the minimum observation time for a given set of radial velocity observations.
@@ -518,9 +522,10 @@ Value-Added Catalog (VAC) 0048.
 \section{A catalog of binary stars} \label{sec:catalog}
 
 For some science cases and exploration (as demonstrated below), it is useful to
-filter these stars to generate catalogs of systems with likely companions.
-This requires making some decisions and imposing hard cuts on the samplings
-returned by the above procedure.
+define catalogs of systems with likely companions from the posterior samplings
+generated here.
+This requires making decisions and imposing hard cuts on the samplings returned
+by the above procedure.
 However, most of the orbital parameter samplings for most sources are highly
 uncertain and multi-modal, and it is therefore not possible to define simple
 cuts on physical parameters (e.g., companion mass) to produce a simple catalog.
@@ -642,6 +647,49 @@ primary stellar masses computed by \citet{Queiroz:2019} by sampling over the
 reported uncertainties on prior mass (assuming a Gaussian noise distribution on
 primary mass).
 
+\subsection{The Gold Sample}
+\label{sec:gold-sample}
+
+The majority of binary star systems that comprise the catalog defined above have
+strongly multi-modal samplings in orbital properties.
+While this is still useful for comparing occurrence rates, it is more difficult
+to summarize the system orbital properties and their trends with stellar
+properties as it is not possible to simply compress the samplings.
+We therefore construct an additional catalog of sources, sub-selected from the
+full catalog of binary-star systems, that pass a more stringent set of quality
+cuts and have converged, unimodal or bimodal posterior samplings.
+We define this \goldsample\ as sources that pass the following cuts:
+\begin{itemize}
+    \item Matches to a \gaia\ source within $2~\textrm{arcsec}$ of the
+          reported \acronym{2MASS} sky position,
+    \item Has a stellar mass measurement in the \acronym{STARHORSE} catalog
+          \citep{Queiroz:2019},
+    \item No additional \gaia\ sources within $2~\textrm{arcsec}$ with a
+          $G$-band magnitude difference $\Delta G > -5$ (to remove sources that
+          would lie within the \apogee\ fiber and appreciably contaminate the
+          spectrum),
+    \item No additional \gaia\ sources within $10~\textrm{arcsec}$ with a
+          $G$-band magnitude difference $\Delta G > 2.5$ (to remove bright
+          neighbor stars),
+    \item $-0.5 < \logg < 5.5$ (reasonable stellar parameters),
+    \item $3500 < \Teff < 8000$ (reasonable stellar parameters),
+    \item $-2.5 < \mh < 0.5$ (reasonable stellar parameters),
+    \item $s_{\textrm{MAP}} < 0.5~\kms$ (a small inferred excess variance),
+    \item $n_{\textrm{vis}} > 5$ (more than 5 visit spectra).
+\end{itemize}
+
+We identify sources with unimodal posterior samplings as sources for which the
+MCMC procedure succeeded (see \sectionname~\ref{sec:methods}).
+We identify sources with bimodal samplings using the same procedure as
+\cite{Price-Whelan:2018}.
+Briefly, we use a $k$-means clustering algorithm with $k=2$ to identify clusters
+of samples in orbital period, and assess whether the samplings in each cluster
+are unimodal by checking whether all samples in each cluster lie within the mode
+size defined in \cite{thejoker}.
+In total, the \goldsample\ contains \ngold\ systems with unimodal samplings, and
+\nbimodal\ systems with bimodal samplings.
+
+
 % Notebook: Figure-binary-fraction.ipynb
 \begin{figure}[!t]
     \begin{center}
@@ -674,58 +722,40 @@ primary mass).
 \subsection{Binary fraction trends with stellar properties}
 \label{sec:binary-fraction}
 
+Our catalog of binary stars is not complete in the sense that the cuts we have
+made on the orbital parameter samplings will impart non-uniform selection biases
+that depend on the true orbital properties of binaries and on the cadence of
+observations (visits) for each source.
+However, because of the simple target selection and observation strategy used by
+\apogee\, \citep{Zasowski:2013, Zasowski:2017}, we do not expect these
+binary-star selection biases to depend strongly on stellar parameters (e.g.,
+metallicity, surface gravity).
+We can therefore still use this catalog to study the \emph{relative} binary
+fraction within our sample, but caution against interpreting the binary
+fractions discussed below in an absolute sense.
+
 \figurename~\ref{fig:binary-CMD} (right) shows a near-infrared, binned
 color-magnitude diagram for all \apogee\ sources in the sample considered here.
 Each pixel is colored by the ratio of the number of binary star systems
 identified by the selections defined above (\equationname~\ref{eq:binary-cuts})
 over the total number of sources in the parent sample; Pixels with fewer than
 four stars in the parent sample are white.
-The two solid lines show $5~\mathrm{Gyr}$ \acronym{MIST} isochrones
+The solid (orange) line shows a $5~\mathrm{Gyr}$ \acronym{MIST} isochrone
 \cite{Dotter:2016, Choi:2016, Paxton:2011, Paxton:2013, Paxton:2015} with
-metallicities indicated in the figure legend.
-The dashed lines show the equal-mass binary sequences for these two isochrones,
-$0.75~\mathrm{mag}$ above the main sequence: Note that, as expected, the binary
-fraction is higher in this region of the CMD, and is higher towards younger /
-more massive main sequence stars.
+metallicity indicated in the figure legend.
+The dashed line shows the equal-mass binary sequence for this isochrone,
+$0.75~\mathrm{mag}$ above the main sequence.
+Note that, as expected, the binary fraction is higher in this region of the CMD,
+and is higher towards younger and more massive main sequence stars.
 Note also that the red clump (around $(J-K) \approx 0.6$, $H \approx -1.8$) has
 a \emph{low} binary fraction.
-
-The top left panel of \figurename~\ref{fig:binary-CMD} shows the total binary
-fraction as a function of surface gravity for stars in the giant branch
-selection region shown in \figurename~\ref{fig:specHR}.
-There is a clear dearth of binary systems near the red clump, and the binary
-fraction decreases appreciably with decreasing surface gravity (i.e., increased
-size).
-This is likely a signature of companion engulfment: As red giant stars evolve
-up the giant branch, any companions with orbital semi-major axes smaller than a
-few times the surface size of the primary star could be consumed \citep{TODO},
-therefore leading to an overall decrease in the binary fraction for larger
-stars.
-The bottom left panel shows the same, but as a function of effective temperature
-(as a proxy for the mass of the primary) for stars in the main sequence
-selection region shown in \figurename~\ref{fig:specHR}.
-From this, it appears that the binary fraction increases with stellar mass
-(effective temperature) along the main sequence.
-\todo{This is consistent with ... cite...}
-Note that the estimates in this figure ignore survey selection effects,
-inclination, and selection biases introduced by the cuts we made to identify
-binary star systems.
-
-\figurename~\ref{fig:binfrac-mh} shows the total binary fraction for main
-sequence stars as a function of bulk metallicity.
-As has been recently emphasized, we find that the binary fraction is
-significantly anti-correlated with bulk metallicity \citep[e.g.,][]{Moe:2019}.
-We find a shallower dependence of these properties, with a slope of $\approx
--0.1$ as compared to the previously determined slope of $-0.2$ \citep{Moe:2019}.
-However, while we do not expect there to be strong selection biases that imprint
-on these quantities, we have not corrected for detection efficiency or
-completeness with our sample.
-\todo{Implications / theoretical understanding of this. See Moe paper.}
+The width of the binary sequence (in $H$ magnitude) can be explained by the
+spread in metallicities in the \apogee\ sample.
 
 % Notebook: Figure-binary-fraction.ipynb
 \begin{figure}[!t]
     \begin{center}
-    \includegraphics[width=0.65\textwidth]{fraction_M_H.pdf}
+    \includegraphics[width=0.6\textwidth]{fraction_M_H.pdf}
     \end{center}
     \caption{%
     The observed binary fraction as a function of bulk metallicity, $[{\rm
@@ -736,44 +766,41 @@ completeness with our sample.
     }
 \end{figure}
 
+The top left panel of \figurename~\ref{fig:binary-CMD} shows another view of the
+binary fraction, here shown as a 1D function of surface gravity for stars in the
+giant branch selection region shown in \figurename~\ref{fig:specHR}.
+There is a clear dearth of binary systems near the red clump, and the binary
+fraction decreases appreciably with decreasing surface gravity (i.e., increased
+size).
+Both of these features are likely signatures of companion engulfment: As red
+giant stars evolve up the giant branch, any companions with orbital semi-major
+axes smaller than a few times the surface size of the primary star could be
+consumed \citep{Ivanova:2013}, therefore leading to an overall decrease in the
+binary fraction for larger stars.
 
-\subsection{Gold Sample}
+The bottom left panel shows the same, but as a function of effective temperature
+(as a proxy for the mass of the primary) for stars in the main sequence
+selection region shown in \figurename~\ref{fig:specHR}.
+As has been noted in many past studies, we find that the binary fraction
+(companion frequency) increases with stellar mass (effective temperature) along
+the main sequence \citep[e.g.,][]{Duchene:2013}.
+Like the compilation of companion frequencies shown in \cite{Duchene:2013}, we
+find that the binary fraction increases steeply for primary stellar masses $M_1
+\gtrsim 1.1~\msun$ ($\Teff \gtrsim 6000~\textrm{K}$).
+
+\figurename~\ref{fig:binfrac-mh} shows the total binary fraction for main
+sequence stars as a function of bulk metallicity, $\mh$.
+As has been recently emphasized, we find that the binary fraction is
+significantly anti-correlated with metallicity \citep[e.g.,][]{Moe:2019}.
+We find a shallower dependence of these properties, with a slope of $\approx
+-0.1$ as compared to the previously determined slope of $-0.2$ \citep{Moe:2019}.
+While we do not expect there to be strong selection biases that imprint on these
+quantities, we emphasize that we have not corrected for detection efficiency or
+completeness with our sample.
+
+
+\subsection{Orbital parameter trends with stellar parameters}
 \label{sec:gold-sample}
-
-The majority of binary star systems that comprise the catalog defined above have
-strongly multi-modal samplings in orbital properties.
-While this is still useful for comparing occurrence rates, it is more difficult
-to summarize the system orbital properties and their trends with stellar
-properties as it is not possible to compress the samplings in a simple way.
-We therefore construct an additional catalog of sources, sub-selected from the
-full catalog of binary-star systems, that pass a more stringent set of quality
-cuts and have converged, unimodal or bimodal posterior samplings.
-We define this \textit{Gold Sample} as sources that pass the following cuts:
-\begin{itemize}
-    \item No additional \gaia\ sources within $2~\textrm{arcsec}$ with a
-          $G$-band magnitude difference $\Delta G > -5$ (to remove sources that
-          would lie within the \apogee\ fiber and appreciably contaminate the
-          spectrum),
-    \item No additional \gaia\ sources within $10~\textrm{arcsec}$ with a
-          $G$-band magnitude difference $\Delta G > 2.5$ (to remove brighter,
-          on-sky neighbors),
-    \item $-0.5 < \logg < 5.5$ (reasonable stellar parameters),
-    \item $3500 < \Teff < 8000$ (reasonable stellar parameters),
-    \item $-2.5 < \mh < 0.5$ (reasonable stellar parameters),
-    \item $s_{\textrm{MAP}} < 0.5~\kms$ (a small inferred excess variance),
-    \item $n_{\textrm{vis}} > 5$ (more than 5 visit spectra).
-\end{itemize}
-
-We identify sources with unimodal posterior samplings as sources for which the
-MCMC procedure succeeded (see \sectionname~\ref{sec:methods}).
-We identify sources with bimodal samplings using the same procedure as
-\cite{Price-Whelan:2018}.
-Briefly, we use a $k$-means clustering algorithm with $k=2$ to identify clusters
-of samples in period, and assess whether the samplings in each cluster are
-unimodal by assessing whether all samples in each cluster lie within the mode
-size defined in \cite{thejoker}.
-In total, the \textit{Gold Sample} contains \ngold\ systems with unimodal
-samplings, and \nbimodal\ systems with bimodal samplings.
 
 % Notebook: Figure-gold-sample.ipynb
 \begin{figure}[!t]
@@ -781,45 +808,82 @@ samplings, and \nbimodal\ systems with bimodal samplings.
     \includegraphics[width=0.85\textwidth]{Plogg_Pe.pdf}
     \end{center}
     \caption{%
-    \textbf{Left:} Inferred orbital periods, $P$, and \apogee\ surface gravity
-    measurements, \logg, for sources in the \textit{Gold Sample}.
-    The circular markers indicate the \ngold\ sources with unimodal samplings,
-    and the square markers indicate the \nbimodal\ sources with bimodal
-    samplings, where the mean of each mode is plotted and connected by a
-    horizontal gray line.
-    The relative sizes of the square markers indicate the fraction of the
-    samples that lie in each mode.
+    \textbf{Left:} Inferred orbital periods, $P$, and eccentricities, $e$, for
+    \goldsample\ systems with unimodal samplings.
+    Markers are colored by surface gravity, \logg.
+    \textbf{Right:} Similar to the left panel, but showing orbital periods and
+    \apogee\ \logg\ measurements.
+    The circular markers again indicate the \ngold\ sources with unimodal
+    samplings, and the square markers indicate the \nbimodal\ sources with
+    bimodal samplings, where the mean of each mode is plotted and connected by a
+    horizontal gray line and the relative sizes of the square markers indicate
+    the fraction of the samples that lie in each mode.
     The diagonal (blue) lines show the orbital period of a $0.3~\msun$ companion
     with an orbital pericentric radius equal to the surface size of a
-    $1.3~\msun$ star with the given surface gravity and labeled eccentricity,
+    $1.1~\msun$ star with the given surface gravity and labeled eccentricity,
     $e$.
-    \textbf{Right:} The same as the left panel but showing inferred orbital
-    period and orbital eccentricity, and only for systems with unimodal
-    samplings.
     \label{fig:Plogg}
     }
 \end{figure}
 
 \figurename~\ref{fig:Plogg} shows inferred orbital periods for all stars in the
-\textit{Gold Sample} as a function of surface gravity (left) and plotted against
-inferred orbital eccentricity (right).
-The diagonal lines in the left panel show the orbital periods at which the
-orbital pericenter of a $0.3~\msun$ companion is equal to the stellar surface
-radius for a $1.3~\msun$ primary star at the given surface gravity and
-eccentricity indicated.
-The observed lack of systems with orbital periods near these lines and $1
-\lesssim \logg \lesssim 3.5$ ...
+\goldsample\ as a function of orbital eccentricity (left) and surface gravity
+(right).
+The left panel clearly shows the impact of tidal circularization
+\citep[e.g.,][]{Zahn:1977, Meibom:2005}.
+The eccentricities of systems with $P \lesssim 10~\dayd$ are much more peaked
+near $e=0$ as compared to systems with larger orbital periods (e.g., $P\gtrsim
+100~\dayd$).
+However, for systems with giant-star members, circularization occurs at longer
+periods \citep[e.g.,][]{Price-Whelan:2018a}: Systems with low eccentricities and
+$P>30~\dayd$ tend to have lower \logg\ values (darker points) as compared to
+systems with $P<10~\dayd$.
+In this panel, we visually inspected the small number of systems with $P\lesssim
+5~\dayd$ and $e \gtrsim 0.4$ and found that most of these cases appear to result
+from systematic errors with the visit velocity data that were not removed by the
+quality cuts.
 
-TODO: Left panel:
-- point out that all of those main sequence companions at $P < 100$ will apparently get consumed
-- asteroseismic pulsations as contamination
-- can see in the color gradients that companions on the left edge tend to be more circular
-- red clump has sources that are circular at long period: duh, they already went up the RGB!
-TODO: Right panel:
-- another look at circularization
-- color gradient here also
-- eccentric, short-period stuff at low logg is mostly contamination
+The right panel of \figurename~\ref{fig:Plogg} shows orbital periods of systems
+in the \goldsample\ (with unimodal or bimodal samplings) as a function of
+surface gravity.
+The diagonal lines in this panel show the orbital periods at which the orbital
+pericenter of a $0.3~\msun$ companion is equal to the stellar surface radius for
+a $1.1~\msun$ primary star (the median RGB mass in our sample) at the given
+surface gravity and eccentricity indicated.
+The apparent lack of systems with orbital periods shorter than these critical
+lines (with $\logg \gtrsim 1$) suggests that a substantial fraction of binaries
+must merge or disrupt during the evolution of the primary star.
+The paradoxical points with small orbital periods at small \logg\ (i.e.,
+suggesting they orbit within the surface of the primary star) are likely due to
+contamination from asteroseismic modes that manifest as velocity ``jitter'' in
+low-surface-gravity giant stars.
+This jitter can reach amplitudes of $>1~\kms$ already by $\logg \approx $ and
+likely increases towards even lower values of \logg\
+\citep[e.g.,][]{Hekker:2008}.
 
+Also note the gradients in eccentricity (i.e., marker color) with respect to
+orbital period in the right panel of \figurename~\ref{fig:Plogg}.
+At a given surface gravity, there tend to be more black points (low
+eccentricity) closer to the stellar surface (closer to the diagonal lines).
+However, near the red clump ($3 \lesssim \logg \lesssim 2$), there appears to be
+an over-abundance of low-eccentricity points at orbital periods $P\gtrsim
+100~\dayd$.
+\figurename~\ref{fig:Pe-logg-bins}
+
+% Notebook: Figure-gold-sample.ipynb
+\begin{figure}[t]
+    \begin{center}
+    \includegraphics[width=0.95\textwidth]{P_e_logg_bins.pdf}
+    \end{center}
+    \caption{%
+    TODO
+    \label{fig:Pe-logg-bins}
+    }
+\end{figure}
+
+
+\subsection{Interesting low and high mass companions}
+\label{sec:low-high-mass}
 
 % Notebook: Figure-gold-sample.ipynb
 \begin{figure}[t]
@@ -841,9 +905,8 @@ TODO:
 - The 8 red ones in left panel are the same as in later figures \figurename~\ref{fig:brown-dwarfs} and \ref{fig:compact-objects}
 
 
-
-\subsection{Interesting low and high mass companions}
-\label{sec:low-high-mass}
+TODO:
+- Mass ratio distribution?
 
 % Notebook: Figure-highmass-lowmass.ipynb
 \begin{figure}[!t]
@@ -879,6 +942,7 @@ TODO:
 - You really need to quantify selection effects
 - Could do something non-parametric
 - Could study as a function of stellar parameters
+- Like: \citep{Duquennoy:1991, Raghavan:2010}
 
 % Notebook: Figure-Long-P-eccentricity.ipynb
 \begin{figure}[!t]
@@ -951,6 +1015,20 @@ or higher-order stellar multiplets will generally have incorrect samplings.
 In future work, we will generate samplings for systems that are consistent with
 being hierarchical triple-star systems, but this is beyond the scope of this
 general-use catalog.
+
+
+\subsection{Binary fraction trends with stellar properties}
+\label{sec:binary-trends}
+
+- Binary fraction trends with metallicity:
+    - Dark matter masses of dwarfs!
+    - X-ray binaries in globulars: maybe just because of metallicity?
+    - More compact object mergers in halo?
+- Some appreciable fraction of giant stars merge with companions - do these
+stars move to other places in the CMD?
+    - Bias stellar mass inferences for old stellar populations using SSP models
+
+% \todo{Implications / theoretical understanding of this. See Moe paper.}
 
 
 \section{Conclusions}
