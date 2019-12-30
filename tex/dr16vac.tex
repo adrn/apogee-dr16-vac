@@ -74,38 +74,37 @@
 
 \begin{abstract}\noindent
 % Context
-Most problems in contemporary astrophysics---from understanding the formation
-of black holes to untangling the chemical
-evolution of galaxies---relies on knowledge about binary stars.
+Most problems in contemporary astrophysics---from understanding the formation of
+black holes to untangling the chemical evolution of galaxies---relies on
+knowledge about binary stars.
 % Aims
-This, in turn, depends on discovery and characterization of binary companions for
-large numbers of different kinds of stars across a range of environments.
-Contemporary stellar spectroscopic surveys observe hundreds of thousands
-to millions of stars, but
-often with few observational epochs, which makes binary discovery
-and orbital characterization challenging.
+This, in turn, depends on discovery and characterization of binary companions
+for large numbers of different kinds of stars across a range of environments.
+Contemporary stellar spectroscopic surveys observe hundreds of thousands to
+millions of stars, but often with few observational epochs, which makes binary
+discovery and orbital characterization challenging.
 % Methods
-We use a custom Monte Carlo sampler (\thejoker) to perform discovery and characterization
-of binary systems by the radial-velocity method, in the regime of
-sparse, noisy, and poorly sampled data.
+We use a custom Monte Carlo sampler (\thejoker) to perform discovery and
+characterization of binary systems using the radial-velocity method, in the
+regime of sparse, noisy, and poorly sampled data.
 We use it to generate posterior samplings in Keplerian parameters for
 \nsources\ sources observed as a part of the \apogee\ surveys and released in
 the recent Data Release 16 (\dr{16}).
-These samplings can be used to perform hierarchical inference about binary-star
+These samplings can be used to perform hierarchical inferences about binary-star
 populations, and we also use them to create catalogs of binary-star systems.
 % Results
-Our final catalog contains \nbinary\ systems.
-It shows interesting relationships between
-binary occurence rate and location in the color--magnitude diagram.
-We find notable
-faint companions at high masses (black-hole candidates), at low masses (planet candidates),
-and at close separations (mass-transfer candidates).
-We also use the posterior  samplings in a (simple, toy) hierarchical inference to
-measure the long-period binary-star eccentricity distribution.
-We release the full set of posterior samplings for the entire parent
-sample of \nsources\ stars; this set of samplings involves no heuristic ``discovery''
-threshold and therefore can be used for myriad statistical inferences, including sub-threshold
-searches.
+Our final catalog contains \nbinary\ high-confidence systems that show
+interesting relationships between binary occurence rate and location in the
+color--magnitude diagram.
+We find notable faint companions at high masses (black-hole candidates), at low
+masses (substellar candidates), and at close separations (mass-transfer
+candidates).
+We also use the posterior  samplings in a (simple, toy) hierarchical inference
+to measure the long-period binary-star eccentricity distribution.
+We release the full set of posterior samplings for the entire parent sample of
+\nsources\ stars; This set of samplings involves no heuristic ``discovery''
+threshold and therefore can be used for myriad statistical inferences, including
+sub-threshold searches.
 \end{abstract}
 
 \keywords{}
@@ -144,9 +143,9 @@ wavelengths and measurement techniques.
 
 As a step towards large-scale population inference, we focus here on multi-epoch
 spectroscopic data from the \apogee\ surveys.
-These surveys are biased towards red-giant stars (although with \dr{16} there are
-now many main-sequence stars too).
-Because of operattional re-visit decisions, the surveys deliver some
+These surveys are biased towards red-giant stars (although with \dr{16} there
+are now many main-sequence stars too).
+Because of operational re-visit decisions, the surveys deliver some
 time-domain information, although they were not designed with
 binary-star characterization as highest priority.
 The fundamental data are $R\sim 20,000$ $H$-band spectroscopy taken with the
@@ -163,8 +162,8 @@ and posterior pdfs for periods, amplitudes, and phases, and the Kepler problem
 is no different.
 These multi-modal likelihood functions are a nightmare for optimization or sampling;
 many of our best people have given their lives in that forest of modes.
-For this reason we created a custom sampler \thejoker\ (CITE) that performs
-brute-force rejection sampling from a prior sampling.
+For this reason we created a custom sampler \thejoker\ \citep{thejoker} that
+performs brute-force rejection sampling from a prior sampling.
 Because this sampler is not a Markov Chain, but rather just a dense prior sampler,
 it does not get ``stuck'' in local optima; it samples the full parameter space,
 with zero autocorrelation among samples.
@@ -175,7 +174,7 @@ radial-velocity data.
 
 Importantly, we use \thejoker\ to sample \emph{every} target as if it were a SB1.
 Discovery of which stars really do have companions becomes a post-processing step
-on the confidence of the characterization; that is, this project deliberatelyconflates
+on the confidence of the characterization; that is, this project deliberately conflates
 discovery with characterization.
 This has the added advantage that we deliver full posterior samplings even for stars
 that aren't obviously in binary systems; these can be used for statistical studies
@@ -186,8 +185,6 @@ resulting catalog of posterior samples, along with some summary metadata for
 the subsample with good, uniquely determined companions and orbits.
 We demonstrate the use of the samplings with a few examples of interesting
 objects and a simple hierarchical probabilistic populations inference.
-
-% HOGG SAY: NO NEED FOR A PARAGRAPH THAT GOES: In section blah we blah.
 
 \section{Data} \label{sec:data}
 
@@ -208,7 +205,7 @@ a duplicate of the \apogee\ spectrograph on the 2.5m du Point telescope at Las
 Campanas Observatory, providing access to targets in the southern hemisphere.
 For the first time, this data release also contains calibrated stellar
 parameters for dwarf stars.
-These two facts mean that \dr{16} contains nearly $3\times$ more sources with
+These two facts mean that \dr{16} contains nearly 3 times more sources with
 calibrated stellar parameters than the previous public data release, \dr{14}
 (\citealt{Abolfathi:2017}; see Section~4 of \citealt{DR16} for many more details
 about \apogee\ \dr{16}).
@@ -931,8 +928,21 @@ One such system (\texttt{2M08160493+2858542}), indicated by the square (orange)
 marker in this panel, appears to be strongly photometrically variable in data
 from the \acronym{ASAS-SN} survey \citep{Shappee:2014, Jayasinghe:2019}, however
 most other candidate interacting systems are in the southern sky and should
-instead be followed up with \acronym{TESS} \citep{TODO}.
+instead be followed up with \acronym{TESS} \citep{Ricker:2014}.
 
+\figurename~\ref{fig:brown-dwarfs} shows the radial velocity data (black
+markers)---under-plotted (blue lines) with orbits computed from posterior
+samples---for the four highlighted systems below the $80~\mjup$ line in
+\figurename~\ref{fig:m2m1} (left).
+The left panels show the time series, and the right panels show the same data
+and orbits, but now phase-folded using the MAP period value.
+The inferred minimum companion masses are indicated on each right panel.
+These systems were chosen from a vetted subsample of all substellar companion
+candidates to highlight systems with a range of companion masses,
+eccentricities, and numbers of observations.
+\figurename~\ref{fig:compact-objects} shows the same, but for the four
+highlighted systems above the $\mtwomin = M_1$ line in
+\figurename~\ref{fig:m2m1}.
 
 % Notebook: Figure-gold-sample.ipynb
 \begin{figure}[t]
@@ -940,7 +950,19 @@ instead be followed up with \acronym{TESS} \citep{TODO}.
     \includegraphics[width=0.85\textwidth]{m2_m1_roche.pdf}
     \end{center}
     \caption{%
-    TODO
+    \textbf{Left:} Minimum companion masses, $\mtwomin$, as a function of
+    primary mass, $M_1$, for all stars in the \goldsample.
+    The upper dashed (blue) line shows the line of equality where $\mtwomin =
+    M_2$; Systems near or above this threshold have candidate compact object
+    companions as the more massive secondary is fainter than the primary.
+    The lower dashed (blue) line shows the approximate hydrogen burning limit;
+    Sources below this threshold are candidate substellar objects.
+    The eight highlighted points (red) are shown below in \figurename
+    s~\ref{fig:brown-dwarfs} and \ref{fig:compact-objects}.
+    \textbf{Right:} The ratio of the primary stellar radius to the (projected)
+    system orbital semi-major axis as a function of minimum mass ratio.
+    Sources above the dashed (blue) line are likely interacting and may be
+    photometrically variable.
     \label{fig:m2m1}
     }
 \end{figure}
@@ -953,7 +975,9 @@ instead be followed up with \acronym{TESS} \citep{TODO}.
     \includegraphics[width=0.8\textwidth]{example-brown-dwarfs-placeholder.png}
     \end{center}
     \caption{%
-    Example binary star systems...
+    Example binary star systems from the \goldsample\ with low-mass companions
+    that are candidate substellar objects.
+    \todo{words...}
     \label{fig:brown-dwarfs}
     }
 \end{figure}
@@ -965,7 +989,9 @@ instead be followed up with \acronym{TESS} \citep{TODO}.
     \includegraphics[width=0.8\textwidth]{example-compact-objects-placeholder.png}
     \end{center}
     \caption{%
-    Example binary star systems...
+    Example binary star systems from the \goldsample\ with faint, high-mass
+    companions that are candidate compact objects.
+    \todo{words...}
     \label{fig:compact-objects}
     }
 \end{figure}
