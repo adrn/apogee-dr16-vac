@@ -43,8 +43,7 @@
 \begin{document}
 
 \title{Binary companions to APOGEE DR16 stars: \\
-       Catalog of 20\,000 binary-star systems
-       across the color--magnitude diagram}
+       20\,000 binary-star systems across the color--magnitude diagram}
 
 \author[0000-0003-0872-7098]{Adrian~M.~Price-Whelan}
 \affiliation{Center for Computational Astrophysics, Flatiron Institute,
@@ -235,6 +234,25 @@ proceeding, and modifications to the visit-level velocity uncertainties to
 account for the fact that they are generally underestimated by the \apogee\ data
 reduction pipeline.
 
+% Notebook: Figure-DR16-statistics.ipynb
+\begin{figure}[!t]
+\begin{center}
+\includegraphics[width=0.7\textwidth]{specHR.pdf}
+\end{center}
+\caption{%
+Two spectroscopic stellar parameters---effective temperature, $T_{\rm eff}$, and
+log-surface gravity, $\log g$---of \apogee\ \dr{16} sources that pass our
+quality cuts; These sources represent our ``parent sample.''
+The pixel coloring indicates the number of sources in each bin of stellar
+parameters.
+The outlined regions roughly identify the red giant branch (upper polygon,
+blue), subgiant branch (middle polygon, black), and (FGK-type) main sequence
+(lower polygon, green).
+The numbers next to each selection polygon indicate the number of sources in
+each.
+\label{fig:specHR}
+}
+\end{figure}
 
 \subsection{Quality cuts and defining a parent sample}
 
@@ -268,26 +286,6 @@ $437,485$ unique sources in all of \apogee\ \dr{16}.
 Of the $\approx$$200,000$ sources removed, the vast majority were dropped
 because they had $<3$ visits ($\approx$$17,000$ were removed by the quality
 cuts).
-
-% Notebook: Figure-DR16-statistics.ipynb
-\begin{figure}[!t]
-\begin{center}
-\includegraphics[width=0.7\textwidth]{specHR.pdf}
-\end{center}
-\caption{%
-Two spectroscopic stellar parameters---effective temperature, $T_{\rm eff}$, and
-log-surface gravity, $\log g$---of \apogee\ \dr{16} sources that pass our
-quality cuts; These sources represent our ``parent sample.''
-The pixel coloring indicates the number of sources in each bin of stellar
-parameters.
-The outlined regions roughly identify the red giant branch (upper polygon,
-blue), subgiant branch (middle polygon, black), and (FGK-type) main sequence
-(lower polygon, green).
-The numbers next to each selection polygon indicate the number of sources in
-each.
-\label{fig:specHR}
-}
-\end{figure}
 
 % Notebook: Figure-DR16-statistics.ipynb
 \begin{figure}[!t]
