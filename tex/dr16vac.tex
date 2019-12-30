@@ -6,6 +6,7 @@
 %   The observed distribution of spectroscopic binaries from the Anglo-Australian Planet Search
 % - What fraction of present-day RGB stars should have eaten a companion star?
 % - Send to: Evan Bauer, Lars Bildsten, Adam Jermyn, Max Moe,
+% - Do we want to add a plot showing the mass ratio distribution?
 
 \documentclass[modern]{aastex63}
 % \documentclass[twocolumn]{aastex63}
@@ -799,7 +800,7 @@ quantities, we emphasize that we have not corrected for detection efficiency or
 completeness with our sample.
 
 
-\subsection{Orbital parameter trends with stellar parameters}
+\subsection{Orbital parameter trends with stellar properties}
 \label{sec:gold-sample}
 
 % Notebook: Figure-gold-sample.ipynb
@@ -868,7 +869,17 @@ eccentricity) closer to the stellar surface (closer to the diagonal lines).
 However, near the red clump ($3 \lesssim \logg \lesssim 2$), there appears to be
 an over-abundance of low-eccentricity points at orbital periods $P\gtrsim
 100~\dayd$.
-\figurename~\ref{fig:Pe-logg-bins}
+\figurename~\ref{fig:Pe-logg-bins} shows histograms of MAP eccentricity values
+for sources in the \goldsample\ with MAP period values $P > 50~\dayd$ in four
+bins of surface gravity, from main sequence (farthest left) to upper giant
+branch (farthest right).
+Note that around the red clump (third panel from the left), there are
+significantly more $e < 0.1$ systems than expected (i.e., as compared to the
+previous bin).
+We therefore posit that systems with a primary around the red clump that have
+low eccentricities have likely already ascended the giant branch, whereas
+systems with large eccentricities are likely on their first ascent up the giant
+branch.
 
 % Notebook: Figure-gold-sample.ipynb
 \begin{figure}[t]
@@ -876,7 +887,10 @@ an over-abundance of low-eccentricity points at orbital periods $P\gtrsim
     \includegraphics[width=0.95\textwidth]{P_e_logg_bins.pdf}
     \end{center}
     \caption{%
-    TODO
+    Histograms of maximum \textsl{a posteriori} (MAP) eccentricity values for
+    systems with MAP $P > 50~\dayd$.
+    Each panel contains systems with primary star surface gravities indicated in
+    the title.
     \label{fig:Pe-logg-bins}
     }
 \end{figure}
@@ -884,6 +898,41 @@ an over-abundance of low-eccentricity points at orbital periods $P\gtrsim
 
 \subsection{Interesting low and high mass companions}
 \label{sec:low-high-mass}
+
+By construction, all sources in the \goldsample\ have primary stellar mass
+estimates, $M_1$, from the \acronym{STARHORSE} catalog \citep{Queiroz:2019}.
+For these systems, we can then also convert the inferred orbital parameters into
+measurements of the minimum companion mass, \mtwomin\ (i.e., $M_2 \, \sin i$
+where the unknown inclination $i$ is assumed to be $90^\circ$).
+\figurename~\ref{fig:m2m1} (left panel) shows these minimum companion mass
+estimates as a function of the \acronym{STARHORSE} primary masses for all
+sources in the \goldsample.
+While the uncertainties in these quantities are not shown for most sources, the
+eight highlighted systems (red markers with error bars) show typical values of
+the errors on the masses (but note that the errors will be strongly correlated).
+The two dashed (blue) lines show the approximate hydrogen burning limit (lower
+horizontal line), and the upper curve shows the line of equality where the
+minimum companion mass is equal to the primary mass.
+Of these, 95 systems have $\mtwomin < 80~\mjup$: Some of these may be
+high-inclination stellar-mass systems, but all should be considered brown dwarf
+candidates.
+Based on the quality cuts applied to define the parent sample (which should
+remove sources with blended spectral lines), systems with $\mtwomin > M_1$
+should not exist in the sample if the companion is luminous; The 40 systems with
+$\mtwomin > M_1$ are therefore excellent candidate compact object companions and
+will be discussed in a separate paper (Price-Whelan et al., in prep.).
+
+The right panel of \figurename~\ref{fig:m2m1} shows the ratio of the primary
+stellar radius over the (projected) system semi-major axis as a function of
+(minimum) mass ratio.
+Here, the curved, dashed line shows an estimate of the Roche radius
+\citep{Eggleton:1983}: Systems above this line are likely interacting.
+One such system (\texttt{2M08160493+2858542}), indicated by the square (orange)
+marker in this panel, appears to be strongly photometrically variable in data
+from the \acronym{ASAS-SN} survey \citep{Shappee:2014, Jayasinghe:2019}, however
+most other candidate interacting systems are in the southern sky and should
+instead be followed up with \acronym{TESS} \citep{TODO}.
+
 
 % Notebook: Figure-gold-sample.ipynb
 \begin{figure}[t]
@@ -896,17 +945,6 @@ an over-abundance of low-eccentricity points at orbital periods $P\gtrsim
     }
 \end{figure}
 
-\figurename~\ref{fig:m2m1} shows...
-TODO:
-- Many companions that could be brown dwarfs
-- Note the sources above the M2=M1 line!
-- Most systems are non-interacting, except...
-- Highlight the ASAS-SN source with a nice light curve in right panel
-- The 8 red ones in left panel are the same as in later figures \figurename~\ref{fig:brown-dwarfs} and \ref{fig:compact-objects}
-
-
-TODO:
-- Mass ratio distribution?
 
 % Notebook: Figure-highmass-lowmass.ipynb
 \begin{figure}[!t]
