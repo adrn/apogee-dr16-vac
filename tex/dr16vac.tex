@@ -1,6 +1,5 @@
 % TODO:
 % - decide whether to submit a companion JOSS paper
-% - huh? http://adsabs.harvard.edu/abs/2014ApJ...790..127B
 % - When Hogg's Gaussian Product Refactor note is on Arxiv, check the referenced
 %   equation numbers in the Appendix against the submitted version!
 % - Check and cite https://pdfs.semanticscholar.org/64cf/b422cbefe0239fd25ae39cf13833d60a4901.pdf
@@ -278,7 +277,7 @@ These bitmasks are designed to remove the most obvious data reduction or
 calibration failures that would directly impact the visit-level radial velocity
 determinations.
 However, we later impose a stricter set of quality masks when showing results in
-\sectionname~\ref{sec:TODO}.
+\sectionname~\ref{sec:gold-sample}.
 After applying the above masks, we additionally reject any source with $<3$
 visits.
 Our final parent sample contains \nsources\ unique sources, selected from the
@@ -488,13 +487,13 @@ about 8 hours to run on 720 cores on our local compute cluster (at the Flatiron
 Institute).
 
 After the procedure described above, the sources have one of two stages of
-completion: Sources either have $\Kmin = \Kminval$ posterior samples (\todo{XX}
-sources) and are complete, or $\Kmin < \Kminval$ posterior samples (\todo{XX}
+completion: Sources either have $\Kmin = \Kminval$ posterior samples ($227\,999$
+sources) and are complete, or $\Kmin < \Kminval$ posterior samples ($4\,496$
 sources) and more samples are needed.
 For sources that require more samples, these can be split again into two
 classes: Sources with unimodal samplings in period, and sources with multi-modal
 samplings (following the criteria described in \citealt{thejoker}).
-For incomplete sources with unimodal samplings (\todo{XX} sources), we use the
+For incomplete sources with unimodal samplings ($1\,709$ sources), we use the
 samples returned from \thejoker\ to initialize Hamiltonian Monte Carlo (HMC) to
 continue generating posterior samples.
 We use \texttt{pymc3} with the \emph{No-U-Turn Sampler} (NUTS; \citealt{NUTS}),
@@ -510,39 +509,10 @@ the sampling from \thejoker---this generally only happens for data with serious
 systematic issues (e.g., one outlier visit velocity with an unreasonable
 velocity measurement).
 
-At this point, we now have \Kminval\ posterior samples in the parameters listed
-in \tablename~\ref{tbl:prior} for \todo{XX} \apogee\ sources; These are released
-as a component of the \sdss\ Value-Added Catalog (VAC).
-
-
-\subsection{Assumptions, caveats, and known failures}
-\label{sec:caveats}
-
-The assumptions that underlie the sampling procedure described above are
-enumerated in \sectionname~3.1 in \cite{Price-Whelan:2018}.
-We therefore briefly rephrase the most important implications of these
-assumptions as a set of caveats and points of caution for any users of the
-posterior samplings generated here.
-
-First, despite allowing for a per-source, additive (in variance) extra
-uncertainty parameter ($s$ in \tablename~\ref{tbl:prior}), we are very sensitive
-to outliers, or, more generally, any visit velocities with strongly non-Gaussian
-noise properties.
-In \apogee, this might occur for blended sources, multiple-star systems with
-more than one star that contribute significantly to infrared flux, or sources
-with stellar parameters very beyond the grid of template spectra
-\citep{Nidever:2015}.
-Second, the adopted prior \pdf\ over systemic velocities, $v_0$, is reasonable
-for considering all \apogee\ sources (i.e., for a mixture of kinematically
-disk-like and halo-like sources), but may lead to biased posterior samplings for
-sources in globular clusters or dwarf galaxies.
-For such systems, it would be safer to re-run \thejoker\ with specialized priors
-over systemic velocity for each individual host system.
-Finally, in this work, we assume that all systems are binary systems, so triples
-or higher-order stellar multiplets will generally have incorrect samplings.
-In future work, we will generate samplings for systems that are consistent with
-being hierarchical triple-star systems, but this is beyond the scope of this
-general-use catalog.
+At this point, we now have up to \Kminval\ posterior samples of the parameters
+listed in \tablename~\ref{tbl:prior} for most of the \nsources\ \apogee\ sources
+in the parent sample; These are released as a component of the \sdss\
+Value-Added Catalog (VAC) 0048.
 
 
 \section{A catalog of binary stars} \label{sec:catalog}
@@ -553,7 +523,7 @@ This requires making some decisions and imposing hard cuts on the samplings
 returned by the above procedure.
 However, most of the orbital parameter samplings for most sources are highly
 uncertain and multi-modal, and it is therefore not possible to define simple
-cuts on physical parameters like companion mass to produce a simple catalog.
+cuts on physical parameters (e.g., companion mass) to produce a simple catalog.
 In the previous iteration of this work \citep{Price-Whelan:2018}, we defined
 cuts based on percentiles computed from the distribution of $\ln K$ values after
 comparing to running the same pipeline on a control sample of data generated
@@ -702,6 +672,7 @@ primary mass).
 \section{Results} \label{sec:results}
 
 \subsection{Binary fraction trends with stellar properties}
+\label{sec:binary-fraction}
 
 \figurename~\ref{fig:binary-CMD} (right) shows a near-infrared, binned
 color-magnitude diagram for all \apogee\ sources in the sample considered here.
@@ -717,17 +688,15 @@ $0.75~\mathrm{mag}$ above the main sequence: Note that, as expected, the binary
 fraction is higher in this region of the CMD, and is higher towards younger /
 more massive main sequence stars.
 Note also that the red clump (around $(J-K) \approx 0.6$, $H \approx -1.8$) has
-a \emph{low} binary fraction: This is likely a manifestation of engulfment, as
-these stars have already been up the giant branch and would therefore have
-consumed any companions with periods less than a few hundred days.
+a \emph{low} binary fraction.
 
 The top left panel of \figurename~\ref{fig:binary-CMD} shows the total binary
 fraction as a function of surface gravity for stars in the giant branch
 selection region shown in \figurename~\ref{fig:specHR}.
-The dearth of binary systems near the red clump and a trend of lower binary
-fraction with decreasing surface gravity (i.e., increased size) is apparent here
-as well.
-This is a possible signature of companion engulfment: As red giant stars evolve
+There is a clear dearth of binary systems near the red clump, and the binary
+fraction decreases appreciably with decreasing surface gravity (i.e., increased
+size).
+This is likely a signature of companion engulfment: As red giant stars evolve
 up the giant branch, any companions with orbital semi-major axes smaller than a
 few times the surface size of the primary star could be consumed \citep{TODO},
 therefore leading to an overall decrease in the binary fraction for larger
@@ -735,21 +704,22 @@ stars.
 The bottom left panel shows the same, but as a function of effective temperature
 (as a proxy for the mass of the primary) for stars in the main sequence
 selection region shown in \figurename~\ref{fig:specHR}.
-Here, the binary fraction appears to increase for more massive stars.
+From this, it appears that the binary fraction increases with stellar mass
+(effective temperature) along the main sequence.
+\todo{This is consistent with ... cite...}
 Note that the estimates in this figure ignore survey selection effects,
 inclination, and selection biases introduced by the cuts we made to identify
 binary star systems.
 
-\figurename~\ref{fig:binfrac-mh}, Similar to the left panels of
-\figurename~\ref{fig:binary-CMD}, shows the total binary fraction for main
+\figurename~\ref{fig:binfrac-mh} shows the total binary fraction for main
 sequence stars as a function of bulk metallicity.
-As has been recently emphasized, we find that the binary fraction is detectably
-anti-correlated with bulk metallicity \citep[e.g.,][]{Moe:2019}.
-We find a shallower dependence of these properties with a slope of $\approx
+As has been recently emphasized, we find that the binary fraction is
+significantly anti-correlated with bulk metallicity \citep[e.g.,][]{Moe:2019}.
+We find a shallower dependence of these properties, with a slope of $\approx
 -0.1$ as compared to the previously determined slope of $-0.2$ \citep{Moe:2019}.
 However, while we do not expect there to be strong selection biases that imprint
-on this particular measurement, we have not corrected for detection efficiency
-or completeness with our sample.
+on these quantities, we have not corrected for detection efficiency or
+completeness with our sample.
 \todo{Implications / theoretical understanding of this. See Moe paper.}
 
 % Notebook: Figure-binary-fraction.ipynb
@@ -768,12 +738,13 @@ or completeness with our sample.
 
 
 \subsection{Gold Sample}
+\label{sec:gold-sample}
 
 The majority of binary star systems that comprise the catalog defined above have
 strongly multi-modal samplings in orbital properties.
 While this is still useful for comparing occurrence rates, it is more difficult
 to summarize the system orbital properties and their trends with stellar
-properties as it is not possible to summarize the samplings in a compact way.
+properties as it is not possible to compress the samplings in a simple way.
 We therefore construct an additional catalog of sources, sub-selected from the
 full catalog of binary-star systems, that pass a more stringent set of quality
 cuts and have converged, unimodal or bimodal posterior samplings.
@@ -796,10 +767,11 @@ We define this \textit{Gold Sample} as sources that pass the following cuts:
 We identify sources with unimodal posterior samplings as sources for which the
 MCMC procedure succeeded (see \sectionname~\ref{sec:methods}).
 We identify sources with bimodal samplings using the same procedure as
-\cite{Price-Whelan:2018}: Briefly, we use a $k$-means clustering algorithm with
-$k=2$ to identify clusters of samples in period, and assess whether the
-samplings in each cluster are unimodal by assessing whether all samples in each
-cluster lie within the mode size defined in \cite{thejoker}.
+\cite{Price-Whelan:2018}.
+Briefly, we use a $k$-means clustering algorithm with $k=2$ to identify clusters
+of samples in period, and assess whether the samplings in each cluster are
+unimodal by assessing whether all samples in each cluster lie within the mode
+size defined in \cite{thejoker}.
 In total, the \textit{Gold Sample} contains \ngold\ systems with unimodal
 samplings, and \nbimodal\ systems with bimodal samplings.
 
@@ -831,6 +803,13 @@ samplings, and \nbimodal\ systems with bimodal samplings.
 \figurename~\ref{fig:Plogg} shows inferred orbital periods for all stars in the
 \textit{Gold Sample} as a function of surface gravity (left) and plotted against
 inferred orbital eccentricity (right).
+The diagonal lines in the left panel show the orbital periods at which the
+orbital pericenter of a $0.3~\msun$ companion is equal to the stellar surface
+radius for a $1.3~\msun$ primary star at the given surface gravity and
+eccentricity indicated.
+The observed lack of systems with orbital periods near these lines and $1
+\lesssim \logg \lesssim 3.5$ ...
+
 TODO: Left panel:
 - point out that all of those main sequence companions at $P < 100$ will apparently get consumed
 - asteroseismic pulsations as contamination
@@ -864,6 +843,7 @@ TODO:
 
 
 \subsection{Interesting low and high mass companions}
+\label{sec:low-high-mass}
 
 % Notebook: Figure-highmass-lowmass.ipynb
 \begin{figure}[!t]
@@ -891,6 +871,7 @@ TODO:
 
 
 \subsection{Hierarchical inference of the long-period eccentricity distribution}
+\label{sec:hierarch-ecc}
 
 Caveat: this is a demonstration. Selection effects, rigid model, etc.
 
@@ -941,6 +922,35 @@ TODO:
 \section{Discussion}
 
 Stuff
+
+\subsection{Assumptions, caveats, and known failures}
+\label{sec:caveats}
+
+The assumptions that underlie the sampling procedure described above are
+enumerated in \sectionname~3.1 in \cite{Price-Whelan:2018}.
+We therefore briefly rephrase the most important implications of these
+assumptions as a set of caveats and points of caution for any users of the
+posterior samplings generated here.
+
+First, despite allowing for a per-source, additive (in variance) extra
+uncertainty parameter ($s$ in \tablename~\ref{tbl:prior}), we are very sensitive
+to outliers, or, more generally, any visit velocities with strongly non-Gaussian
+noise properties.
+In \apogee, this might occur for blended sources, multiple-star systems with
+more than one star that contribute significantly to infrared flux, or sources
+with stellar parameters very beyond the grid of template spectra
+\citep{Nidever:2015}.
+Second, the adopted prior \pdf\ over systemic velocities, $v_0$, is reasonable
+for considering all \apogee\ sources (i.e., for a mixture of kinematically
+disk-like and halo-like sources), but may lead to biased posterior samplings for
+sources in globular clusters or dwarf galaxies.
+For such systems, it would be safer to re-run \thejoker\ with specialized priors
+over systemic velocity for each individual host system.
+Finally, in this work, we assume that all systems are binary systems, so triples
+or higher-order stellar multiplets will generally have incorrect samplings.
+In future work, we will generate samplings for systems that are consistent with
+being hierarchical triple-star systems, but this is beyond the scope of this
+general-use catalog.
 
 
 \section{Conclusions}
