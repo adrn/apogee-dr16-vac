@@ -14,3 +14,6 @@ gitstuff.tex
 *.fls
 submit
 catalogs
+
+# Hogg
+*~
