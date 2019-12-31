@@ -242,26 +242,6 @@ proceeding, and modifications to the visit-level velocity uncertainties to
 account for the fact that they are generally underestimated by the \apogee\ data
 reduction pipeline.
 
-% Notebook: Figure-DR16-statistics.ipynb
-\begin{figure}[!t]
-\begin{center}
-\includegraphics[width=0.7\textwidth]{specHR.pdf}
-\end{center}
-\caption{%
-Two spectroscopic stellar parameters---effective temperature, $T_{\rm eff}$, and
-log-surface gravity, $\log g$---of \apogee\ \dr{16} sources that pass our
-quality cuts; These sources represent our ``parent sample.''
-The pixel coloring indicates the number of sources in each bin of stellar
-parameters.
-The outlined regions roughly identify the red giant branch (upper polygon,
-blue), subgiant branch (middle polygon, black), and (FGK-type) main sequence
-(lower polygon, green).
-The numbers next to each selection polygon indicate the number of sources in
-each.
-\label{fig:specHR}
-}
-\end{figure}
-
 \subsection{Quality cuts and defining a parent sample}
 
 The primary goal of this \documentname\ is to produce a catalog of posterior
@@ -298,20 +278,20 @@ cuts).
 % Notebook: Figure-DR16-statistics.ipynb
 \begin{figure}[!t]
 \begin{center}
-\includegraphics[width=0.9\textwidth]{visitstats.pdf}
+\includegraphics[width=0.7\textwidth]{specHR.pdf}
 \end{center}
 \caption{%
-Some statistics of \apogee\ \dr{16} visits.
-\textbf{Left:} The number of sources with more than a given number of visits,
-$n_{\rm vis}$.
-While $\approx$$50\%$ of sources have 3 visits, ($114\,263$, $57\,593$,
-$15\,862$) sources have $> (3, 5, 10)$ visits, respectively.
-A very small number of sources have $>50$ visits.
-\textbf{Right:} The number of sources with a time baseline, $\tau$, longer than
-given (on the horizontal axis).
-While $\approx$$50\%$ of sources have a time baseline $\tau \lesssim 56~{\rm
-day}$, ($88\,737$, $9\,743$) sources have $\tau > (100, 1\,000)~{\rm days}$.
-\label{fig:visitstats}
+Two spectroscopic stellar parameters---effective temperature, $T_{\rm eff}$, and
+log-surface gravity, $\log g$---of \apogee\ \dr{16} sources that pass our
+quality cuts; These sources represent our ``parent sample.''
+The pixel coloring indicates the number of sources in each bin of stellar
+parameters.
+The outlined regions roughly identify the red giant branch (upper polygon,
+blue), subgiant branch (middle polygon, black), and (FGK-type) main sequence
+(lower polygon, green).
+The numbers next to each selection polygon indicate the number of sources in
+each.
+\label{fig:specHR}
 }
 \end{figure}
 
@@ -328,6 +308,26 @@ About half of the sources have a small number of visits spread over a small time
 baseline: $50\%$ of sources have $<5$ visits over $<100~{\rm days}$.
 About $7\%$ of sources ($15\,366$) have $\geq 10$ visits over $\geq 100~{\rm
 days}$.
+
+% Notebook: Figure-DR16-statistics.ipynb
+\begin{figure}[!t]
+\begin{center}
+\includegraphics[width=0.9\textwidth]{visitstats.pdf}
+\end{center}
+\caption{%
+Some statistics of \apogee\ \dr{16} visits.
+\textbf{Left:} The number of sources with more than a given number of visits,
+$n_{\rm vis}$.
+While $\approx$$50\%$ of sources have 3 visits, ($114\,263$, $57\,593$,
+$15\,862$) sources have $> (3, 5, 10)$ visits, respectively.
+A very small number of sources have $>50$ visits.
+\textbf{Right:} The number of sources with a time baseline, $\tau$, longer than
+given (on the horizontal axis).
+While $\approx$$50\%$ of sources have a time baseline $\tau \lesssim 56~{\rm
+day}$, ($88\,737$, $9\,743$) sources have $\tau > (100, 1\,000)~{\rm days}$.
+\label{fig:visitstats}
+}
+\end{figure}
 
 
 \subsection{Visit velocity uncertainty calibration} \label{sec:visitcalib}
@@ -927,6 +927,29 @@ should not exist in the sample if the companion is luminous; The 40 systems with
 $\mtwomin > M_1$ are therefore excellent candidate compact object companions and
 will be discussed in a separate paper (Price-Whelan et al. submitted).
 
+% Notebook: Figure-gold-sample.ipynb
+\begin{figure}[t]
+    \begin{center}
+    \includegraphics[width=0.85\textwidth]{m2_m1_roche.pdf}
+    \end{center}
+    \caption{%
+    \textbf{Left:} Minimum companion masses, $\mtwomin$, as a function of
+    primary mass, $M_1$, for all stars in the \goldsample.
+    The upper dashed (blue) line shows the line of equality where $\mtwomin =
+    M_2$; Systems near or above this threshold have candidate compact object
+    companions as the more massive secondary is fainter than the primary.
+    The lower dashed (blue) line shows the approximate hydrogen burning limit;
+    Sources below this threshold are candidate substellar objects.
+    The eight highlighted points (red) are shown below in \figurename
+    s~\ref{fig:brown-dwarfs} and \ref{fig:compact-objects}.
+    \textbf{Right:} The ratio of the primary stellar radius to the (projected)
+    system orbital semi-major axis as a function of minimum mass ratio.
+    Sources above the dashed (blue) line are likely interacting and may be
+    photometrically variable.
+    \label{fig:m2m1}
+    }
+\end{figure}
+
 The right panel of \figurename~\ref{fig:m2m1} shows the ratio of the primary
 stellar radius over the (projected) system semi-major axis as a function of
 (minimum) mass ratio.
@@ -937,6 +960,20 @@ marker in this panel, appears to be strongly photometrically variable in data
 from the \acronym{ASAS-SN} survey \citep{Shappee:2014, Jayasinghe:2019}, however
 most other candidate interacting systems are in the southern sky and should
 instead be followed up with \acronym{TESS} \citep{Ricker:2014}.
+
+% Notebook: Figure-highmass-lowmass.ipynb
+\begin{figure}[!t]
+    \begin{center}
+    % \includegraphics[width=1\textwidth]{example-brown-dwarfs.pdf}
+    \includegraphics[width=0.8\textwidth]{example-brown-dwarfs-placeholder.png}
+    \end{center}
+    \caption{%
+    Example binary star systems from the \goldsample\ with low-mass companions
+    that are candidate substellar objects.
+    \todo{words...}
+    \label{fig:brown-dwarfs}
+    }
+\end{figure}
 
 \figurename~\ref{fig:brown-dwarfs} shows the radial velocity data (black
 markers)---under-plotted (blue lines) with orbits computed from posterior
@@ -961,44 +998,6 @@ The recently discovered non-interacting black hole--giant star system (that made
 use of \apogee\ data; \citealt{Thompson:2019}) does not appear in our candidates
 because it only has 3 visit spectra with \apogee\ data alone and thus does not
 pass the strict cuts we used to construct the \goldsample.
-
-% Notebook: Figure-gold-sample.ipynb
-\begin{figure}[t]
-    \begin{center}
-    \includegraphics[width=0.85\textwidth]{m2_m1_roche.pdf}
-    \end{center}
-    \caption{%
-    \textbf{Left:} Minimum companion masses, $\mtwomin$, as a function of
-    primary mass, $M_1$, for all stars in the \goldsample.
-    The upper dashed (blue) line shows the line of equality where $\mtwomin =
-    M_2$; Systems near or above this threshold have candidate compact object
-    companions as the more massive secondary is fainter than the primary.
-    The lower dashed (blue) line shows the approximate hydrogen burning limit;
-    Sources below this threshold are candidate substellar objects.
-    The eight highlighted points (red) are shown below in \figurename
-    s~\ref{fig:brown-dwarfs} and \ref{fig:compact-objects}.
-    \textbf{Right:} The ratio of the primary stellar radius to the (projected)
-    system orbital semi-major axis as a function of minimum mass ratio.
-    Sources above the dashed (blue) line are likely interacting and may be
-    photometrically variable.
-    \label{fig:m2m1}
-    }
-\end{figure}
-
-
-% Notebook: Figure-highmass-lowmass.ipynb
-\begin{figure}[!t]
-    \begin{center}
-    % \includegraphics[width=1\textwidth]{example-brown-dwarfs.pdf}
-    \includegraphics[width=0.8\textwidth]{example-brown-dwarfs-placeholder.png}
-    \end{center}
-    \caption{%
-    Example binary star systems from the \goldsample\ with low-mass companions
-    that are candidate substellar objects.
-    \todo{words...}
-    \label{fig:brown-dwarfs}
-    }
-\end{figure}
 
 % Notebook: Figure-highmass-lowmass.ipynb
 \begin{figure}[!t]
@@ -1089,6 +1088,26 @@ b)$, as
         \quad .
 \end{equation}
 
+% Notebook: Figure-Long-P-eccentricity.ipynb
+\begin{figure}[!t]
+    \begin{center}
+    \includegraphics[width=0.85\textwidth]{eccentricity-distr.pdf}
+    \end{center}
+    \caption{%
+    \textbf{Left:} The inferred eccentricity distribution for binary star
+    systems with FGK-type primary stars (black line).
+    We use the posterior sampings for $8\,599$ sources within a toy hierarchical
+    model of the eccentricity distribution, represented as a beta distribution.
+    We also plot common eccentricity distributions from the literature, such as
+    the global exoplanet model from \cite[][; solid, gray line]{Kipping:2013},
+    the (theoretical) thermalized population \citep[][; dashed, blue
+    line]{Jeans:1919}, and a uniform distribution (dotted, orange line).
+    \textbf{Right:} The same as the left panel, but showing cumulative
+    distribution functions instead.
+    \label{fig:eccdist}
+    }
+\end{figure}
+
 With a method for evaluating the hierarchical likelihood
 (\equationname~\ref{eq:hierarch-post}), we now just need to specify prior
 probability distributions over the hyperparameters of the beta distribution $(a,
@@ -1126,26 +1145,6 @@ parameters of the beta distribution imply that we have enough data to complexify
 the model, either by using non-parametric forms for the eccentricity
 distribution to move away from rigid models or by parametrizing variations in
 the distribution with stellar parameters.
-
-% Notebook: Figure-Long-P-eccentricity.ipynb
-\begin{figure}[!t]
-    \begin{center}
-    \includegraphics[width=0.85\textwidth]{eccentricity-distr.pdf}
-    \end{center}
-    \caption{%
-    \textbf{Left:} The inferred eccentricity distribution for binary star
-    systems with FGK-type primary stars (black line).
-    We use the posterior sampings for $8\,599$ sources within a toy hierarchical
-    model of the eccentricity distribution, represented as a beta distribution.
-    We also plot common eccentricity distributions from the literature, such as
-    the global exoplanet model from \cite[][; solid, gray line]{Kipping:2013},
-    the (theoretical) thermalized population \citep[][; dashed, blue
-    line]{Jeans:1919}, and a uniform distribution (dotted, orange line).
-    \textbf{Right:} The same as the left panel, but showing cumulative
-    distribution functions instead.
-    \label{fig:eccdist}
-    }
-\end{figure}
 
 
 \section{Discussion}
