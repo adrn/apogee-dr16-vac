@@ -29,7 +29,7 @@
 
 % Numbers:
 \newcommand{\nsources}{\ensuremath{232\,531}}
-\newcommand{\Kmin}{K_{\rm min}}
+\newcommand{\Kmin}{M_{\rm min}}
 \newcommand{\Kminval}{512}
 \newcommand{\nbinary}{\ensuremath{19\,635}}
 
@@ -917,7 +917,7 @@ Based on the quality cuts applied to define the parent sample (which should
 remove sources with blended spectral lines), systems with $\mtwomin > M_1$
 should not exist in the sample if the companion is luminous; The 40 systems with
 $\mtwomin > M_1$ are therefore excellent candidate compact object companions and
-will be discussed in a separate paper (Price-Whelan et al., in prep.).
+will be discussed in a separate paper (Price-Whelan et al. submitted).
 
 The right panel of \figurename~\ref{fig:m2m1} shows the ratio of the primary
 stellar radius over the (projected) system semi-major axis as a function of
@@ -940,9 +940,19 @@ The inferred minimum companion masses are indicated on each right panel.
 These systems were chosen from a vetted subsample of all substellar companion
 candidates to highlight systems with a range of companion masses,
 eccentricities, and numbers of observations.
+
 \figurename~\ref{fig:compact-objects} shows the same, but for the four
 highlighted systems above the $\mtwomin = M_1$ line in
 \figurename~\ref{fig:m2m1}.
+The companions in the systems shown in the top two rows are just barely
+consistent with being high-mass neutron stars \citep[e.g.,][]{Cromartie:2019},
+but the systems shown in the bottom two rows contain candidate non-interacting
+black hole companions (these are discussed in more detail in the companion
+paper; Price-Whelan et al., submitted).
+The recently discovered non-interacting black hole--giant star system (that made
+use of \apogee\ data; \citealt{Thompson:2019}) does not appear in our candidates
+because it only has 3 visit spectra with \apogee\ data alone and thus does not
+pass the strict cuts we used to construct the \goldsample.
 
 % Notebook: Figure-gold-sample.ipynb
 \begin{figure}[t]
@@ -1000,13 +1010,114 @@ highlighted systems above the $\mtwomin = M_1$ line in
 \subsection{Hierarchical inference of the long-period eccentricity distribution}
 \label{sec:hierarch-ecc}
 
-Caveat: this is a demonstration. Selection effects, rigid model, etc.
+Most of the results highlighted above make use of the catalogs created from
+defining selections on the posterior samplings generated with \thejoker.
+However, the real power in the individual system posterior samplings is that
+they enable further \emph{hierarchical} modeling of binary-star population
+properties without having to make hard cuts on the samples.
+In future work, we will use these samplings to construct a joint model for the
+period, eccentricity, and mass ratio distributions of binary stars as a function
+of stellar parameters, but this will also require modeling the sample selection
+function and our detection efficiency.
+While the full hierarchical inference is out of scope for this \documentname,
+here we demonstrate how this could be done using a simpler, toy problem:
+Inferring the eccentricity distribution of long-period binary stars using a
+parametric model.
 
-TODO:
-- You really need to quantify selection effects
-- Could do something non-parametric
-- Could study as a function of stellar parameters
-- Like: \citep{Duquennoy:1991, Raghavan:2010}
+We first select all $53\,790$ sources with samplings from \thejoker\ (or
+subsequent MCMC) with $4000~\textrm{K} < \Teff < 7000~\textrm{K}$ and $-2 < \mh
+< 0.5$ in order to select main sequence, FGK-type stars.
+We then only keep $8\,599$ sources that have $>128$ samples with $P > 100~\dayd$
+and $K > 1~\kms$, of which 158 sources have unimodal samplings (i.e., generated
+with MCMC).
+The second criteria (on velocity semi-ampitude, $K$) would not be necessary if
+we instead constructed a mixture model with components to represent stars with
+companions and the background population, but here, for simplicity, we instead
+just make a cut on the posterior samplings.
+For each $j$ source in this sample of binaries with FGK-type primary stars, we
+then have $M_j$ (up to 512) samples in orbital eccentricity, $e_{jm}$.
+We parametrize the eccentricity distribution using a beta distribution,
+$B(a,b)$, and use the importance sampling trick to reweight the $e_{jm}$ samples
+to infer the hyperparameters $(a, b)$ \citep{Hogg:2010}.
+
+In detail, we would like to evaluate or generate samples from the posterior
+probability distribution over the hyperparameters of the eccentricity
+distribution
+\begin{equation}
+    p(a, b \given D) \propto p(D \given a, b) \, p(a, b)\label{eq:hierarch-post}
+\end{equation}
+where $D$ represents all visit data for all sources, i.e.,
+\begin{equation}
+    p(D \given a, b) = \prod_j p(D_j \given a, b)
+\end{equation}
+and $(a, b)$ are the parameters of our assumed beta distribution model.
+There is no obvious way to evaluate this posterior probability---especially the
+likelihood term---given the hyperparameters.
+However, recall that we have samplings from the per-source posterior
+distributions over eccentricity,
+\begin{align}
+    p(e_j \given D_j, \alpha_0) &\propto p(D_j \given e_j) \,
+        p(e_j \given \alpha_0)\\
+    e_{jm} &\sim p(e \given D_j, \alpha_0)
+\end{align}
+where $\alpha_0$ is meant to represent the parameters of our assumed ``interim''
+prior over eccentricity that we used to generate the per-source samplings (i.e.,
+see \tablename~\ref{tbl:prior}), and here ``$\sim$'' means ``is sampled from.''
+Through math that is explained in more detail in other work
+\citep[e.g.,][]{Hogg:2010, Price-Whelan:2018}, it turns out that the
+hierarchical likelihood can be written as a sum over the ratio of probabilities
+\begin{equation}
+    p(D_j \given a, b) \approx \frac{\mathcal{Z}}{M_j} \,
+        \sum_k^M \frac{p(e_{jm} \given a, b)}{p(e_{jm} \given \alpha_0)}
+        \quad .
+\end{equation}
+In practice, we evaluate the hierarchical log-likelihood, $\ln p(D_j \given a,
+b)$, as
+\begin{equation}
+    \ln p(D \given a, b) =
+        \sum_j \left[\underset{m}{\textrm{logsumexp}}\left(
+        \ln p(e_{jm} \given a, b) - \ln p(e_{jm} \given \alpha_0)\right)
+        - \ln M_j\right]
+        \quad .
+\end{equation}
+
+With a method for evaluating the hierarchical likelihood
+(\equationname~\ref{eq:hierarch-post}), we now just need to specify prior
+probability distributions over the hyperparameters of the beta distribution $(a,
+b)$.
+For each parameter, we use a uniform distribution over the domain $(0.1, 10)$.
+We implement this model, including the sums over the eccentricity samples,
+within the context of a \texttt{pymc3} model and use the built-in NUTS sampler
+to generate posterior samples in the parameters of the eccentricity
+distribution.
+We run the sampler for 1000 steps to tune, then run four chains in parallel,
+each for an additional 2000 steps.
+We assess convergence again by computing the Gelman-Rubin statistic, $\hat{R}$
+and find that all parameters have converged samplings at the end of our run.
+
+From these posterior samples, we find $a = 1.749 \pm 0.001$ and $b = 2.008 \pm
+0.001$.
+\figurename~\ref{fig:eccdist} shows the inferred eccentricity distribution
+(black curve, left panel) and the corresponding cumulative distribution function
+(right panel) along with some other eccentricity distributions from the
+literature.
+For example, the (global) exoplanet eccentricity distribution from
+\citet{Kipping:2013}, the (theoretical) eccentricity distribution for a
+thermalized population of binaries \citep{Jeans:1919}, and a uniform
+distribution.
+At long periods, binary star systems seem to have moderate eccentricities that
+disfavor circular or very eccentric values.
+This is in agreement with past studies that have focused on nearby samples of
+solar-type stars with smaller sample sizes \citep[e.g.,][]{Duquennoy:1991,
+Raghavan:2010}.
+Note, however, that this should still be viewed as a demonstration: Future
+analysis should assess the impact of selection effects and detection efficiency
+on the inferred eccentricity distribution using these data.
+We also emphasize that the extremely precise constraints we get on the
+parameters of the beta distribution imply that we have enough data to complexify
+the model, either by using non-parametric forms for the eccentricity
+distribution to move away from rigid models or by parametrizing variations in
+the distribution with stellar parameters.
 
 % Notebook: Figure-Long-P-eccentricity.ipynb
 \begin{figure}[!t]
@@ -1014,42 +1125,22 @@ TODO:
     \includegraphics[width=0.85\textwidth]{eccentricity-distr.pdf}
     \end{center}
     \caption{%
-    TODO: \citep{Kipping:2013}, \citep{Jeans:1919}
+    \textbf{Left:} The inferred eccentricity distribution for binary star
+    systems with FGK-type primary stars (black line).
+    We use the posterior sampings for $8\,599$ sources within a toy hierarchical
+    model of the eccentricity distribution, represented as a beta distribution.
+    We also plot common eccentricity distributions from the literature, such as
+    the global exoplanet model from \cite[][; solid, gray line]{Kipping:2013},
+    the (theoretical) thermalized population \citep[][; dashed, blue
+    line]{Jeans:1919}, and a uniform distribution (dotted, orange line).
+    \textbf{Right:} The same as the left panel, but showing cumulative
+    distribution functions instead.
     \label{fig:eccdist}
     }
 \end{figure}
 
 
-% \begin{align}
-%     z &= \ln\,P\\
-%     \bs{\theta} &= (z, e)\\
-%     \bs{\alpha} &= (k, z_0, \alpha_0)\\
-%     p(\bs{\theta} \given \bs{\alpha}) &= p(z) \, p(e \given z)\\
-%     p(z) &= \norm\left(z \given \mu_z, \sigma_z^2 \right)\\
-%     p(e \given z) &= \alpha(z) \, p_1(e) + (1-\alpha(z)) \, p_2(e)\\
-%     f(z\,;\,k,z_0) &= \frac{1}{1 + e^{-k\,(z - z_0)}}\\
-%     \alpha(z \,;\, k, z_0, \alpha_0) &= (1-\alpha_0) \, f(z \,;\, k, z_0) + \alpha_0\\
-%     p_1(e) &= B(e \given a_1, b_1)\\
-%     p_2(e) &= B(e \given a_2, b_2)
-% \end{align}
-
-% \begin{align}
-%     p(D \given \bs{\alpha}) &= \int \dd\bs{\theta} \,
-%         p(D \given \bs{\theta}) \, p(\bs{\theta} \given \bs{\alpha})\\
-%     &\approx \frac{\mathcal{Z}}{K} \sum_k^K
-%         \frac{p(\bs{\theta}_k \given \bs{\alpha})}
-%             {p(\bs{\theta}_k \given \bs{\alpha}_0)}\\
-%     \bs{\theta}_k &\sim p(\bs{\theta} \given D, \bs{\alpha}_0)
-% \end{align}
-
-
-% Lars: "Any idea of the incidence of stars which did an engulfment on their way
-% UP the RGB from the Luminosity of the clump to that of the RGB TIP? "
-
-
 \section{Discussion}
-
-Stuff
 
 \subsection{Assumptions, caveats, and known failures}
 \label{sec:caveats}
@@ -1058,7 +1149,7 @@ The assumptions that underlie the sampling procedure described above are
 enumerated in \sectionname~3.1 in \cite{Price-Whelan:2018}.
 We therefore briefly rephrase the most important implications of these
 assumptions as a set of caveats and points of caution for any users of the
-posterior samplings generated here.
+posterior samplings released with this \documentname.
 
 First, despite allowing for a per-source, additive (in variance) extra
 uncertainty parameter ($s$ in \tablename~\ref{tbl:prior}), we are very sensitive
@@ -1077,8 +1168,8 @@ over systemic velocity for each individual host system.
 Finally, in this work, we assume that all systems are binary systems, so triples
 or higher-order stellar multiplets will generally have incorrect samplings.
 In future work, we will generate samplings for systems that are consistent with
-being hierarchical triple-star systems, but this is beyond the scope of this
-general-use catalog.
+being hierarchical triple-star systems, but this is beyond the scope of the
+general-use catalog considered here.
 
 
 \subsection{Binary fraction trends with stellar properties}
