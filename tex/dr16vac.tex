@@ -1245,6 +1245,36 @@ These undoubtebly also ... constrain binary star formation physics ...
 
 % \todo{Implications / theoretical understanding of this. See Moe paper.}
 
+\todo{Mention here that any real understanding of the binary fraction will
+require a model of the selection function, both for \apogee\ and for our detections. This then
+segues nicely into the next section...}
+
+
+\subsection{Selection, completeness, false positives, and contamination}
+\label{sec:completeness}
+
+\todo{We have done nothing to deliver completeness or false-positive estimates.}
+I (HOGG) don't think we need to do this in this paper; it is out of scope.
+However, it is critical for use of our 20,000 objects as a catalog for performing
+statistical tests.
+For example, if we want to interpret the beautiful binary fraction plot!
+In general, completeness will be a function of amplitude, period,
+orbital phase, and eccentricity vector (maybe in that order).
+
+Because we have released all our code open-source, we have made it very easy
+for anyone to do this kind of work.
+Here's a little outline of how one might do it, and what one might find.
+
+As for contamination, that is a hard problem, because it requires a
+model of the kinds of contaminants that might be present, which are
+(almost by definition) the things we don't know about.
+However, one good example is the asteroseismic mode contamination
+that appears to be enetering our sample at the top of the RGB.
+This is a kind of contamination that could certainly be modeled, with a
+mechanical model of asteroseismic surface motions and our open-source code.
+That's also out of scope, but an interesting, valuable, and straightforward
+project.
+
 \section{Conclusions}
 
 Our key results are summarized below:
@@ -1380,7 +1410,7 @@ nonlinear parameters $\vec{\theta}$, can be written
     \vec{b} &= \mat{M} \cdot \vec{\mu}\\
     \mat{B} &= \mat{C} + \mat{M} \cdot \mat{\Lambda} \cdot \transpose{\mat{M}}
 \end{align}
-where the integral becomes trivial because the second normal distribution,
+where the integral becomes simple because the second normal distribution,
 $\norm(\vec{y} \given \vec{b}, \mat{B})$, does not depend on the integration
 variables, $\vec{x}$, and the integral over the first normal distribution is 1
 \citep{Hogg:2020}.
