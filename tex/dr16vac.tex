@@ -1153,6 +1153,44 @@ distribution to move away from rigid models or by parametrizing variations in
 the distribution with stellar parameters.
 
 
+\subsection{Sub-threshold searches}
+\label{sec:subthreshold}
+
+\todo{APW TODO: Feel free to delete this! But here is where we could say
+something like this:}
+One problem with a traditional catalog of detected binary companions
+(like our Table~whatever) is that there are many sources in which the
+evidence for a binary is significant, but not strong enough to qualify
+as a reliable detection.
+A user who has informative data on a star that would take a
+sub-threshold source above threshold has no recourse if only given a
+rigidly thresholded catalog.
+Even for well detected binary systems, in a traditional catalog of
+orbital parameters, there is no simple way to combine the results with
+new data to improve or adjust parameter estimates.
+The samplings provided here (in Table~whatever) can be used to solve
+these problems; they can be used to combine the \apogee\ information
+with new data, without requiring an ab initio re-analysis of
+the original \apogee\ data.
+
+As an example, we do APW HELP ME... maybe take a sub-threshold star and
+imagine that we got an RV point at some time in the future and show that
+it jumps above threshold?? It's just a cutesie example that would involve
+importance sampling the sampling with the likelihood from the new point.
+
+blah blah blah...
+
+The ability to perform sub-threshold searches or add external
+information is limited by detailed shape of the posterior pdf and the
+number of samples we deliver.
+If the new data are highly informative, or favor a mode in the
+posterior pdf that is not well sampled, the 512-sample posterior
+samplings we deliver will not be dense enough to provide support for
+the updated posterior pdf.
+This puts limitations on the scope of sub-threshold searches, but at
+least they are possible with these outputs, in some regime of applicability.
+
+
 \section{Discussion}
 
 \subsection{Assumptions, caveats, and known failures}
@@ -1216,6 +1254,7 @@ Our key results are summarized below:
     \item[Brown dwarfs]
     \item[Non-interacting compact object candidates]
     \item[Eccentricity distribution]
+    \item[Sub-threshold search and discovery]
     \item[Huge sample of binary star systems]
 \end{description}
 
