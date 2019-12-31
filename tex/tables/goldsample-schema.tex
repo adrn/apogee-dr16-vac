@@ -1,0 +1,29 @@
+\begin{table}[ht]
+    \footnotesize
+    \centering
+    \begin{tabular}{l|l|p{6.5cm}}
+        \multicolumn{3}{c}{\textbf{Metadata for the \goldsample}} \\
+        \hline
+        Column name & Unit / format & Description \\
+        \hline
+        \texttt{APOGEE\_ID} & & \apogee\ source identifier\\
+        \texttt{mass}        & $\mathrm{M_{\odot}}$ & mass of the primary, from the \acronym{STARHORSE} catalog\\
+        \texttt{mass\_err}   & $\mathrm{M_{\odot}}$ & uncertainty on the primary mass\\
+        \texttt{m2\_min\_1}  & $\mathrm{M_{\odot}}$ & 1st percentile value of \mtwomin\\
+        \texttt{m2\_min\_5}  & $\mathrm{M_{\odot}}$ & 5th percentile value of \mtwomin\\
+        \texttt{m2\_min\_16} & $\mathrm{M_{\odot}}$ & 16th percentile value of \mtwomin\\
+        \texttt{m2\_min\_50} & $\mathrm{M_{\odot}}$ & median value of \mtwomin\\
+        \texttt{m2\_min\_84} & $\mathrm{M_{\odot}}$ & 84th percentile value of \mtwomin\\
+        \texttt{m2\_min\_95} & $\mathrm{M_{\odot}}$ & 95th percentile value of \mtwomin\\
+        \texttt{m2\_min\_99} & $\mathrm{M_{\odot}}$ & 99th percentile value of \mtwomin\\
+        \vdots & & all columns from \tablename~\ref{tbl:metadata}\\
+        \vdots & & all columns from \apogee\ \texttt{allStar} file\\
+        \vdots & & all columns from \gaia\ DR2 \texttt{gaia\_source} table\\
+        \hline
+        \multicolumn{3}{c}{\textit{(\ngold\ rows)}}
+    \end{tabular}
+    \caption{Description of the data table containing summary information
+    for all sources in the \goldsample.
+    }
+    \label{tbl:goldsample}
+\end{table}

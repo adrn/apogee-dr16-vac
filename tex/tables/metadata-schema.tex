@@ -1,0 +1,51 @@
+\begin{table}[ht]
+    \footnotesize
+    \centering
+    \begin{tabular}{l|l|p{6.6cm}}
+        \multicolumn{3}{c}{\textbf{Metadata for all sources in the parent sample}} \\
+        \hline
+        Column name & Unit / format & Description \\
+        \hline
+        \texttt{APOGEE\_ID}                          &                        & \apogee\ source identifier\\
+        \texttt{n\_visits}                           &                        & number of visits that pass our quality cuts\\
+        \texttt{MAP\_P}                              & $\mathrm{d}$           & $P$, orbital period\\
+        \texttt{MAP\_P\_err}                         & $\mathrm{d}$           & \\
+        \texttt{MAP\_e}                              &                        & $e$, orbital eccentricity\\
+        \texttt{MAP\_e\_err}                         &                        & \\
+        \texttt{MAP\_omega}                          & $\mathrm{rad}$         & $\omega$, argument of pericenter\\
+        \texttt{MAP\_omega\_err}                     & $\mathrm{rad}$         & \\
+        \texttt{MAP\_M0}                             & $\mathrm{rad}$         & $M_0$, phase at reference epoch\\
+        \texttt{MAP\_M0\_err}                        & $\mathrm{rad}$         & \\
+        \texttt{MAP\_K}                              & $\mathrm{km\,s^{-1}}$  & $K$, velocity semi-amplitude\\
+        \texttt{MAP\_K\_err}                         & $\mathrm{km\,s^{-1}}$  & \\
+        \texttt{MAP\_v0}                             & $\mathrm{km\,s^{-1}}$  & $v_0$, systemic velocity\\
+        \texttt{MAP\_v0\_err}                        & $\mathrm{km\,s^{-1}}$  & \\
+        \texttt{MAP\_s}                              & $\mathrm{km\,s^{-1}}$  & $s$, excess variance parameter\\
+        \texttt{MAP\_s\_err}                         & $\mathrm{km\,s^{-1}}$  & \\
+        \texttt{t0\_bmjd}                            &                        & reference epoch (Barycentric MJD)\\
+        \texttt{baseline}                            & $\mathrm{d}$           & the time baseline of the visits\\
+        \texttt{MAP\_ln\_likelihood}                 &                        & the log-marginal-likelihood value of the MAP sample\\
+        \texttt{MAP\_ln\_prior}                      &                        & the log-prior value of the MAP sample\\
+        \texttt{max\_unmarginalized\_ln\_likelihood} &                        & the maximum value of the unmarginalized likelihood\\
+        \texttt{max\_phase\_gap}                     &                        & the maximum gap in phase of the data for the MAP sample\\
+        \texttt{periods\_spanned}                    &                        & the number of (MAP) periods spanned by the data \\
+        \texttt{phase\_coverage}                     &                        & the phase-coverage of the data folded on the MAP period\\
+        \texttt{phase\_coverage\_per\_period}        &                        & the maximum number of data points within a single MAP period\\
+        \texttt{unimodal}                            & \texttt{boolean}       & True if the sampling is unimodal in period\\
+        \texttt{joker\_completed}                    & \texttt{boolean}       & True if the source has \Kminval\ samples from \thejoker\\
+        \texttt{mcmc\_completed}                     & \texttt{boolean}       & True if the source has \Kminval\ samples from MCMC\\
+        \texttt{mcmc\_success}                       & \texttt{boolean}       & True if the MCMC sampling converged\\
+        \texttt{gelman\_rubin\_max}                  &                        & The maximum (over parameters) value of $\hat{R}$\\
+        \texttt{robust\_constant\_ln\_likelihood}    &                        & The maximum log-likelihood value of a robust constant-velocity fit to the visit data\\
+        \texttt{binary\_catalog}                     & \texttt{boolean}       & True if the source is in the binary catalog (\sectionname~\ref{sec:catalog})\\
+        \hline
+        \multicolumn{3}{c}{\textit{(\nsources\ rows)}}
+    \end{tabular}
+    \caption{Description of the metadata table containing summary information
+    for all \apogee\ sources in the parent sample.
+    All columns ending in \texttt{\_err} are estimates of the standard-deviation
+    of the posterior samples around the MAP sample, but only computed for
+    unimodal samplings.
+    }
+    \label{tbl:metadata}
+\end{table}

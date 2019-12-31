@@ -635,6 +635,10 @@ the maximum Kepler model likelihood should be $>100$ times the maximum robust
 constant-velocity likelihood value.
 Of the \nsources\ total sources in our parent sample, \nbinary\ sources pass the
 selection above.
+Summary information for the samplings generated from all sources in the parent
+sample is included in \tablename~\ref{tbl:metadata}; In this table, the boolean
+mask \texttt{binary_catalog} can be used to select the \nbinary\ sources that
+pass the binary star selections defined in \equationname~\ref{eq:binary-cuts}.
 
 \figurename s~\ref{fig:binary-examples-short} and
 \ref{fig:binary-examples-long} show some examples of systems that passed the
@@ -695,6 +699,8 @@ are unimodal by checking whether all samples in each cluster lie within the mode
 size defined in \cite{thejoker}.
 In total, the \goldsample\ contains \ngold\ systems with unimodal samplings, and
 \nbimodal\ systems with bimodal samplings.
+Summary information and a list of sources in the \goldsample\ are included in
+\tablename~\ref{tbl:goldsample}.
 
 
 % Notebook: Figure-binary-fraction.ipynb
@@ -1280,7 +1286,7 @@ open source and is also available as a \texttt{Python} package, \texttt{hq}
 % project.
 
 
-\subsection{Sub-threshold searches}
+\subsection{Below-threshold searches}
 \label{sec:subthreshold}
 
 Another problem with a traditional catalog of detected binary companions (like
@@ -1480,9 +1486,18 @@ parameters.
 \section{Data tables}
 \label{sec:datatables}
 
-The primary data products released with this ...
+The primary data product released with this \documentname\ are the posterior
+samplings generated for each of \nsources\ sources in \apogee\ \dr{16}.
+However, we also compute summary information and statistics about these
+samplings and provide these data in \tablename~\ref{tbl:metadata}.
+We also define a \goldsample\ of high-quality, uniquely-solved binary star
+systems (see \sectionname~\ref{sec:gold-sample}) and release summary information
+along with cross-matched data from \gaia\ \dr{2} and the \acronym{STARHORSE}
+catalog of stellar parameters in \tablename~\ref{tbl:goldsample}.
 
-% \input{tables/metadata-schema.tex}
+\input{tables/metadata-schema.tex}
+
+\input{tables/goldsample-schema.tex}
 
 \bibliographystyle{aasjournal}
 \bibliography{dr16vac}
