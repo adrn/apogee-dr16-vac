@@ -2,11 +2,10 @@
 % - decide whether to submit a companion JOSS paper
 % - When Hogg's Gaussian Product Refactor note is on Arxiv, check the referenced
 %   equation numbers in the Appendix against the submitted version!
-% - Check and cite https://pdfs.semanticscholar.org/64cf/b422cbefe0239fd25ae39cf13833d60a4901.pdf
-%   The observed distribution of spectroscopic binaries from the Anglo-Australian Planet Search
 % - What fraction of present-day RGB stars should have eaten a companion star?
 % - Send to: Evan Bauer, Lars Bildsten, Adam Jermyn, Max Moe,
 % - Do we want to add a plot showing the mass ratio distribution?
+% - Include tables so we can actually include the data!
 
 \documentclass[modern]{aastex63}
 % \documentclass[twocolumn]{aastex63}
@@ -75,14 +74,14 @@
 \begin{abstract}\noindent
 % Context
 Most problems in contemporary astrophysics---from understanding the formation of
-black holes to untangling the chemical evolution of galaxies---relies on
-knowledge about binary stars.
+black holes to untangling the chemical evolution of galaxies---rely on knowledge
+about binary stars.
 % Aims
 This, in turn, depends on discovery and characterization of binary companions
 for large numbers of different kinds of stars across a range of environments.
-Contemporary stellar spectroscopic surveys observe hundreds of thousands to
-millions of stars, but often with few observational epochs, which makes binary
-discovery and orbital characterization challenging.
+Current stellar spectroscopic surveys observe hundreds of thousands to millions
+of stars, but often with few observational epochs, which makes binary discovery
+and orbital characterization challenging.
 % Methods
 We use a custom Monte Carlo sampler (\thejoker) to perform discovery and
 characterization of binary systems by the radial-velocity method, in the
@@ -91,22 +90,21 @@ We use it to generate posterior samplings in Keplerian parameters for
 \nsources\ sources released in \apogee\ Data Release 16.
 % Results
 Our final catalog contains \nbinary\ high-confidence systems that show
-interesting relationships between binary occurence rate and location in the
+interesting relationships between binary occurrence rate and location in the
 color--magnitude diagram.
 We find notable faint companions at high masses (black-hole candidates), at low
 masses (substellar candidates), and at close separations (mass-transfer
 candidates).
-We also use the posterior  samplings in a (simple, toy) hierarchical inference
-to measure the long-period binary-star eccentricity distribution.
+We also use the posterior samplings in a (toy) hierarchical inference to measure
+the long-period binary-star eccentricity distribution.
 We release the full set of posterior samplings for the entire parent sample of
 \nsources\ stars.
-This set of samplings involves no heuristic ``discovery''
-threshold and therefore can be used for myriad statistical purposes,
-including
-hierarchical inferences about binary-star populations and sub-threshold searches.
+This set of samplings involves no heuristic ``discovery'' threshold and
+therefore can be used for myriad statistical purposes, including hierarchical
+inferences about binary-star populations and sub-threshold searches.
 \end{abstract}
 
-\keywords{}
+% \keywords{}
 
 \section*{~}\clearpage
 \section{Introduction} \label{sec:intro}
@@ -789,14 +787,18 @@ selection region shown in \figurename~\ref{fig:specHR}.
 As has been noted in many past studies, we find that the binary fraction
 (companion frequency) increases with stellar mass (effective temperature) along
 the main sequence \citep[e.g.,][]{Duchene:2013}.
-Like the compilation of companion frequencies shown in \cite{Duchene:2013}, we
-find that the binary fraction increases steeply for primary stellar masses $M_1
-\gtrsim 1.1~\msun$ ($\Teff \gtrsim 6000~\textrm{K}$).
+Like the compilation of companion frequencies shown in \cite{Duchene:2013} and a
+number of studies of local samples of binary systems
+\citep[e.g.,][]{Eggleton:2008, Raghavan:2010, Gao:2014}, we find that the binary
+fraction increases steeply for primary stellar masses $M_1 \gtrsim 1.1~\msun$
+($\Teff \gtrsim 6000~\textrm{K}$).
 
 \figurename~\ref{fig:binfrac-mh} shows the total binary fraction for main
 sequence stars as a function of bulk metallicity, $\mh$.
 As has been recently emphasized, we find that the binary fraction is
-significantly anti-correlated with metallicity \citep[e.g.,][]{Moe:2019}.
+significantly anti-correlated with metallicity \citep[e.g.,][]{Moe:2019}, in
+disagreement with other recent work (with a much smaller sample) that has found
+no dependency with metallicity \citep{Jenkins:2015}.
 We find a shallower dependence of these properties, with a slope of $\approx
 -0.1$ as compared to the previously determined slope of $-0.2$ \citep{Moe:2019}.
 While we do not expect there to be strong selection biases that imprint on these
@@ -1152,44 +1154,6 @@ distribution to move away from rigid models or by parametrizing variations in
 the distribution with stellar parameters.
 
 
-\subsection{Sub-threshold searches}
-\label{sec:subthreshold}
-
-\todo{APW TODO: Feel free to delete this! But here is where we could say
-something like this:}
-One problem with a traditional catalog of detected binary companions
-(like our Table~whatever) is that there are many sources in which the
-evidence for a binary is significant, but not strong enough to qualify
-as a reliable detection.
-A user who has informative data on a star that would take a
-sub-threshold source above threshold has no recourse if only given a
-rigidly thresholded catalog.
-Even for well detected binary systems, in a traditional catalog of
-orbital parameters, there is no simple way to combine the results with
-new data to improve or adjust parameter estimates.
-The samplings provided here (in Table~whatever) can be used to solve
-these problems; they can be used to combine the \apogee\ information
-with new data, without requiring an ab initio re-analysis of
-the original \apogee\ data.
-
-As an example, we do APW HELP ME... maybe take a sub-threshold star and
-imagine that we got an RV point at some time in the future and show that
-it jumps above threshold?? It's just a cutesie example that would involve
-importance sampling the sampling with the likelihood from the new point.
-
-blah blah blah...
-
-The ability to perform sub-threshold searches or add external
-information is limited by detailed shape of the posterior pdf and the
-number of samples we deliver.
-If the new data are highly informative, or favor a mode in the
-posterior pdf that is not well sampled, the 512-sample posterior
-samplings we deliver will not be dense enough to provide support for
-the updated posterior pdf.
-This puts limitations on the scope of sub-threshold searches, but at
-least they are possible with these outputs, in some regime of applicability.
-
-
 \section{Discussion}
 
 \subsection{Assumptions, caveats, and known failures}
@@ -1282,6 +1246,43 @@ This is a kind of contamination that could certainly be modeled, with a
 mechanical model of asteroseismic surface motions and our open-source code.
 That's also out of scope, but an interesting, valuable, and straightforward
 project.
+
+
+\subsection{Sub-threshold searches}
+\label{sec:subthreshold}
+
+Another problem with a traditional catalog of detected binary companions
+(like our ) is that there are many sources in which the
+evidence for a binary is significant, but not strong enough to qualify
+as a reliable detection.
+A user who has informative data on a star that would take a
+sub-threshold source above threshold has no recourse if only given a
+rigidly thresholded catalog.
+Even for well detected binary systems, in a traditional catalog of
+orbital parameters, there is no simple way to combine the results with
+new data to improve or adjust parameter estimates.
+The samplings provided here (in Table~whatever) can be used to solve
+these problems; they can be used to combine the \apogee\ information
+with new data, without requiring an ab initio re-analysis of
+the original \apogee\ data.
+
+As an example, we do APW HELP ME... maybe take a sub-threshold star and
+imagine that we got an RV point at some time in the future and show that
+it jumps above threshold?? It's just a cutesie example that would involve
+importance sampling the sampling with the likelihood from the new point.
+
+blah blah blah...
+
+The ability to perform sub-threshold searches or add external
+information is limited by detailed shape of the posterior pdf and the
+number of samples we deliver.
+If the new data are highly informative, or favor a mode in the
+posterior pdf that is not well sampled, the 512-sample posterior
+samplings we deliver will not be dense enough to provide support for
+the updated posterior pdf.
+This puts limitations on the scope of sub-threshold searches, but at
+least they are possible with these outputs, in some regime of applicability.
+
 
 \section{Conclusions}
 
