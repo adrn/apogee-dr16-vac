@@ -10,7 +10,6 @@
 
 \documentclass[modern]{aastex63}
 % \documentclass[twocolumn]{aastex63}
-\usepackage{amsmath}
 
 % Load common packages
 \usepackage{microtype}  % ALWAYS!
@@ -22,6 +21,7 @@
 \usepackage{color}
 
 % Hogg's issues need to be addressed.
+\renewcommand{\twocolumngrid}{\onecolumngrid} % guess what this does HAHAHA!
 \setlength{\parindent}{1.1\baselineskip}
 \addtolength{\topmargin}{-0.2in}
 \addtolength{\textheight}{0.4in}
