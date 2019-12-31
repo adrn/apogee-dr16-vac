@@ -19,6 +19,9 @@
 \usepackage{graphicx}
 \usepackage{color}
 
+\usepackage{enumitem}
+\setlist[description]{style=unboxed}
+
 % Hogg's issues need to be addressed.
 \setlength{\parindent}{1.1\baselineskip}
 \addtolength{\topmargin}{-0.2in}
@@ -637,7 +640,7 @@ Of the \nsources\ total sources in our parent sample, \nbinary\ sources pass the
 selection above.
 Summary information for the samplings generated from all sources in the parent
 sample is included in \tablename~\ref{tbl:metadata}; In this table, the boolean
-mask \texttt{binary_catalog} can be used to select the \nbinary\ sources that
+mask \texttt{binary\_catalog} can be used to select the \nbinary\ sources that
 pass the binary star selections defined in \equationname~\ref{eq:binary-cuts}.
 
 \figurename s~\ref{fig:binary-examples-short} and
@@ -1340,16 +1343,63 @@ are possible with these outputs, in some regime of applicability.
 
 \section{Conclusions}
 
-\todo{refer directly to the figures}
-
-Our key results are summarized below:
+Our key results and conclusions are summarized below:
 \begin{description}
-    \item[Signatures of companion engulfment] at the red clump, and with decreasing logg
-    \item[The binary fraction is anti-correlated with metallicity]
-    \item[Brown dwarfs]
-    \item[Non-interacting compact object candidates]
-    \item[Eccentricity distribution]
-    \item[Huge sample of binary star systems]
+    \item[The binary fraction depends on the stellar parameters of the primary
+    star] \figurename~\ref{fig:binary-CMD} shows a simple estimate of the binary
+    fraction over the color--magnitude diagram, utilizing all \nsources\
+    \apogee\ sources used in this work. There is a notable dearth of companions
+    around the red clump, where companions may have been engulfed when the
+    primary star ascended the upper giant branch. We also rediscover trends in
+    the binary fraction with effective temperature along the main sequence
+    (i.e., stellar mass), and show that the binary fraction on the giant branch
+    depends on the surface gravity (i.e., surface size) of the primary, also
+    indicating that companion engulfment is an important outcome of close binary
+    star evolution.
+    \item[The binary fraction is anti-correlated with metallicity] We find that
+    the binary fraction decreases linearly with bulk metallicity with a slope of
+    $-0.1~\textrm{dex}^{-1}$ over the domain $-1 \lesssim \mh \lesssim 0.4$, as
+    shown in \figurename~\ref{fig:binfrac-mh}.
+    \item[We detect the clear signature of tidal circularization in field main
+    sequence and red giant branch stars] \figurename~\ref{fig:Plogg} (left)
+    shows inferred periods and eccentricities for systems with
+    uniquely-determined orbits in the \goldsample.
+    The abundances of low-eccentricity sources at short periods is a
+    manifestation of tidal circularization, which should operate at longer
+    periods for larger, more convective (i.e., giant branch) stars.
+    \item[We identify 95 candidate brown dwarf companions] Using simplistic cuts
+    on the \goldsample\ of high-quality sources with unimodal posterior
+    samplings, we identify candidate brown dwarf companions by selecting sources
+    with median minimum companion mass (\mtwomin) values below the hydrogen
+    burning limit, $\mtwomin < 80~\mjup$. \figurename~\ref{fig:m2m1} (left)
+    shows these sources as points below the horizontal dashed line. We highlight
+    a few of these systems in \figurename~\ref{fig:brown-dwarfs}.
+    \item[We identify 40 candidate non-interacting compact object companions]
+    Again using simplistic cuts on the \goldsample\ of high-quality sources with
+    unimodal posterior samplings, we identify candidate compact object
+    companions by selecting sources with $\mtwomin > M_1$.
+    \figurename~\ref{fig:m2m1} (left) shows these sources as points above the
+    upper, curved dashed line. We highlight a few of these systems in
+    \figurename~\ref{fig:compact-objects}.
+    \item[The long-period, binary-star eccentricity distribution is peaked at
+    moderate eccentricities] We execute a toy hierarchical inference using the
+    posterior samplings for $\sim 8\,600$ FGK-type main sequence stars to infer
+    the eccentricity distribution of long-period ($P>100~\dayd$),
+    intermediate-mass main-sequence star binary systems. By representing the
+    distribution using a beta distribution, we derive precise posterior
+    constraints on the parameters using this hierarchical model and find $a =
+    1.749 \pm 0.001$ and $b = 2.008 \pm 0.001$. \figurename~\ref{fig:eccdist}
+    shows our inferred eccentricity distribution, indicating that long-period
+    binary star systems prefer moderate eccentricities.
+    \item[We release a sample of $20\,000$ binary star systems and posterior
+    samplings over orbital parameters for $\nsources$ \apogee\ sources] Finally,
+    we release a catalog of \nbinary\ high-confidence binary star systems
+    (\tablename~\ref{tbl:metadata}). The majority of these systems have poorly
+    constrained orbital parameters, but we release posterior samplings over
+    these parameters for all \nsources\ \apogee\ sources to enable other
+    probabilistic inferences with these data. We also define and release a
+    \goldsample\ containing \ngold\ systems with high-quality, unimodal
+    posterior samplings that can be used and summarized more simply.
 \end{description}
 
 
