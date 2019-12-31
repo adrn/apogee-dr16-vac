@@ -1,11 +1,10 @@
 % TODO:
-% - decide whether to submit a companion JOSS paper
 % - When Hogg's Gaussian Product Refactor note is on Arxiv, check the referenced
 %   equation numbers in the Appendix against the submitted version!
-% - What fraction of present-day RGB stars should have eaten a companion star?
-% - Send to: Evan Bauer, Lars Bildsten, Adam Jermyn, Max Moe,
 % - Do we want to add a plot showing the mass ratio distribution?
 % - Include tables so we can actually include the data!
+% - What fraction of present-day RGB stars should have eaten a companion star?
+% - Send to: Evan Bauer, Lars Bildsten, Adam Jermyn, Max Moe,
 
 \documentclass[modern]{aastex63}
 % \documentclass[twocolumn]{aastex63}
@@ -189,7 +188,12 @@ some summary metadata for the subsample with good, uniquely determined
 companions and orbits.
 We demonstrate the use of the samplings with a few examples of interesting
 objects and a simple hierarchical probabilistic populations inference.
-
+This \documentname\ is similar to \cite{Price-Whelan:2018} but should be viewed
+as a strict replacement (rather than an improvement) of the catalogs and results
+of that work: We have made substantial improvements to the methodology
+(improvements to \thejoker, see Appendix~\ref{app:marginal-likelihood}), and the
+\apogee\ data in \dr{16} are both higher quality and substantially larger in
+volume.
 
 \section{Data} \label{sec:data}
 
@@ -1083,8 +1087,8 @@ hierarchical likelihood can be written as a sum over the ratio of probabilities
 \begin{equation}
     p(D_j \given a, b) \approx \frac{\mathcal{Z}}{M_j} \,
         \sum_k^M \frac{p(e_{jm} \given a, b)}{p(e_{jm} \given \alpha_0)}
-        \quad .
 \end{equation}
+where $\mathcal{Z}$ is a normalization constant.
 In practice, we evaluate the hierarchical log-likelihood, $\ln p(D_j \given a,
 b)$, as
 \begin{equation}
@@ -1173,26 +1177,32 @@ In \apogee, this might occur for blended sources, multiple-star systems with
 more than one star that contribute significantly to infrared flux, or sources
 with stellar parameters very beyond the grid of template spectra
 \citep{Nidever:2015}.
-Second, the adopted prior \pdf\ over systemic velocities, $v_0$, is reasonable
+
+Second, related to the first point, we make the strong assumption that all
+sources are single-lined, i.e., that any binary companions do not contribute
+significantly to the observed spectra.
+This is wrong in general: Some systems will be double lined (sometimes only
+subtly, but detectable, e.g., \citealt{El-Badry:2018}), and we will be biased in
+cases where these sources are not properly filtered by the quality cuts done
+above.
+This also means that we will definitely miss systems with similar masses (and
+especially ``twin'' binaries; \citealt{El-Badry:2019}).
+We expect this assumption to be worse on the main sequence than on the giant
+branch, because any lower-mass companion to a giant branch star will have a
+luminosity hundreds or thousand times fainter.
+
+Third, the adopted prior \pdf\ over systemic velocities, $v_0$, is reasonable
 for considering all \apogee\ sources (i.e., for a mixture of kinematically
 disk-like and halo-like sources), but may lead to biased posterior samplings for
 sources in globular clusters or dwarf galaxies.
 For such systems, it would be safer to re-run \thejoker\ with specialized priors
 over systemic velocity for each individual host system.
+
 Finally, in this work, we assume that all systems are binary systems, so triples
 or higher-order stellar multiplets will generally have incorrect samplings.
-In future work, we will generate samplings for systems that are consistent with
-being hierarchical triple-star systems, but this is beyond the scope of the
+We will generate samplings for systems that are consistent with being
+hierarchical triple-star systems, but this is beyond the scope of the
 general-use catalog considered here.
-
-\todo{I (HOGG) think we should NOT promise future work. So soften that ``we will generate'' above.}
-
-\todo{Another assumption is that the binaries are single-lined.}
-Some are \emph{in fact} double lined and we are definitely doing those wrong.
-We must be getting biased results.
-Also many will be in an intermediate state, where they aren't double lined but
-you can detect the second spectrum. CITE EL~BADRY.
-These will also be biased.
 
 
 \subsection{Binary fraction trends with stellar properties}
@@ -1200,91 +1210,131 @@ These will also be biased.
 
 We find a number of interesting trends in the binary fraction as a function of
 stellar parameters and chemical composition that have far-reaching implications.
-For one, the binary fraction increases rapidly with stellar mass and with
-decreasing metallicity.
-\todo{See Moe paper for discussion of this?}
-- Dark matter masses of dwarfs??
-- Impacts on stellar population evolution - e.g., how does varying binary fraction change chemical enrichment?
+For one, the binary fraction increases rapidly with decreasing metallicity (as
+also noted recently by \citealt{Moe:2019}).
+Beyond the implications discussed in \cite{Moe:2019}, this also motivates
+appropriate investigation into how a large binary fraction could influence
+inferred properties of dwarf galaxies and globular clusters.
+For example, stellar binarity impacts velocity dispersion measurements, which
+then contaminate estimates of dark matter masses in these systems
+\citep[e.g.,][]{Kouwenhoven:2008, Spencer:2017, Spencer:2018}, but also impact
+the long-term stability and dynamical evolution of compact stellar systems
+\citep[e.g.,][]{Hut:1992, Sigurdsson:1993}.
+A large binary fraction also impacts the chemical evolution of these systems
+\citep[e.g.,][]{Eldridge:2008, Eldridge:2009}.
 
-We also do not observe systems with evolved-star members that have short-period
-companions that could have survived the common-envelope phase.
-Combined with the first point, this implies that some appreciable fraction of
-evolving stars (on their way to the RGB or horizontal branch) likely merge with
-their companion.
-If true, ... do the merger stars move to other places in the CMD? Bias stellar mass inferences for old stellar populations using SSP models?
+% While we detect many main sequence systems with short-period (i.e.,
+% $P<50~\dayd$) companions, we do not observe systems with evolved-star members
+% that have short-period companions that could have survived the common-envelope
+% phase.
+% Combined with the observation that the binary fraction rises steeply with
+% stellar mass, this implies that an appreciable fraction of evolving stars (i.e.,
+% the more massive stars on their way to the RGB or horizontal branch) likely
+% merge with their companions.
+% Do these mergers
+% This , ... do the merger stars move to other places in the CMD? Bias stellar mass inferences for old stellar populations using SSP models?
 
-These undoubtebly also ... constrain binary star formation physics ...
+% These trends undoubtedly also constrain binary star formation physics ...
 
-% \todo{Implications / theoretical understanding of this. See Moe paper.}
-
-\todo{Mention here that any real understanding of the binary fraction will
-require a model of the selection function, both for \apogee\ and for our detections. This then
-segues nicely into the next section...}
+We caution, however, that any real understanding of the binary fraction (in an
+absolute sense) from the \emph{catalogs} produced here will require a model of
+the \apogee\ selection function and for our detection efficiency.
+Still, we clearly now have samples of binary stars large enough to begin placing
+strong constraints on theories of binary star formation and evolution and their
+impact on galactic stellar populations.
 
 
 \subsection{Selection, completeness, false positives, and contamination}
 \label{sec:completeness}
 
-\todo{We have done nothing to deliver completeness or false-positive estimates.}
-I (HOGG) don't think we need to do this in this paper; it is out of scope.
-However, it is critical for use of our 20,000 objects as a catalog for performing
-statistical tests.
-For example, if we want to interpret the beautiful binary fraction plot!
-In general, completeness will be a function of amplitude, period,
-orbital phase, and eccentricity vector (maybe in that order).
+As cautioned above, to properly use our catalog of systems for performing
+statistical tests (for example, to interpret the binary fraction values in
+\figurename~\ref{fig:binary-CMD} in an absolute sense), it is critical to have
+estimates of our detection efficiency or completeness as a function of binary
+orbital parameters and stellar parameters.
+While we have not provided estimates of the completeness, we do release the full
+posterior samplings in orbital parameters for \emph{all} sources, along with
+open-source software that could be used to construct these estimates.
+In general, our completeness will likely be a strong function of velocity
+semi-amplitude, period, and eccentricity (which implicitly imply functions of
+companion mass, inclination, and separation).
+It will also depend on mass ratio, as many sources with bright companions will
+be dropped by the quality cuts imposed on the \apogee\ data.
 
-Because we have released all our code open-source, we have made it very easy
-for anyone to do this kind of work.
-Here's a little outline of how one might do it, and what one might find.
+One way to construct completeness estimates would be to repeat the analysis done
+in this \documentname\ using simulated systems with known parameters.
+The sampler used to generate the posterior orbit samplings is open source and
+released as a \texttt{Python} package \citep{thejoker, Price-Whelan:2019a}.
+The pipeline software used to define and analyze the \apogee\ parent sample is
+open source and is also available as a \texttt{Python} package, \texttt{hq}
+\citep{Price-Whelan:2019}.
 
-As for contamination, that is a hard problem, because it requires a
-model of the kinds of contaminants that might be present, which are
-(almost by definition) the things we don't know about.
-However, one good example is the asteroseismic mode contamination
-that appears to be enetering our sample at the top of the RGB.
-This is a kind of contamination that could certainly be modeled, with a
-mechanical model of asteroseismic surface motions and our open-source code.
-That's also out of scope, but an interesting, valuable, and straightforward
-project.
+% As for contamination, that is a hard problem, because it requires a
+% model of the kinds of contaminants that might be present, which are
+% (almost by definition) the things we don't know about.
+% However, one good example is the asteroseismic mode contamination
+% that appears to be enetering our sample at the top of the RGB.
+% This is a kind of contamination that could certainly be modeled, with a
+% mechanical model of asteroseismic surface motions and our open-source code.
+% That's also out of scope, but an interesting, valuable, and straightforward
+% project.
 
 
 \subsection{Sub-threshold searches}
 \label{sec:subthreshold}
 
-Another problem with a traditional catalog of detected binary companions
-(like our ) is that there are many sources in which the
-evidence for a binary is significant, but not strong enough to qualify
-as a reliable detection.
-A user who has informative data on a star that would take a
-sub-threshold source above threshold has no recourse if only given a
-rigidly thresholded catalog.
-Even for well detected binary systems, in a traditional catalog of
-orbital parameters, there is no simple way to combine the results with
-new data to improve or adjust parameter estimates.
-The samplings provided here (in Table~whatever) can be used to solve
-these problems; they can be used to combine the \apogee\ information
-with new data, without requiring an ab initio re-analysis of
-the original \apogee\ data.
+Another problem with a traditional catalog of detected binary companions (like
+ours) is that there are many sources in which the evidence for a binary is
+significant, but not strong enough to qualify as a reliable ``detection.''
+A user who has informative data for a source that would take a sub-threshold
+source above threshold (in terms of our criteria for including a source in the
+catalog) has no recourse if only given the rigidly-thresholded catalog entries.
+Even for well detected binary systems, in a traditional catalog of orbital
+parameters, there is no simple way to combine the results with new data to
+improve or adjust parameter estimates.
+The samplings provided here can be used to solve these problems; They can be
+used to combine the \apogee\ information with new data, without requiring an
+\textsl{ab initio} re-analysis of the original \apogee\ data.
+This can be done by repeating the rejection sampling step used in \thejoker\ to
+generate posterior samples, but replacing the prior samples with the posterior
+samples generated with the \apogee\ data alone and replacing the full marginal
+likelihood evaluation with the marginal likelihood of the new data computed at
+each sample.
 
-As an example, we do APW HELP ME... maybe take a sub-threshold star and
-imagine that we got an RV point at some time in the future and show that
-it jumps above threshold?? It's just a cutesie example that would involve
-importance sampling the sampling with the likelihood from the new point.
+In detail, following the notation in Appendix~\ref{app:marginal-likelihood},
+converting the posterior samples released here into posterior samples over the
+\apogee\ data, $D_1$, \textsl{plus} some new velocity data, $D_2$, requires
+generating samples from the posterior \pdf
+\begin{align}
+    p(\bs{\theta} \given D_1, D_2) &\propto
+        p(D_1 \given \bs{\theta}) \, p(D_2 \given \bs{\theta}) \,
+        p(\bs{\theta})\label{eq:postupdate1}\\
+        &\propto p(D_2 \given \bs{\theta}) \,
+        \left[ p(D_1 \given \bs{\theta}) \, p(\bs{\theta}) \right]
+        \label{eq:postupdate2}
+\end{align}
+where we have assumed that the new data are independent of the \apogee\ data.
+Note that the terms in brackets in \equationname~\ref{eq:postupdate2} are
+proportional to the posterior probability of the parameters given only the
+\apogee\ data, i.e., the distribution we have generated samples from using
+\thejoker.
+We can therefore use the posterior samples generated from the \thejoker\ with
+the \apogee\ data to rejection-sample using the new marginal likelihood, $p(D_2
+\given \bs{\theta})$, to generate samples from $p(\bs{\theta} \given D_1, D_2)$.
 
-blah blah blah...
-
-The ability to perform sub-threshold searches or add external
-information is limited by detailed shape of the posterior pdf and the
-number of samples we deliver.
-If the new data are highly informative, or favor a mode in the
-posterior pdf that is not well sampled, the 512-sample posterior
-samplings we deliver will not be dense enough to provide support for
-the updated posterior pdf.
-This puts limitations on the scope of sub-threshold searches, but at
-least they are possible with these outputs, in some regime of applicability.
+The ability to perform sub-threshold searches or add external information is
+limited by detailed shape of the posterior \pdf\ and the number of samples we
+deliver (here, \Kminval).
+If the new data are highly informative, or favor a mode in the posterior \pdf\
+that is not well sampled, the posterior samplings we deliver will not be dense
+enough to provide support for the updated posterior \pdf.
+This puts limitations on the scope of sub-threshold searches, but at least they
+are possible with these outputs, in some regime of applicability.
 
 
 \section{Conclusions}
+
+\todo{refer directly to the figures}
 
 Our key results are summarized below:
 \begin{description}
@@ -1293,7 +1343,6 @@ Our key results are summarized below:
     \item[Brown dwarfs]
     \item[Non-interacting compact object candidates]
     \item[Eccentricity distribution]
-    \item[Sub-threshold search and discovery]
     \item[Huge sample of binary star systems]
 \end{description}
 
@@ -1345,7 +1394,7 @@ Wisconsin, Vanderbilt University, and Yale University.
     schwimmbad \citep{schwimmbad:2017},
     scipy \citep{scipy},
     theano \citep{theano},
-    thejoker \citep{thejoker}
+    thejoker \citep{thejoker, Price-Whelan:2019a}
 }
 
 
@@ -1428,6 +1477,12 @@ A final point that is relevant to additional enhancements discussed in
 to note that $\vec{\mu}$ and $\mat{\Lambda}$ \emph{can} depend on the nonlinear
 parameters.
 
+\section{Data tables}
+\label{sec:datatables}
+
+The primary data products released with this ...
+
+% \input{tables/metadata-schema.tex}
 
 \bibliographystyle{aasjournal}
 \bibliography{dr16vac}
