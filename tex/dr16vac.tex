@@ -180,7 +180,8 @@ But it generates full samplings over orbital parameters for arbitrarily sampled
 radial-velocity data.
 
 Importantly, we use \thejoker\ to sample \emph{every} \apogee\ target as if it
-were an SB1.
+were an SB1 (see \sectionname~\ref{sec:discussion} for some discussion of the
+implications of this assumption).
 Discovery of which stars really do have companions then becomes a
 post-processing step on the confidence of the characterization: This project
 deliberately conflates discovery with characterization.
@@ -216,8 +217,9 @@ by area, which leads to extremely nonuniform coverage of the Galactic stellar
 distribution (see, e.g., Figure~1 in \citealt{DR16}).
 
 \dr{16} is the first \sdss\ data release to contain \apogee\ data observed with
-a duplicate of the \apogee\ spectrograph on the 2.5m du Point telescope at Las
-Campanas Observatory, providing access to targets in the southern hemisphere.
+a duplicate of the \apogee\ spectrograph on the 2.5m Ir\'en\'ee du Pont
+telescope \citep{Bowen:1973} at Las Campanas Observatory, providing access to
+targets in the southern hemisphere.
 For the first time, this data release also contains calibrated stellar
 parameters for dwarf stars.
 These two facts mean that \dr{16} contains nearly 3 times more sources with
@@ -226,15 +228,21 @@ calibrated stellar parameters than the previous public data release, \dr{14}
 about \apogee\ \dr{16}).
 
 Most \apogee\ stars are observed multiple times in separate ``visits'' that are
-combined before the \apogee\ data reduction pipeline \citep{ASPCAP} determines
-stellar parameters and chemical abundances for each source.
+combined before the \apogee\ data reduction pipeline \citep{Nidever:2015,
+Zamora:2015, ASPCAP} determines stellar parameters and chemical abundances for
+each source.
 While the visit spectra naturally provide time-domain velocity information about
 sources (thus enabling searches for massive companions), studying stellar
 multiplicity is not the primary goal of the survey:
 The cadence and time baseline for a typical \apogee\ source is primarily
 governed by trying to schedule a set number of visits determined by
 signal-to-noise thresholds for the faintest targets in a given field.
-A consequence of this strategy is that the time resolution and number of visits
+A small number of fields (five) were designed specifically for companion studies
+and have $>10$ visits spaced to enable binary system characterization.
+
+While some past studies have made use of other fields with large numbers of
+visits to study binary-star systems \citep{Troup:2016, Fernandez-Trincado:2019},
+a consequence of this strategy is that the time resolution and number of visits
 for the vast majority of \apogee\ sources in \dr{16} is not sufficient for fully
 determining companion orbital properties, as illustrated below.
 Still, the large number of targets in \apogee\ and the dynamic range in stellar
@@ -510,6 +518,9 @@ more samples are needed.
 For sources that require more samples, these can be split again into two
 classes: Sources with unimodal samplings in period, and sources with multi-modal
 samplings (following the criteria described in \citealt{thejoker}).
+For incomplete sources with multi-modal samplings ($2\,787$ sources), these
+would need to be re-run with a much larger number of prior samples to reach
+$\Kminval$ posterior samples, but here we mark these sources as incomplete.
 For incomplete sources with unimodal samplings ($1\,709$ sources), we use the
 samples returned from \thejoker\ to initialize Hamiltonian Monte Carlo (HMC) to
 continue generating posterior samples.
@@ -755,7 +766,7 @@ $\sim 20\%$--$40\%$ of all bound binary star systems.
 With this in mind, we use our sample to study some simply population properties
 of these binary systems, and highlight some interesting systems in our sample.
 
-\subsection{Binary fraction trends with stellar properties}
+\subsection{Close binary fraction trends with stellar properties}
 \label{sec:binary-fraction}
 
 Our catalog of binary stars is not complete in the sense that the cuts we have
@@ -763,9 +774,10 @@ made on the orbital parameter samplings will impart non-uniform selection biases
 that depend on the true orbital properties of binaries and on the cadence of
 observations (visits) for each source.
 However, because of the simple target selection and observation strategy used by
-\apogee\, \citep{Zasowski:2013, Zasowski:2017}, we do not expect these
-binary-star selection biases to depend strongly on stellar parameters (e.g.,
-metallicity, surface gravity).
+\apogee\, \citep{Zasowski:2013, Zasowski:2017} and \apogee-2S (south; Beaton et
+al., in prep., Santana et al., in prep.), we do not expect these binary-star
+selection biases to depend strongly on stellar parameters (e.g., metallicity,
+surface gravity).
 We can therefore still use this catalog to study the \emph{relative} close
 binary fraction within our sample, but caution against interpreting the binary
 fractions discussed below in an absolute sense.
@@ -1048,7 +1060,7 @@ pass the strict cuts we used to construct the \goldsample.
     \includegraphics[width=0.8\textwidth]{example-compact-objects-placeholder.png}
     \end{center}
     \caption{%
-    The same as \figurename~\ref{fig:brown-dwarfs}, but for txample binary star
+    The same as \figurename~\ref{fig:brown-dwarfs}, but for example binary star
     systems from the \goldsample\ with faint, high-mass companions that are
     candidate compact objects.
     \label{fig:compact-objects}
@@ -1189,7 +1201,7 @@ distribution to move away from rigid models or by parametrizing variations in
 the distribution with stellar parameters.
 
 
-\section{Discussion}
+\section{Discussion}\label{sec:discussion}
 
 In what follows, we discuss some important caveats and considerations for
 interpreting the results and using the catalogs described in this \documentname.
@@ -1258,9 +1270,9 @@ appropriate investigation into how a large binary fraction could influence
 inferred properties of dwarf galaxies and globular clusters.
 For example, stellar binarity impacts velocity dispersion measurements, which
 then contaminate estimates of dark matter masses in these systems
-\citep[e.g.,][]{Kouwenhoven:2008, Spencer:2017, Spencer:2018}, but also impact
-the long-term stability and dynamical evolution of compact stellar systems
-\citep[e.g.,][]{Hut:1992, Sigurdsson:1993}.
+\citep[e.g.,][]{Aaronson:1987, Kouwenhoven:2008, Spencer:2017, Spencer:2018},
+but also impact the long-term stability and dynamical evolution of compact
+stellar systems \citep[e.g.,][]{Hut:1992, Sigurdsson:1993}.
 A large binary fraction also impacts the chemical evolution of these systems
 \citep[e.g.,][]{Eldridge:2008, Eldridge:2009}.
 
