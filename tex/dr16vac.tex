@@ -131,7 +131,7 @@ solar neighborhood \citep{Raghavan:2010}, for specific stellar types
 \citep[e.g.,][]{Moe:2017}, or with imprecise statistics using large samples of
 stars \citep{Badenes:2018}.
 
-While this problem spans a huge range in timescales (from hours to centuries),
+While this problem spans a huge range in timescales (from hours to millenia),
 current or near-future stellar surveys (e.g., \textit{Gaia}, \apogee,
 \acronym{LAMOST}, \acronym{SDSS-V}; \citealt{Gaia-Collaboration:2016,
 Gaia-Collaboration:2018, Majewski:2017, Zhao:2012, Kollmeier:2017}) have the
@@ -140,15 +140,16 @@ magnitude larger than are presently known, throughout all stages of stellar
 evolution.
 Even with existing datasets, we now have large enough sample sizes and the
 robust tools needed to perform hierarchical inferences to constrain much more
-detailed models of binary star formation and evolution.
+detailed models of binary star formation and evolution \citep[e.g.,][]{Moe:2018,
+El-Badry:2019a}.
 However, the most precise measurements of the binary star population properties
 will benefit from joint analysis of all stellar surveys, which cover a range of
 stellar types, wavelengths, and measurement techniques.
 
 As a step towards large-scale population inference, we focus here on multi-epoch
 spectroscopic data from the \apogee\ surveys.
-These surveys are biased towards red-giant stars (although with \dr{16} there
-are now many main-sequence stars, see below).
+This survey sequence has predominantly targeted red-giant stars (although with
+\dr{16} there are now many main-sequence stars, see below).
 Because of operational re-visit decisions to reach signal-to-noise thresholds,
 the surveys deliver some time-domain information, although they were not
 designed with binary-star characterization as highest priority.
@@ -173,16 +174,16 @@ performs brute-force rejection sampling using a large, initial prior sampling.
 Because this sampler does not produce Markov Chains, but rather just uses dense
 prior samples, it does not get ``stuck'' in local optima; It samples the full
 parameter space, with zero autocorrelation among samples.
-To proceed, however, the sampler makes strong assumptions (the source is a
-single-lined spectroscopic binary (SB1) with only one companion, for example),
-but it generates full samplings over orbital parameters for arbitrarily sampled
+To proceed, however, the sampler makes strong assumptions, that the source is a
+single-lined spectroscopic binary (SB1) with only one companion (for example).
+But it generates full samplings over orbital parameters for arbitrarily sampled
 radial-velocity data.
 
-Importantly, we use \thejoker\ to sample \emph{every} target as if it were a
-SB1.
+Importantly, we use \thejoker\ to sample \emph{every} \apogee\ target as if it
+were an SB1.
 Discovery of which stars really do have companions then becomes a
-post-processing step on the confidence of the characterization; That is, this
-project deliberately conflates discovery with characterization.
+post-processing step on the confidence of the characterization: This project
+deliberately conflates discovery with characterization.
 This has the added advantage that we deliver full posterior samplings even for
 stars that aren't obviously in binary systems; These can be used for statistical
 studies and sub-threshold searches when new data arrive.
@@ -192,12 +193,13 @@ some summary metadata for the subsample with good, uniquely determined
 companions and orbits.
 We demonstrate the use of the samplings with a few examples of interesting
 objects and a simple hierarchical probabilistic populations inference.
+
 This \documentname\ is similar to \cite{Price-Whelan:2018} but should be viewed
 as a strict replacement (rather than an improvement) of the catalogs and results
 of that work: We have made substantial improvements to the methodology
 (improvements to \thejoker, see Appendix~\ref{app:marginal-likelihood}), and the
-\apogee\ data in \dr{16} are both higher quality and substantially larger in
-volume.
+\apogee\ data in \dr{16} are of higher quality, substantially larger in
+volume, and have more observation epochs.
 
 \section{Data} \label{sec:data}
 
