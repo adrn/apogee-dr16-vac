@@ -46,8 +46,8 @@
 
 \begin{document}
 
-\title{Binary companions to APOGEE DR16 stars: \\
-       20\,000 binary-star systems across the color--magnitude diagram}
+\title{Close Binary Companions to APOGEE DR16 Stars: \\
+       20\,000 Binary-star Systems Across the Color--Magnitude Diagram}
 
 \author[0000-0003-0872-7098]{Adrian~M.~Price-Whelan}
 \affiliation{Center for Computational Astrophysics, Flatiron Institute,
@@ -75,27 +75,28 @@
 
 \begin{abstract}\noindent
 % Context
-Most problems in contemporary astrophysics---from understanding the formation of
+Many problems in contemporary astrophysics---from understanding the formation of
 black holes to untangling the chemical evolution of galaxies---rely on knowledge
 about binary stars.
 % Aims
 This, in turn, depends on discovery and characterization of binary companions
-for large numbers of different kinds of stars across a range of environments.
+for large numbers of different kinds of stars in different chemical and
+dynamical environments.
 Current stellar spectroscopic surveys observe hundreds of thousands to millions
-of stars, but often with few observational epochs, which makes binary discovery
-and orbital characterization challenging.
+of stars with (typically) few observational epochs, which allows binary
+discovery but makes orbital characterization challenging.
 % Methods
 We use a custom Monte Carlo sampler (\thejoker) to perform discovery and
-characterization of binary systems by the radial-velocity method, in the
-regime of sparse, noisy, and poorly sampled data.
+characterization of binary systems through radial-velocities, in the regime of
+sparse, noisy, and poorly sampled multi-epoch data.
 We use it to generate posterior samplings in Keplerian parameters for
 \nsources\ sources released in \apogee\ Data Release 16.
 % Results
-Our final catalog contains \nbinary\ high-confidence systems that show
+Our final catalog contains \nbinary\ high-confidence close-binary ($P \lesssim 1~\yr$, $a \lesssim 1~\AU$) systems that show
 interesting relationships between binary occurrence rate and location in the
 color--magnitude diagram.
 We find notable faint companions at high masses (black-hole candidates), at low
-masses (substellar candidates), and at close separations (mass-transfer
+masses (substellar candidates), and at very close separations (mass-transfer
 candidates).
 We also use the posterior samplings in a (toy) hierarchical inference to measure
 the long-period binary-star eccentricity distribution.
@@ -419,7 +420,7 @@ period and eccentricity values.
 This implicitly implies vastly different prior beliefs about the companion mass
 as a function of orbital period: For example, a zero-mean Gaussian prior on $K$
 with a standard-deviation of $30~\kms$ transforms to reasonable prior beliefs
-about companion mass at periods around $1~{\rm year}$, but gives substantial
+about companion mass at periods around $1~\yr$, but gives substantial
 prior probability to companion masses $>100~\msun$ at periods $>10^4~\dayd$.
 We therefore, by default, adopt a new (also Gaussian) prior on the
 semi-amplitude with a variance, $\sigma^2_K$, that scales with the
