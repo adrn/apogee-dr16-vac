@@ -69,9 +69,19 @@
 \affiliation{Max-Planck-Institut f\"ur Astronomie,
              K\"onigstuhl 17, D-69117 Heidelberg, Germany}
 
-\author{RV-var team}
 
-\author{more}
+\author{Rachael~L.~Beaton}
+\author{Jos\'e~G.~Fern\'andez-Trincado}
+\author{Peter~M.~Frinchaboy}
+\author{Domingo~An\'ibal Garc\'ia-Hern\'andez}
+\author{Hannah~Lewis}
+\author{Pen\'elope~Longa-Pe{\~n}a}
+\author{Steven~R.~Majewski}
+\author{David~L.~Nidever}
+\author{Christian~Nitschelm}
+\author{Jennifer~Sobeck}
+\author{Nicholas~W.~Troup}
+
 
 \begin{abstract}\noindent
 % Context
@@ -186,8 +196,9 @@ Discovery of which stars really do have companions then becomes a
 post-processing step on the confidence of the characterization: This project
 deliberately conflates discovery with characterization.
 This has the added advantage that we deliver full posterior samplings even for
-stars that aren't obviously in binary systems; These can be used for statistical
-studies and sub-threshold searches when new data arrive.
+stars that aren't obviously in binary systems; these can be used for statistical
+studies and sub-threshold searches when new data arrive (i.e., future surveys or
+follow-up).
 In what follows, we run \thejoker\ on all of \apogee\ \dr{16} (subject to some
 quality cuts) and release the resulting catalog of posterior samples, along with
 some summary metadata for the subsample with good, uniquely determined
@@ -205,27 +216,28 @@ volume, and have more observation epochs.
 \section{Data} \label{sec:data}
 
 We use spectroscopic data from data release 16 (\dr{16}) of the \apogee\ surveys
-(\citealt{Majewski:2017, DR16}).
+(\citealt{Majewski:2017, DR16}; J\"onsson et al., in prep.).
 \apogee\ is a component of the Sloan Digital Sky Survey IV (\sdssiv;
 \citealt{Gunn:2006, Blanton:2017}) and its main goal is to survey the chemical
 and dynamical properties of stars across much of the Milky Way disk by obtaining
-high-resolution ($R \sim 22,500$) infrared ($H$-band) spectroscopy of hundreds
-of thousands of stars.
-The primary survey targets are selected with simple color and magnitude cuts,
-but the survey uses fiber-plugged plates that cover only a small fraction of the
-by area, which leads to extremely nonuniform coverage of the Galactic stellar
-distribution (see, e.g., Figure~1 in \citealt{DR16}).
+high-resolution ($R \sim 22,500$; \citealt{Wilson:2019}) infrared ($H$-band)
+spectroscopy of hundreds of thousands of stars.
+The primary survey targets are selected with simple color and magnitude cuts
+\citep{Zasowski:2013, Zasowski:2017}, but the survey uses fiber-plugged plates
+that cover only a small fraction of the by area, which leads to extremely
+nonuniform coverage of the Galactic stellar distribution (see, e.g., Figure~1 in
+\citealt{DR16}).
 
 \dr{16} is the first \sdss\ data release to contain \apogee\ data observed with
 a duplicate of the \apogee\ spectrograph on the 2.5m Ir\'en\'ee du Pont
 telescope \citep{Bowen:1973} at Las Campanas Observatory, providing access to
 targets in the southern hemisphere.
 For the first time, this data release also contains calibrated stellar
-parameters for dwarf stars.
+parameters for dwarf stars (J\"onsson et al., in prep.).
 These two facts mean that \dr{16} contains nearly 3 times more sources with
 calibrated stellar parameters than the previous public data release, \dr{14}
-(\citealt{Abolfathi:2017}; see Section~4 of \citealt{DR16} for many more details
-about \apogee\ \dr{16}).
+(\citealt{Abolfathi:2017, Holtzman:2018}; see Section~4 of \citealt{DR16} for
+many more details about \apogee\ \dr{16}).
 
 Most \apogee\ stars are observed multiple times in separate ``visits'' that are
 combined before the \apogee\ data reduction pipeline \citep{Nidever:2015,
@@ -263,7 +275,7 @@ samplings in Keplerian orbital parameters for \emph{all} high-quality \apogee\
 sources in \dr{16} with multiple, well-measured radial velocities.
 We therefore impose a set of quality cuts to sub-select \apogee\ \dr{16} sources
 by rejecting sources or visits using the following \apogee\
-bitmasks\footnote{https://www.sdss.org/dr16/algorithms/bitmasks/}:
+bitmasks (\citealt{Holtzman:2018}, J\"onsson et al., in prep.):
 \begin{itemize}
     \item Source-level (\texttt{allStar}) \texttt{STARFLAG} must not contain
     \texttt{VERY\_BRIGHT\_NEIGHBOR}, \texttt{SUSPECT\_RV\_COMBINATION} (bitmask
@@ -295,9 +307,9 @@ cuts).
 \includegraphics[width=0.7\textwidth]{specHR.pdf}
 \end{center}
 \caption{%
-Two spectroscopic stellar parameters---effective temperature, $T_{\rm eff}$, and
-log-surface gravity, $\log g$---of \apogee\ \dr{16} sources that pass our
-quality cuts.
+Two spectroscopic (ASPCAP) stellar parameters---effective temperature, $T_{\rm
+eff}$, and log-surface gravity, $\log g$---of \apogee\ \dr{16} sources that pass
+our quality cuts.
 These sources represent our ``parent sample.''
 The pixel coloring indicates the number of sources in each bin of stellar
 parameters.
@@ -316,7 +328,8 @@ above---as a function of spectroscopic stellar parameters $T_{\rm eff}$,
 effective temperature, and $\log g$, log-surface gravity.
 While the majority of sources are giant-branch stars ($>150\,000$), a
 substantial number of main sequence stars are present ($>60\,000$) thanks to the
-\apogee\ data reduction pipeline improvements for \dr{16}.
+\apogee\ data reduction pipeline improvements for \dr{16} (J\"onsson et al., in
+prep.).
 Figure~\ref{fig:visitstats} shows some statistics about the time coverage of the
 visits for sources in our parent sample.
 About half of the sources have a small number of visits spread over a small time
@@ -806,8 +819,8 @@ spread in metallicities in the \apogee\ sample.
     \includegraphics[width=0.6\textwidth]{fraction_M_H.pdf}
     \end{center}
     \caption{%
-    The observed binary fraction as a function of bulk metallicity, $[{\rm
-    M}/{\rm H}$.
+    The observed close binary fraction as a function of bulk metallicity, $[{\rm
+    M}/{\rm H}]$.
     The binary fraction is anti-correlated with metallicity, here measured with
     a slope of $-0.1$.
     \label{fig:binfrac-mh}
@@ -956,7 +969,7 @@ By construction, all sources in the \goldsample\ have primary stellar mass
 estimates, $M_1$, from the \acronym{STARHORSE} catalog \citep{Queiroz:2019}.
 For these systems, we can then also convert the inferred orbital parameters into
 measurements of the minimum companion mass, \mtwomin\ (i.e., $M_2 \, \sin i$
-where the unknown inclination $i$ is assumed to be $90^\circ$).
+where the unknown inclination $i$ is set to $90^\circ$).
 \figurename~\ref{fig:m2m1} (left panel) shows these minimum companion mass
 estimates as a function of the \acronym{STARHORSE} primary masses for all
 sources in the \goldsample.
@@ -1489,6 +1502,8 @@ Wisconsin, Vanderbilt University, and Yale University.
 
 \software{
     Astropy \citep{astropy, astropy:2018},
+    apred \citep{Nidever:2015},
+    ASPCAP \citep{ASPCAP},
     exoplanet \citep{exoplanet:exoplanet},
     gala \citep{gala},
     IPython \citep{ipython},
