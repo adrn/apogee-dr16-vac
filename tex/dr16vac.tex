@@ -349,14 +349,15 @@ bitmasks (\citealt{Holtzman:2018}, J\"onsson et al., in prep.):
 \begin{itemize}
     \item Source-level (\texttt{allStar}) \texttt{STARFLAG} must not contain
     \texttt{VERY\_BRIGHT\_NEIGHBOR}, \texttt{SUSPECT\_RV\_COMBINATION} (bitmask
-    value: 65544)
+    values: 3, 16)
     \item Source-level (\texttt{allStar}) \texttt{ASPCAPFLAG} must not contain
     \texttt{TEFF\_BAD}, \texttt{LOGG\_BAD}, \texttt{VMICRO\_BAD},
-    \texttt{ROTATION\_BAD}, \texttt{VSINI\_BAD} (bitmask value: 1141309440)
+    \texttt{ROTATION\_BAD}, \texttt{VSINI\_BAD} (bitmask value: 16, 17, 18, 26,
+    30)
     \item Visit-level (\texttt{allVisit}) \texttt{STARFLAG} must not contain
     \texttt{VERY\_BRIGHT\_NEIGHBOR}, \texttt{SUSPECT\_RV\_COMBINATION},
     \texttt{LOW\_SNR}, \texttt{PERSIST\_HIGH}, \texttt{PERSIST\_JUMP\_POS},
-    \texttt{PERSIST\_JUMP\_NEG} (bitmask value: 78360)
+    \texttt{PERSIST\_JUMP\_NEG} (bitmask value: 3, 9, 12, 13, 16)
 \end{itemize}
 These bitmasks are designed to remove the most obvious data reduction or
 calibration failures that would directly impact the visit-level radial velocity
@@ -1002,7 +1003,7 @@ Also note the gradients in eccentricity (i.e., marker color) with respect to
 orbital period in the right panel of \figurename~\ref{fig:Plogg}.
 At a given surface gravity, there tend to be more black points (low
 eccentricity) closer to the stellar surface (closer to the diagonal lines).
-However, near the red clump ($3 \lesssim \logg \lesssim 2$), there appears to be
+However, near the red clump ($2 \lesssim \logg \lesssim 3$), there appears to be
 an over-abundance of low-eccentricity points at orbital periods $P\gtrsim
 100~\dayd$.
 \figurename~\ref{fig:Pe-logg-bins} shows histograms of maximum \textsl{a
