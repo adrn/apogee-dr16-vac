@@ -506,7 +506,7 @@ to data that are very noisy or have a small time baseline compared to the
 samples of interest.
 We have rewritten the expression for the marginal likelihood that underlies
 \thejoker\ in Appendix~\ref{app:marginal-likelihood}, based on the notation in
-\cite{Hogg:2020}.
+Hogg et al. (in prep.).
 
 Another issue with the assumption in the original implementation of \thejoker\
 is that the prior over the velocity semi-amplitude, $K$, was identical at all
@@ -623,8 +623,9 @@ velocity measurement).
 
 At this point, we now have up to \Kminval\ posterior samples of the parameters
 listed in \tablename~\ref{tbl:prior} for most of the \nsources\ \apogee\ sources
-in the parent sample; these are released as a component of the \sdss\
-Value-Added Catalog (VAC) 0048.
+in the parent sample.
+These full samplings will be released as a Value-Added Catalog (VAC) with the
+\sdss\ \dr{16}+ ``mini'' data release planned for July 2020.
 
 
 \section{A catalog of binary stars} \label{sec:catalog}
@@ -1626,11 +1627,11 @@ We have already made the assumption that our likelihood has a Gaussian form, so
 to do this marginalization conveniently and analytically, we additionally assume
 that the prior \pdf\ also has a Gaussian form.
 Under these assumptions, the solution to this marginalization is given in
-\cite{Hogg:2020}.
+Hogg et al. (in prep.).
 
 To see the relation between the specific problem solved by \thejoker\ and the
-derivation in \cite{Hogg:2020}, it will be convenient to repackage our data and
-linear parameters as
+derivation in Hogg et al. (in prep.), it will be convenient to repackage our
+data and linear parameters as
 \begin{align}
     \vec{y} &= \transpose{(v_1, v_2, \ldots, v_N)}\\
     \vec{x} &= \transpose{(K, v_0)}\\
@@ -1672,7 +1673,7 @@ nonlinear parameters $\vec{\theta}$, can be written
 where the integral becomes simple because the second normal distribution,
 $\norm(\vec{y} \given \vec{b}, \mat{B})$, does not depend on the integration
 variables, $\vec{x}$, and the integral over the first normal distribution is 1
-\citep{Hogg:2020}.
+Hogg et al. (in prep.).
 A final point that is relevant to additional enhancements discussed in
 \sectionname~\ref{sec:joker-update} (and is exploited in this \documentname) is
 to note that $\vec{\mu}$ and $\mat{\Lambda}$ \emph{can} depend on the nonlinear
