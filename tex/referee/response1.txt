@@ -26,7 +26,7 @@ These are all good points; this requires emphasis and attention. To emphasize th
 
 - Fig. 5, right panel: the chosen color scale is difficult to read (particularly in print), as well as the colors for the plotted isochrones. I also suspect that this choice of color scales will be a problem for color-blind readers.
 
-TODO:
+The colormap was chosen to be colorblind-friendly, but we agree that the isochrones are hard to read over the background. We have adopted an alternate colorblind-friendly color scheme that prints to grayscale more gracefully.
 
 
 - Sect. 6.1, Fig. 6: The rather low binary fraction found for solar metallicity dwarfs (around 0.07) seems in contradiction with other works (related, e.g. to exoplanet research). It would be important to further review the literature and evaluate if this is due to a limited sensitivity of the present wurvey, or to different definitions of binarity (e.g., in terms of minimum companion mass).
