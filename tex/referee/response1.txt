@@ -67,7 +67,8 @@ TODO:
 
 - Sect. 7.4: The sentence "This can be done by repeating the rejection sampling (...)" is unclear.
 
-TODO:
+We completely re-wrote the latter part of that paragraph. We hope it
+is much more clear now.
 
 
 - Sect. 8: The nature of M2>M1 detections as compact objects is questionable and I suggest to adopt a more prudent phrasing. From the available data, they could possibly be hierarchical triple stellar systems with pairs of relatively low mass stellar companions mimicking high mass secondaries, pulsating stars, or instabilities in the parameter computation (as for 2MASSJ13090983+1711572)

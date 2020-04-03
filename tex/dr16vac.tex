@@ -1471,11 +1471,14 @@ improve or adjust parameter estimates.
 The samplings provided here can be used to solve these problems; They can be
 used to combine the \apogee\ information with new data, without requiring an
 \textsl{ab initio} re-analysis of the original \apogee\ data.
-This can be done by repeating the rejection sampling step used in \thejoker\ to
-generate posterior samples, but replacing the prior samples with the posterior
-samples generated with the \apogee\ data alone and replacing the full marginal
-likelihood evaluation with the marginal likelihood of the new data computed at
-each sample.
+\changes{An example of this kind of use is the following: The
+  posterior samples delivered here from the \apogee\ data are declared
+  to be the \emph{prior samples} for a new rejection sampling. In this
+  new rejection sampling, the likelihood we use here is replaced with
+  a likelihood from the new data (say, for example, astrometric data),
+  computed now at each of these new prior samples. The output of this
+  rejection sampling will be a sampling of a posterior pdf that
+  accounts correctly for both the \apogee\ data and the new data.}
 
 In detail, following the notation in Appendix~\ref{app:marginal-likelihood},
 converting the posterior samples released here into posterior samples over the
