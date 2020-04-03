@@ -25,6 +25,9 @@
 \addtolength{\textheight}{0.4in}
 \sloppy\sloppypar\raggedbottom\frenchspacing
 
+% For referee:
+\newcommand{\changes}[1]{{\bf\color{purple}#1}}
+
 % Numbers:
 \newcommand{\nsources}{\ensuremath{232\,531}}
 \newcommand{\Kmin}{M_{\rm min}}
@@ -455,7 +458,7 @@ considering low-mass or long-period companions, will depend strongly on the
 accuracy of the visit-velocity measurement errors.
 However, the catalog-level \apogee\ visit-velocity errors (\texttt{VRELERR} in
 the \texttt{allVisit} file) are known to be underestimated
-\citep[e.g.,][]{Cottaar:2014}.
+\citep[e.g.,][]{Cottaar:2014,Badenes:2018}.
 Here, we adopt the relation defined in Brown et al. (in prep.) to scale up the
 visit-velocity errors
 \begin{equation}
@@ -463,8 +466,17 @@ visit-velocity errors
 \end{equation}
 where $\sigma_v$ is the adopted visit-velocity error for a given visit, and
 \texttt{VRELERR} is the uncertainty reported in the \apogee\ \dr{16} catalog.
+\changes{The form of this expression --- $(a\,\sigma_v^b)^2 + c^2$ --- comes
+from the assumption that the visit-velocity noise variance values have a finite
+minimum value (i.e., a noise ``floor'') and should either be increased or
+decreased by a multiplicative factor that scales with the pipeline-reported
+value of the uncertainty.
+The values of the constants in this function ($a,b,c$) come from robustly
+fitting this relation to the observed visit velocity scatters for each source as
+a function of their median visit velocity error values.
+}
 This effectively applies a floor to the visit-velocity errors of $72~\mps$ and
-globally increases the error values by a multiplicative factor.
+globally scales up the error values.
 
 
 \section{Methods} \label{sec:methods}
@@ -803,9 +815,9 @@ We define this \goldsample\ as sources that pass the following cuts:
     \item No additional \gaia\ sources within $10~\textrm{arcsec}$ with a
           $G$-band magnitude difference $\Delta G > 2.5$ (to remove bright
           neighbor stars)
-    \item $-0.5 < \logg < 5.5$ (reasonable stellar parameters)
-    \item $3500 < \Teff < 8000$ (reasonable stellar parameters)
-    \item $-2.5 < \mh < 0.5$ (reasonable stellar parameters)
+    \item $-0.5 < \logg < 5.5$ (reliable stellar parameters)
+    \item $3500~\Kel < \Teff < 10000~\Kel$ (reliable stellar parameters)\footnote{\changes{While the new \apogee\ \acronym{MARCS} grids extend below 3500~\Kel (J\"onsson et al., in prep.; \citealt{DR16}), there are few calibrator stars with such low temperatures, so the stellar parameters are less reliable for stars with $\Teff < 3500~\Kel$.}}
+    \item $-2.5 < \mh < 0.5$ (reliable stellar parameters)
     \item $s_{\textrm{MAP}} < 0.5~\kms$ (a small inferred excess variance)
     \item $n_{\textrm{vis}} > 5$ (more than 5 visit spectra)
 \end{itemize}
@@ -989,8 +1001,8 @@ completeness with our sample.
 
 \figurename~\ref{fig:Plogg} shows the inferred orbital periods for all stars in
 the \goldsample\ as a function of orbital eccentricity (left) and surface
-gravity (right), where the range of periods is limited (at large $P$) by
-the \apogee\ survey length.
+gravity (right), where the range of periods is limited (at large $P$)
+\changes{by the length of the \apogee\ surveys.}
 The left panel clearly shows the impact of tidal circularization
 \citep[e.g.,][]{Zahn:1977, Meibom:2005}:
 The eccentricities of systems with $P \lesssim 10~\dayd$ are much more peaked
@@ -1261,9 +1273,9 @@ b)$, as
     We use the posterior sampings for $8\,599$ sources within a toy hierarchical
     model of the eccentricity distribution, represented as a beta distribution.
     We also plot common eccentricity distributions from the literature, such as
-    the global exoplanet model from \cite[][; solid, gray line]{Kipping:2013},
-    the (theoretical) thermalized population \citep[][; dashed, blue
-    line]{Jeans:1919}, and a uniform distribution (dotted, orange line).
+    the global exoplanet model from \citet{Kipping:2013}, shown as a solid, gray
+    line, the (theoretical) thermalized population (\citealt{Jeans:1919};
+    dashed, blue line) and a uniform distribution (dotted, orange line).
     \textbf{Right:} The same as the left panel, but showing cumulative
     distribution functions instead.
     \label{fig:eccdist}
@@ -1361,7 +1373,7 @@ Finally, related to the fourth point, we assume that all velocity variations
 represent orbital motion (i.e., not pulsation or similar intrinsic stellar
 phenomena).
 As highlighted in \figurename~\ref{fig:binary-CMD}, this assumption is clearly
-violated when $\logg \lesssim 1~\kms$ where stellar surface jitter masquerades
+violated when $\logg \lesssim 1$ where stellar surface jitter masquerades
 as orbital motion and leads to (a small amount of) contamination.
 
 
