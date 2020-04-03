@@ -31,17 +31,17 @@ The colormap was chosen to be colorblind-friendly, but we agree that the isochro
 
 - Sect. 6.1, Fig. 6: The rather low binary fraction found for solar metallicity dwarfs (around 0.07) seems in contradiction with other works (related, e.g. to exoplanet research). It would be important to further review the literature and evaluate if this is due to a limited sensitivity of the present wurvey, or to different definitions of binarity (e.g., in terms of minimum companion mass).
 
-TODO:
+As noted elsewhere in the text, the binary fraction here is really the "observed" binary fraction, not the intrinstic binary fraction estimated from correcting for selection effects and detection efficiency. The constant offset or normalization of the trend is therefore set by the survey and our selection criteria. We put the phrase "binary fraction" in quotations to emphasize this, and added a sentence to the figure caption to reiterate that this is the  uncorrected binary fraction.
 
 
 - Sect. 6.2, Fig. 7: The figures are quite difficult to read, both in print and on screen.
 
-TODO:
+We have added more explicit axis titles to explain the samples plotted in each panel, and made the points larger in both panels.
 
 
 - Sect. 6.2, last sentence: This hypothesis appears speculative considering the uncertainties displayed in the histograms of Fig. 8.
 
-TODO:
+We have added the qualification that "asteroseismic observations would be required to test this hypothesis".
 
 
 - Sect. 6.3: The identification of possible companions with higher masses than the primary is an interesting result of the study. But considering that they are almost not discussed in the text, proposing that they are compact objects (or even black hole) candidates in the text and in the abstract is premature. I would suggest to change the phrasing of the abstract and text in this respect, unless a more argumented discussion is added to the paper. A separate paper is listed as in preparation on this topic, and the proposed identifications could also be simply postponed to this work.
@@ -60,26 +60,30 @@ TODO:
 
 
 - Sect. 7.1: This section would be better placed in the Methods section (Sect. 3), as it describes the intrinsic limitations of the adopted hypotheses. This would allow the reader to interpret more objectively the candidate detections.
-Pulsation (and other types of intrinsic radial velocity variability) often induce a photometric variability. This is in principle easy to observe in the data from multi-epochs global surveys as Gaia, or even the SDSS (of which APOGEE is part). As a suggestion, the authors may consider the possibility to cross check the photometric variability of the APOGEE DR16 sources and flag the variable stars in their catalog. The "simple line" radial velocity model that they adopt relies on the "simplicity" of the sources, and a photometric variability could indicate an unreliable record (for different reasons).
 
-TODO:
+We have moved this subsection up to the end of the methods section.
+
+
+- Pulsation (and other types of intrinsic radial velocity variability) often induce a photometric variability. This is in principle easy to observe in the data from multi-epochs global surveys as Gaia, or even the SDSS (of which APOGEE is part). As a suggestion, the authors may consider the possibility to cross check the photometric variability of the APOGEE DR16 sources and flag the variable stars in their catalog. The "simple line" radial velocity model that they adopt relies on the "simplicity" of the sources, and a photometric variability could indicate an unreliable record (for different reasons).
+
+We agree - thanks for the suggestion! However, we consider this outside of the scope of this paper and is something we will investigate in future work.
 
 
 - Sect. 7.4: The sentence "This can be done by repeating the rejection sampling (...)" is unclear.
 
 We completely re-wrote the latter part of that paragraph. We hope it
-is much more clear now.
+is much clearer now.
 
 
 - Sect. 8: The nature of M2>M1 detections as compact objects is questionable and I suggest to adopt a more prudent phrasing. From the available data, they could possibly be hierarchical triple stellar systems with pairs of relatively low mass stellar companions mimicking high mass secondaries, pulsating stars, or instabilities in the parameter computation (as for 2MASSJ13090983+1711572)
 Following the same reasoning, the very low mass objects could be close to face-on inclination, stellar mass companions. On a purely statistical basis, this seems quite plausible.
 
-TODO:
+In the text and in figure titles and captions, we always precede the terms "compact objects," "black holes," or "brown dwarfs" with the word "candidate." We do not claim that these systems are compact objects or brown dwarfs, but they are excellent candidates that should motivate future follow-up efforts to determine their nature. We believe we have fairly captured this sentiment in the abstract, paper text, figure captions, and conclusions.
 
 
 - Suggestion: the signature of binarity in the Gaia DR2 using a combination of Hipparcos and Gaia astrometry has been studied, e.g., by Brandt (2018, ApJS 239, 31) and Kervella+ (2019, A&A 623, A72). Although the overlap with the APOGEE sources may be small, in some cases a cross-identification with this distinct approach to binarity could be valuable. Even if not implemented in this catalog, the possibility of a combined use of these data sets could be suggested in the text. The coming Gaia DR3 will bring a valuable basis for the validation of the APOGEE candidate companions.
 
-TODO:
+We agree that this is an exciting and interesting line of research! However, there are a sufficient number of subtleties such that we feel that this is beyond the scope of this paper. For example, of the 21 systems in our Gold Sample that also appear in the Brandt/Kervella catalogs, all have periods much shorter than the time baseline over which the astrometric acceleration is estimated. However, we agree that this should provide some additional constraints on the orbits of these systems and this should absolutely be investigated in future work.
 
 
 Typos:
