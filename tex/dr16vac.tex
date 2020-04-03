@@ -1,8 +1,7 @@
 % TODO:
 % - When Hogg's Gaussian Product Refactor note is on Arxiv, check the referenced
 %   equation numbers in the Appendix against the submitted version!
-% - Gaia references about parallax!! Duh...
-% - Reference Winn or other exoplanet stuff about opposite sense of metallicity trend!
+
 
 \documentclass[modern]{aastex63}
 % \documentclass[twocolumn]{aastex63}
@@ -25,6 +24,9 @@
 \addtolength{\topmargin}{-0.2in}
 \addtolength{\textheight}{0.4in}
 \sloppy\sloppypar\raggedbottom\frenchspacing
+
+% For referee:
+\newcommand{\changes}[1]{{\bf\color{purple}#1}}
 
 % Numbers:
 \newcommand{\nsources}{\ensuremath{232\,531}}
@@ -177,15 +179,15 @@ Many problems in contemporary astrophysics---from understanding the formation of
 black holes to untangling the chemical evolution of galaxies---rely on knowledge
 about binary stars.
 % Aims
-This, in turn, depends on discovery and characterization of binary companions
-for large numbers of different kinds of stars in different chemical and
-dynamical environments.
+This, in turn, depends on the discovery and characterization of binary
+companions for large numbers of different kinds of stars in different chemical
+and dynamical environments.
 Current stellar spectroscopic surveys observe hundreds of thousands to millions
-of stars with (typically) few observational epochs, which allows binary
-discovery but makes orbital characterization challenging.
+of stars with (typically) few observational epochs, which allows for binary
+discovery, but makes orbital characterization challenging.
 % Methods
 We use a custom Monte Carlo sampler (\thejoker) to perform discovery and
-characterization of binary systems through radial-velocities, in the regime of
+characterization of binary systems through radial velocities, in the regime of
 sparse, noisy, and poorly sampled multi-epoch data.
 We use it to generate posterior samplings in Keplerian parameters for
 \nsources\ sources released in \apogee\ Data Release 16.
@@ -211,14 +213,14 @@ inferences about binary-star populations and sub-threshold searches.
 \section*{~}\clearpage
 \section{Introduction} \label{sec:intro}
 
-Binary star systems provide key context and constraints for nearly all subfields
+Binary-star systems provide key context and constraints for nearly all subfields
 in astrophysics \citep[e.g.,][]{Breivik:BAAS, Rix:BAAS}.
 For two concrete examples, a measurement of the occurrence rate of stellar-mass
 black holes in the Milky Way would enable new constraints on binary black hole
 formation channels to explain merger events observed by \acronym{LIGO}
 \citep{LIGO:BH1, LIGO:catalog}, and interpretation of spectroscopic observations
 of high-redshift galaxies and their stellar populations depends on understanding
-the impacts of binary star evolution on stellar population parameters
+the impacts of binary-star evolution on stellar population parameters
 \cite[e.g.,][]{Eldridge:2017}.
 One common need for all applications is improved constraints on the population
 properties (e.g., period, eccentricity, and mass ratio distributions, occurrence
@@ -226,7 +228,7 @@ rates) of stellar multiplets and their variations with stellar type, chemistry,
 and dynamical environment, especially at the extrema of these stellar
 characteristics.
 This has only been comprehensively done for a sample of a few hundred stars in
-solar neighborhood \citep{Raghavan:2010}, for specific stellar types
+the Solar Neighborhood \citep{Raghavan:2010}, for specific stellar types
 \citep[e.g.,][]{Moe:2017}, or with imprecise statistics using large samples of
 stars \citep{Badenes:2018}.
 
@@ -237,11 +239,11 @@ Gaia-Collaboration:2018, Majewski:2017, Zhao:2012, Kollmeier:2017}) have the
 capacity to deliver samples of binary stars and stellar companions orders of
 magnitude larger than are presently known, throughout all stages of stellar
 evolution.
-Even with existing datasets, we now have large enough sample sizes and the
+Even with existing datasets, we now have sufficiently large sample sizes and the
 robust tools needed to perform hierarchical inferences to constrain much more
-detailed models of binary star formation and evolution \citep[e.g.,][]{Moe:2018,
+detailed models of binary-star formation and evolution \citep[e.g.,][]{Moe:2018,
 El-Badry:2019a}.
-However, the most precise measurements of the binary star population properties
+However, the most precise measurements of the binary-star population properties
 will benefit from joint analysis of all stellar surveys, which cover a range of
 stellar types, wavelengths, and measurement techniques.
 
@@ -251,7 +253,7 @@ This survey sequence has predominantly targeted red-giant stars (although with
 \dr{16} there are now many main-sequence stars, see below).
 Because of operational re-visit decisions to reach signal-to-noise thresholds,
 the surveys deliver some time-domain information, although they were not
-designed with binary-star characterization as highest priority.
+designed with binary-star characterization as the highest priority.
 The fundamental data are $R\sim 20\,000$ $H$-band spectroscopy taken with the
 primary purpose of mapping the Milky Way in elemental abundances and kinematics.
 This survey is not the perfect target for binary-star identification, but it
@@ -268,15 +270,15 @@ problem is no different.
 These multi-modal likelihood functions are a nightmare for optimization or
 sampling.
 % many of our best people have given their lives in that forest of modes.
-For this reason we created a custom sampler \thejoker\ \citep{thejoker} that
+For this reason we created a custom sampler, \thejoker\ \citep{thejoker}, that
 performs brute-force rejection sampling using a large, initial prior sampling.
 Because this sampler does not produce Markov Chains, but rather just uses dense
 prior samples, it does not get ``stuck'' in local optima; It samples the full
 parameter space, with zero autocorrelation among samples.
-To proceed, however, the sampler makes strong assumptions, that the source is a
-single-lined spectroscopic binary (SB1) with only one companion (for example).
-But it generates full samplings over orbital parameters for arbitrarily sampled
-radial-velocity data.
+To proceed, however, the sampler makes strong assumptions, for example, that the
+source is a single-lined spectroscopic binary (SB1) with only one companion.
+The advantage is that it generates full samplings over orbital parameters for
+arbitrarily sampled radial-velocity data.
 
 Importantly, we use \thejoker\ to sample \emph{every} \apogee\ target as if it
 were an SB1 (see \sectionname~\ref{sec:discussion} for some discussion of the
@@ -284,18 +286,18 @@ implications of this assumption).
 Discovery of which stars really do have companions then becomes a
 post-processing step on the confidence of the characterization: This project
 deliberately conflates discovery with characterization.
-This has the added advantage that we deliver full posterior samplings even for
-stars that aren't obviously in binary systems; these can be used for statistical
-studies and sub-threshold searches when new data arrive (i.e., future surveys or
-follow-up).
+This has the added advantage that we can deliver full posterior samplings even
+for stars that aren't obviously in binary systems; these can be used for
+statistical studies and sub-threshold searches when new data arrive (e.g., from
+future surveys or follow-up).
 In what follows, we run \thejoker\ on all of \apogee\ \dr{16} (subject to some
-quality cuts) and release the resulting catalog of posterior samples, along with
-some summary metadata for the subsample with good, uniquely determined
+quality cuts), and release the resulting catalog of posterior samples, along
+with some summary metadata for the subsample with good, uniquely determined
 companions and orbits.
 We demonstrate the use of the samplings with a few examples of interesting
 objects and a simple hierarchical probabilistic populations inference.
 
-This \documentname\ is similar to \cite{Price-Whelan:2018} but should be viewed
+This \documentname\ is similar to \cite{Price-Whelan:2018}, but should be viewed
 as a strict replacement (rather than an improvement) of the catalogs and results
 of that work: We have made substantial improvements to the methodology
 (improvements to \thejoker, see Appendix~\ref{app:marginal-likelihood}), and the
@@ -307,23 +309,23 @@ volume, and have more observation epochs.
 We use spectroscopic data from data release 16 (\dr{16}) of the \apogee\ surveys
 (\citealt{Majewski:2017, DR16}; J\"onsson et al., in prep.).
 \apogee\ is a component of the Sloan Digital Sky Survey IV (\sdssiv;
-\citealt{Gunn:2006, Blanton:2017}) and its main goal is to survey the chemical
+\citealt{Gunn:2006, Blanton:2017}); its main goal is to survey the chemical
 and dynamical properties of stars across much of the Milky Way disk by obtaining
-high-resolution ($R \sim 22,500$; \citealt{Wilson:2019}) infrared ($H$-band)
+high-resolution ($R \sim 22,500$; \citealt{Wilson:2019}), infrared ($H$-band)
 spectroscopy of hundreds of thousands of stars.
 The primary survey targets are selected with simple color and magnitude cuts
 \citep{Zasowski:2013, Zasowski:2017}, but the survey uses fiber-plugged plates
-that cover only a small fraction of the by area, which leads to extremely
+that cover only a small fraction of the available area, which leads to extremely
 nonuniform coverage of the Galactic stellar distribution (see, e.g., Figure~1 in
 \citealt{DR16}).
 
 \dr{16} is the first \sdss\ data release to contain \apogee\ data observed with
 a duplicate of the \apogee\ spectrograph on the 2.5m Ir\'en\'ee du Pont
 telescope \citep{Bowen:1973} at Las Campanas Observatory, providing access to
-targets in the southern hemisphere.
+targets in the Southern Hemisphere.
 For the first time, this data release also contains calibrated stellar
 parameters for dwarf stars (J\"onsson et al., in prep.).
-These two facts mean that \dr{16} contains nearly 3 times more sources with
+These two facts mean that \dr{16} contains nearly three times more sources with
 calibrated stellar parameters than the previous public data release, \dr{14}
 (\citealt{Abolfathi:2017, Holtzman:2018}; see Section~4 of \citealt{DR16} for
 many more details about \apogee\ \dr{16}).
@@ -339,7 +341,7 @@ The cadence and time baseline for a typical \apogee\ source is primarily
 governed by trying to schedule a set number of visits determined by
 signal-to-noise thresholds for the faintest targets in a given field.
 A small number of fields (five) were designed specifically for companion studies
-and have $>10$ visits spaced to enable binary system characterization.
+and have $>10$ visits spaced to enable binary-system characterization.
 
 While some past studies have made use of other fields with large numbers of
 visits to study binary-star systems \citep{Troup:2016, Fernandez-Trincado:2019},
@@ -348,7 +350,7 @@ for the vast majority of \apogee\ sources in \dr{16} is not sufficient for fully
 determining companion orbital properties, as illustrated below.
 Still, the large number of targets in \apogee\ and the dynamic range in stellar
 and chemical properties offers an exciting opportunity to study the
-\emph{population} of binary star systems as a function of these intrinsic
+\emph{population} of binary-star systems as a function of these intrinsic
 properties, even if most individual systems are poorly constrained.
 We have previously developed tools to enable such studies \citep{thejoker}, as
 summarized in \sectionname~\ref{sec:methods} below.
@@ -357,7 +359,7 @@ proceeding, and modifications to the visit-level velocity uncertainties to
 account for the fact that they are generally underestimated by the \apogee\ data
 reduction pipeline.
 
-\subsection{Quality cuts and defining a parent sample}
+\subsection{Quality Cuts and Defining a Parent Sample}
 
 The primary goal of this \documentname\ is to produce a catalog of posterior
 samplings in Keplerian orbital parameters for \emph{all} high-quality \apogee\
@@ -379,7 +381,7 @@ bitmasks (\citealt{Holtzman:2018}, J\"onsson et al., in prep.):
     \texttt{PERSIST\_JUMP\_NEG} (bitmask value: 3, 9, 12, 13, 16)
 \end{itemize}
 These bitmasks are designed to remove the most obvious data reduction or
-calibration failures that would directly impact the visit-level radial velocity
+calibration failures that would directly impact the visit-level radial-velocity
 determinations.
 However, we later impose a stricter set of quality masks when showing results in
 \sectionname~\ref{sec:gold-sample}.
@@ -398,8 +400,8 @@ cuts).
 \end{center}
 \caption{%
 Two spectroscopic (ASPCAP) stellar parameters---effective temperature, $T_{\rm
-eff}$, and log-surface gravity, $\log g$---of \apogee\ \dr{16} sources that pass
-our quality cuts.
+eff}$, and log-surface gravity, $\log g$---of the \apogee\ \dr{16} sources that
+pass our quality cuts.
 These sources represent our ``parent sample.''
 The pixel coloring indicates the number of sources in each bin of stellar
 parameters.
@@ -412,14 +414,14 @@ each.
 }
 \end{figure}
 
-\figurename~\ref{fig:specHR} shows the sources in our parent sample---i.e.
+\figurename~\ref{fig:specHR} shows the sources in our parent sample---i.e.,
 \apogee\ sources with 3 or more visits that pass the quality cuts described
 above---as a function of spectroscopic stellar parameters $T_{\rm eff}$,
 effective temperature, and $\log g$, log-surface gravity.
 While the majority of sources are giant-branch stars ($>150\,000$), a
-substantial number of main sequence stars are present ($>60\,000$) thanks to the
-\apogee\ data reduction pipeline improvements for \dr{16} (J\"onsson et al., in
-prep.).
+substantial number of main-sequence stars are present ($>60\,000$), thanks to
+the \apogee\ data reduction pipeline improvements for \dr{16} (J\"onsson et al.,
+in prep.).
 Figure~\ref{fig:visitstats} shows some statistics about the time coverage of the
 visits for sources in our parent sample.
 About half of the sources have a small number of visits spread over a small time
@@ -443,51 +445,60 @@ A very small number of sources have $>50$ visits.
 \textbf{Right:} The number of sources with a time baseline, $\tau$, longer than
 given (on the horizontal axis).
 While $\approx$$50\%$ of sources have a time baseline $\tau \lesssim 56~{\rm
-day}$, ($88\,737$, $9\,743$) sources have $\tau > (100, 1\,000)~{\rm days}$.
+days}$, ($88\,737$, $9\,743$) sources have $\tau > (100, 1\,000)~{\rm days}$.
 \label{fig:visitstats}
 }
 \end{figure}
 
 
-\subsection{Visit velocity uncertainty calibration} \label{sec:visitcalib}
+\subsection{Visit Velocity Uncertainty Calibration} \label{sec:visitcalib}
 
-The significance of apparent radial velocity variations, especially when
+The significance of apparent radial-velocity variations, especially when
 considering low-mass or long-period companions, will depend strongly on the
-accuracy of the visit velocity measurement errors.
-However, the catalog-level \apogee\ visit velocity errors (\texttt{VRELERR} in
+accuracy of the visit-velocity measurement errors.
+However, the catalog-level \apogee\ visit-velocity errors (\texttt{VRELERR} in
 the \texttt{allVisit} file) are known to be underestimated
-\citep[e.g.,][]{Cottaar:2014}.
+\citep[e.g.,][]{Cottaar:2014,Badenes:2018}.
 Here, we adopt the relation defined in Brown et al. (in prep.) to scale up the
-visit velocity errors
+visit-velocity errors
 \begin{equation}
     \sigma_v^2 = (3.5\,(\texttt{VRELERR})^{1.2})^2 + (0.072~\kms)^2 \label{eq:verr}
 \end{equation}
-where $\sigma_v$ is the adopted visit velocity error for a given visit, and
+where $\sigma_v$ is the adopted visit-velocity error for a given visit, and
 \texttt{VRELERR} is the uncertainty reported in the \apogee\ \dr{16} catalog.
-This effectively applies a floor to the visit velocity errors of $72~\mps$ and
-globally increases the error values by a multiplicative factor.
+\changes{The form of this expression --- $(a\,\sigma_v^b)^2 + c^2$ --- comes
+from the assumption that the visit-velocity noise variance values have a finite
+minimum value (i.e., a noise ``floor'') and should either be increased or
+decreased by a multiplicative factor that scales with the pipeline-reported
+value of the uncertainty.
+The values of the constants in this function ($a,b,c$) come from robustly
+fitting this relation to the observed visit velocity scatters for each source as
+a function of their median visit velocity error values.
+}
+This effectively applies a floor to the visit-velocity errors of $72~\mps$ and
+globally scales up the error values.
 
 
 \section{Methods} \label{sec:methods}
 
 As illustrated above, a large number of sources in \apogee\ \dr{16} have few
 visits that span a short time baseline.
-For most sources, we therefore expect that even if visit-level radial velocity
+For most sources, we therefore expect that even if visit-level radial-velocity
 variations are detected with high significance, the companion orbital parameters
-will be very uncertain---i.e. the posterior probability distribution function
+will be very uncertain---i.e., the posterior probability distribution function
 (\pdf) over orbital parameters will generally be multi-modal with many
 modes of comparable integrated probability \citep[e.g.,][]{thejoker}.
 Still, in unison, or within the context of a hierarchical model that utilizes
 the individual posterior samplings, the combination of all of these individually
-weakly-constrained binary star orbits provides information about the population
+weakly constrained binary-star orbits provides information about the population
 of binary stars.
 We have previously defined and implemented a custom Monte Carlo sampler for
 precisely this problem: \thejoker\ \citep{thejoker}.
 \thejoker\ is designed to deliver converged posterior samplings over Keplerian
-orbital parameters given radial velocity observations, even when the
+orbital parameters given radial-velocity observations, even when the
 observations are sparse or very noisy.
 Its prior application to \apogee\ \dr{14} \citep{Price-Whelan:2018} resulted in
-a released catalog of over $5,000$ binary star systems;
+a released catalog of over $5,000$ binary-star systems;
 this \documentname\ and companion catalog is a successor to this previous work.
 
 As before, we use a parametrization of the two-body problem in which the radial
@@ -495,7 +506,7 @@ velocity, $v$, of an observed star in a binary system (referred to as the
 \emph{primary}, even if it is less massive than its companion) can be expressed
 as:
 \begin{equation}
-    v(t) = K \, \zeta(t \,;\, P, e, \omega, M_0, t_0) + v_0 \label{eq:kepler}
+    v(t) = K \, \zeta(t \,;\, P, e, \omega, M_0, t_0) + v_0 \quad , \label{eq:kepler}
 \end{equation}
 where $K$ and $v_0$ are linear parameters (in time $t$).
 The other parameters---period $P$, eccentricity $e$, argument of periastron
@@ -503,10 +514,10 @@ $\omega$, reference time $t_0$, and mean anomaly at reference time $M_0$---enter
 through the nonlinear function
 \begin{equation}
     \zeta(t \,;\, P, e, \omega, M_0, t_0) =
-        \cos\left(f + \omega\right) + e\,\cos\omega \label{eq:zeta}
+        \cos\left(f + \omega\right) + e\,\cos\omega \quad , \label{eq:zeta}
 \end{equation}
 where $f$ is the true anomaly, and we always set the reference time, $t_0$, to
-the minimum observation time for a given set of radial velocity observations.
+the minimum observation time for a given set of radial-velocity observations.
 
 \subsection{Updates to \thejoker}
 \label{sec:joker-update}
@@ -540,7 +551,7 @@ semi-amplitude with a variance, $\sigma^2_K$, that scales with the
 period and eccentricity such that
 \begin{equation}
     \sigma^2_K = \sigma^2_{K, 0} \, \left(\frac{P}{P_0}\right)^{-2/3} \,
-        \left(1 - e^2\right)^{-1} \label{eq:sigK}
+        \left(1 - e^2\right)^{-1} \quad , \label{eq:sigK}
 \end{equation}
 where $\sigma_{K, 0}$ and $P_0$ are additional hyperparameters that must be
 specified.
@@ -554,7 +565,7 @@ For example, the prior distributions over all parameters are now specified as
 priors over the nonlinear Keplerian parameters ($P$, $e$, $\omega$, and $M_0$;
 see \citealt{thejoker}) are now fully customizable.
 Using \texttt{pymc3} also enables compatibility with more efficient Markov Chain
-Monte Carlo methods such as Hamiltonian Monte Carlo (HMC), which is useful for
+Monte Carlo methods, such as Hamiltonian Monte Carlo (HMC), which is useful for
 seamlessly transitioning from generating posterior orbit samples with \thejoker\
 to HMC when the system parameters are highly constrained (as discussed below).
 
@@ -563,7 +574,7 @@ to HMC when the system parameters are highly constrained (as discussed below).
     \setlength{\tabcolsep}{0.75em} % for the horizontal padding
     \begin{tabular}{ r l p{6cm} }
     \toprule
-    \textbf{parameter} & \textbf{prior} & \textbf{description} \\
+    \textbf{Parameter} & \textbf{Prior} & \textbf{Description} \\
     \toprule
     \multicolumn{3}{l}{\footnotesize \textsl{nonlinear parameters}}\\
     \hline
@@ -572,7 +583,7 @@ to HMC when the system parameters are highly constrained (as discussed below).
     $t_0$ & fixed (minimum time) & reference time \\
     $M_0$ & $M_0 \sim \mathcal{U}(0, 2\pi)~\textrm{rad}$ & mean anomaly at reference time \\
     $\omega$ & $\omega \sim \mathcal{U}(0, 2\pi)~\textrm{rad}$ & argument of pericenter \\
-    $s$ & $\ln s \sim \mathcal{N}(\mu_y, \sigma_y^2)$ & extra ``jitter'' added in quadrature to each visit velocity error \\
+    $s$ & $\ln s \sim \mathcal{N}(\mu_y, \sigma_y^2)$ & extra ``jitter'' added in quadrature to each visit-velocity error \\
     \hline
     \multicolumn{3}{l}{\footnotesize \textsl{linear parameters}}\\
     \hline
@@ -597,9 +608,9 @@ to HMC when the system parameters are highly constrained (as discussed below).
 
 For each of the \nsources\ sources in the parent catalog of sources selected
 from \apogee\ \dr{16} (\sectionname~\ref{sec:data}), we run \thejoker\
-\citep{thejoker} generate posterior samplings over the Keplerian orbital
-parameters, including an additional per-source uncertainty or ``jitter''
-parameter that is added in quadrature to the (adjusted) \apogee\ visit velocity
+\citep{thejoker} in order to generate posterior samplings over the Keplerian
+orbital parameters, including an additional per-source uncertainty or ``jitter''
+parameter that is added in quadrature to the (adjusted) \apogee\ visit-velocity
 uncertainties (see above).
 We start by generating a cache of $100,000,000$ prior samples for the nonlinear
 parameters generated from the prior \pdf\ summarized in
@@ -628,7 +639,7 @@ For incomplete sources with unimodal samplings ($1\,709$ sources), we use the
 samples returned from \thejoker\ to initialize Hamiltonian Monte Carlo (HMC) to
 continue generating posterior samples.
 We use \texttt{pymc3} with the \emph{No-U-Turn Sampler} (NUTS; \citealt{NUTS}),
-using the dense mass matrix tuning prescription implemented in
+using the dense mass-matrix tuning prescription implemented in
 \texttt{exoplanet} \citep{exoplanet:exoplanet} and run 4 chains in parallel,
 each for 1000 tuning steps and 4000 steps subsequently.
 We use these 4 chains and \texttt{pymc3} to compute the Gelman-Rubin convergence
@@ -662,7 +673,7 @@ cuts based on percentiles computed from the distribution of $\ln K$ values after
 comparing to running the same pipeline on a control sample of data generated
 with purely Gaussian noise properties and time information taken from the
 \apogee\ \dr{14} visits.
-Here, we use both a selection based on the posterior samples in $K$ and based on
+Here, we use both a selection based on the posterior samples in $K$, and using
 a likelihood ratio comparing the Keplerian orbit model assumed by \thejoker\
 with a (robust) constant-velocity model for each source.
 
@@ -685,12 +696,12 @@ $> 1~\kms$).
 For each \apogee\ source, after generating the posterior samplings, we compute
 and store the maximum (over posterior samples) \emph{unmarginalized}
 log-likelihood value for the Keplerian orbit model, i.e., for one source with
-$N$ visit velocity measurements $v_n$ at times $t_n$,
+$N$ visit-velocity measurements $v_n$ at times $t_n$,
 \begin{equation}
     \ln \hat{L}_1 = \sum_n^N \ln \mathcal{N}(v_n \given
-        v(t_n \,;\, \bs{\theta}_{\mathrm{max}}), \sigma_n^2)
+        v(t_n \,;\, \bs{\theta}_{\mathrm{max}}), \sigma_n^2) \quad ,
 \end{equation}
-where $\sigma_n$ are the adjusted visit velocity errors
+where $\sigma_n$ are the adjusted visit-velocity errors
 (\equationname~\ref{eq:verr}) and $v(\cdot)$ is given by
 \equationname~\ref{eq:kepler} and is evaluated using the parameters for the
 maximum likelihood posterior sample, $\bs{\theta}_{\mathrm{max}}$.
@@ -701,12 +712,12 @@ maximum likelihood posterior sample, $\bs{\theta}_{\mathrm{max}}$.
     \includegraphics[width=0.8\textwidth]{example-binaries-short.pdf}
     \end{center}
     \caption{%
-    Example binary star systems that pass the selection and are included in the
+    Example binary-star systems that pass the selection and are included in the
     catalog released here for \apogee\ sources with short visit baselines
     ($\tau < 100~\dayd$).
     Each row is an \apogee\ source (indicated on the left panel).
     Left panels show the visit velocity data (black markers; error bars are
-    typically smaller than the marker) and radial velocity orbits computed from
+    typically smaller than the marker) and radial-velocity orbits computed from
     the posterior samples (blue lines).
     Right panels show the same samples in period $P$ and minimum companion mass
     \mtwomin.
@@ -736,7 +747,7 @@ under this model is given by
 \begin{equation}
     \hat{L}_2 = \prod_n^N \left[(1-f) \,
         \mathcal{N}(v_n \given \mu_v, \sigma_n^2)
-        + f\, \mathcal{N}(v_n \given \mu_v, \sigma_n^2 + \Sigma) \right]
+        + f\, \mathcal{N}(v_n \given \mu_v, \sigma_n^2 + \Sigma) \right] \quad ,
 \end{equation}
 where $f$ is the outlier fraction, $\mu_v$ is the constant-velocity value, and
 $\Sigma$ is the variance of the outlier model component (assumed to be large).
@@ -746,7 +757,7 @@ bounds on the parameters such that $f \in (0, 0.2)$, $\mu_v \in (-500,
 We store the optimized log-likehihood value of the robust constant-velocity
 model and refer to this as $\ln \hat{L}_2$
 
-We define a catalog of binary star systems based on the posterior samplings
+We define a catalog of binary-star systems based on the posterior samplings
 generated from \thejoker\ by selecting sources for which
 \begin{align}
     P_{1\%}(\ln K) &> 0\\
@@ -761,7 +772,7 @@ parameter samplings.
 Summary information for the samplings generated from all sources in the parent
 sample is included in \tablename~\ref{tbl:metadata}; in this table, the boolean
 mask \texttt{binary\_catalog} can be used to select the \nbinary\ sources that
-pass the binary star selections defined in \equationname~\ref{eq:binary-cuts}.
+pass the binary-star selections defined in \equationname~\ref{eq:binary-cuts}.
 
 \figurename s~\ref{fig:binary-examples-short} and \ref{fig:binary-examples-long}
 show some examples of binary systems that passed the selection above.
@@ -770,7 +781,7 @@ some example short baseline (\figurename~\ref{fig:binary-examples-short}) and
 long baseline (\figurename~\ref{fig:binary-examples-long}) cases.
 The left column of panels in each figure show the radial velocity data (black
 markers) for randomly-chosen sources with (3, 5, 7, 9) visits (from top to
-bottom), and the blue lines show radial velocity orbits computed from the
+bottom), and the blue lines show radial-velocity orbits computed from the
 posterior samplings generated by \thejoker.
 The right column of panels show the same posterior samples (blue markers), but
 in a projection of the parameter space (period $P$ and minimum companion mass,
@@ -783,7 +794,7 @@ primary mass).
 \subsection{The Gold Sample}
 \label{sec:gold-sample}
 
-The majority of binary star systems that comprise the catalog defined above have
+The majority of binary-star systems that comprise the catalog defined above have
 strongly multi-modal samplings in orbital properties.
 While this is useful for binary \textit{population} studies, it is more
 difficult to summarize the system orbital properties and their trends with
@@ -794,21 +805,21 @@ posterior samplings.
 We define this \goldsample\ as sources that pass the following cuts:
 \begin{itemize}
     \item Matches to a \gaia\ source within $2~\textrm{arcsec}$ of the
-          reported \acronym{2MASS} sky position,
+          reported \acronym{2MASS} sky position
     \item Has a stellar mass measurement in the \acronym{STARHORSE} catalog
-          \citep{Queiroz:2019},
+          \citep{Queiroz:2019}
     \item No additional \gaia\ sources within $2~\textrm{arcsec}$ with a
           $G$-band magnitude difference $\Delta G > -5$ (to remove sources that
           would lie within the \apogee\ fiber and appreciably contaminate the
-          spectrum),
+          spectrum)
     \item No additional \gaia\ sources within $10~\textrm{arcsec}$ with a
           $G$-band magnitude difference $\Delta G > 2.5$ (to remove bright
-          neighbor stars),
-    \item $-0.5 < \logg < 5.5$ (reasonable stellar parameters),
-    \item $3500 < \Teff < 8000$ (reasonable stellar parameters),
-    \item $-2.5 < \mh < 0.5$ (reasonable stellar parameters),
-    \item $s_{\textrm{MAP}} < 0.5~\kms$ (a small inferred excess variance),
-    \item $n_{\textrm{vis}} > 5$ (more than 5 visit spectra).
+          neighbor stars)
+    \item $-0.5 < \logg < 5.5$ (reliable stellar parameters)
+    \item $3500~\Kel < \Teff < 10000~\Kel$ (reliable stellar parameters)\footnote{\changes{While the new \apogee\ \acronym{MARCS} grids extend below 3500~\Kel (J\"onsson et al., in prep.; \citealt{DR16}), there are few calibrator stars with such low temperatures, so the stellar parameters are less reliable for stars with $\Teff < 3500~\Kel$.}}
+    \item $-2.5 < \mh < 0.5$ (reliable stellar parameters)
+    \item $s_{\textrm{MAP}} < 0.5~\kms$ (a small inferred excess variance)
+    \item $n_{\textrm{vis}} > 5$ (more than 5 visit spectra)
 \end{itemize}
 
 We identify sources with unimodal posterior samplings as sources for which the
@@ -832,22 +843,23 @@ Summary information and a list of sources in the \goldsample\ are included in
     \end{center}
     \caption{%
     Close binarity across the color--magnitude diagram.
-    \textbf{Upper left:} The observed close binary fraction as a function of
+    \textbf{Upper left:} The observed close-binary fraction as a function of
     spectroscopic surface gravity, $\log g$, for all stars that pass the
-    giant branch selection indicated in \figurename~\ref{fig:specHR}.
+    giant-branch selection indicated in \figurename~\ref{fig:specHR}.
     \textbf{Lower left:} The observed binary fraction as a function of
     spectroscopic effective temperature, $T_{\rm eff}$, for all stars that pass
-    the main sequence selection indicated in \figurename~\ref{fig:specHR}.
+    the main-sequence selection indicated in \figurename~\ref{fig:specHR}.
     \textbf{Right:} The extinction-corrected \acronym{2MASS} color-magnitude
     diagram (CMD) for all \apogee\ sources, colored by the fraction of sources
     identified as binary-star systems (\sectionname~\ref{sec:catalog}).
     The solid (orange) line shows a \acronym{MIST} isochrone for a
     $5~\mathrm{Gyr}$ stellar population with $\feh = -0.2$, and the dashed line
-    indicates the corresponding equal-mass binary sequence for main sequence
+    indicates the corresponding equal-mass binary sequence for main-sequence
     stars.
     %
-    The panels in this figure are meant to be illustrative and should only be
-    compared in a relative sense.
+    \changes{The panels in this figure are meant to be illustrative only, since
+    the observed binary fraction is not precisely the true, complete binary
+    fraction (see \sectionname~\ref{sec:catalog} for selection criteria).}
     \label{fig:binary-CMD}
     }
 \end{figure}
@@ -863,28 +875,29 @@ However, the overall binary-star population extends from close binaries to
 systems with $a\gtrsim 20\,000~\AU$, with a broad, approximately log-normal
 period distribution centered at $\sim \log(250~\yr)$ \citep{Raghavan:2010}.
 The binary systems we identified and study here are commonly referred to as
-``close binaries'' \citep{Moe:2018, Badenes:2018}, representing the closest
-$\sim 20\%$--$40\%$ of all bound binary star systems.
-With this in mind, we use our sample to study some simply population properties
+``close binaries'' \citep{Badenes:2018, Moe:2018}, representing the closest
+$\sim 20\%$--$40\%$ of all bound binary-star systems.
+With this in mind, we use our sample to study some simple population properties
 of these binary systems, and highlight some interesting systems in our sample.
 
-\subsection{Close binary fraction trends with stellar properties}
+\subsection{Close Binary Fraction Trends with Stellar Properties}
 \label{sec:binary-fraction}
 
 Our catalog of binary stars is not complete in the sense that the cuts we have
-made on the orbital parameter samplings will impart non-uniform selection biases
+made on the orbital-parameter samplings will impart non-uniform selection biases
 that depend on the true orbital properties of binaries and on the cadence of
 observations (visits) for each source.
 However, because of the simple target selection and observation strategy used by
 \apogee\, \citep{Zasowski:2013, Zasowski:2017} and \apogee-2S (south; Beaton et
-al., in prep., Santana et al., in prep.), we do not expect these binary-star
+al., in prep.; Santana et al., in prep.), we do not expect these binary-star
 selection biases to depend strongly on stellar parameters (e.g., metallicity,
 surface gravity).
 We can therefore still use this catalog to study the \emph{relative} close
 binary fraction within our sample, but caution against interpreting the binary
 fractions discussed below in an absolute sense.
 Note that here we use ``binary fraction'' to mean the observed fraction of
-detected binary systems, not the intrinsic or birth fraction of binary systems.
+\emph{detected} binary systems, not the intrinsic or birth fraction of binary
+systems.
 
 \figurename~\ref{fig:binary-CMD} (right) shows a near-infrared, binned
 color-magnitude diagram for all \apogee\ sources in the subset of our sample
@@ -892,7 +905,7 @@ that cross-match to the \gaia\ \dr{2} astrometric catalog
 \citep{Gaia-Collaboration:2016, Gaia-Collaboration:2018, Gaia:2018a} and have a
 parallax signal-to-noise $\varpi / \sigma_\varpi > 8$; we compute the absolute
 $H$-band magnitudes by converting parallax into distance as $d = 1/\varpi$.
-Each pixel is colored by the ratio of the number of binary star systems
+Each pixel is colored by the ratio of the number of binary-star systems
 identified by the selections defined above (\equationname~\ref{eq:binary-cuts})
 over the total number of sources in the parent sample; Pixels with fewer than
 four stars in the parent sample are white.
@@ -901,8 +914,8 @@ The solid (orange) line shows a $5~\mathrm{Gyr}$ \acronym{MIST} isochrone
 metallicity indicated in the figure legend.
 The dashed line shows the equal-mass binary sequence for this isochrone,
 $0.75~\mathrm{mag}$ above the main sequence.
-Note that, as expected, the binary fraction is higher in this region of the CMD,
-and is higher towards younger and more massive main sequence stars.
+Note that, as expected, the \changes{observed} binary fraction is higher in this region of the CMD,
+and is higher towards younger and more massive main-sequence stars.
 Note also that the red clump (around $(J-K) \approx 0.6$, $H \approx -1.8$) has
 a \emph{low} binary fraction (as noted in \citealt{Badenes:2018}).
 The width of the binary sequence (in $H$ magnitude) can be explained by the
@@ -914,7 +927,7 @@ spread in metallicities in the \apogee\ sample.
     \includegraphics[width=0.6\textwidth]{fraction_M_H.pdf}
     \end{center}
     \caption{%
-    The observed close binary fraction as a function of bulk metallicity, $[{\rm
+    The observed close-binary fraction as a function of bulk metallicity, $[{\rm
     M}/{\rm H}]$.
     The binary fraction is anti-correlated with metallicity, here measured with
     a slope of $-0.1$.
@@ -923,10 +936,10 @@ spread in metallicities in the \apogee\ sample.
 \end{figure}
 
 The top left panel of \figurename~\ref{fig:binary-CMD} shows another view of the
-binary fraction, here shown as a 1D function of surface gravity for stars in the
+\changes{observed} binary fraction, here shown as a 1D function of surface gravity for stars in the
 giant branch selection region shown in \figurename~\ref{fig:specHR}.
 There is a clear and sharp dip in the occurrence of binary systems near the red
-clump, and the close binary fraction decreases appreciably with decreasing
+clump, and the close-binary fraction decreases appreciably with decreasing
 surface gravity (i.e., increased size).
 Both of these features are likely signatures of companion engulfment: As red
 giant stars evolve up the giant branch, any companions with orbital semi-major
@@ -934,11 +947,11 @@ axes smaller than a few times the surface size of the primary star could be
 consumed \citep{Ivanova:2013}, therefore leading to an overall decrease in the
 binary fraction for larger stars.
 
-The bottom left panel shows the same, but as a function of effective temperature
+The bottom-left panel shows the same, but as a function of effective temperature
 (as a proxy for the mass of the primary) for stars in the main sequence
 selection region shown in \figurename~\ref{fig:specHR}.
-As has been noted in many past studies, we find that the binary fraction
-(companion frequency) increases with stellar mass (effective temperature) along
+As has been noted in many past studies, we find that the \changes{observed} binary fraction
+(\changes{detected} companion frequency) increases with stellar mass (effective temperature) along
 the main sequence \citep[e.g.,][]{Duchene:2013}.
 Like the compilation of companion frequencies shown in \cite{Duchene:2013} and a
 number of studies of local samples of binary systems
@@ -946,21 +959,21 @@ number of studies of local samples of binary systems
 fraction increases steeply for primary stellar masses $M_1 \gtrsim 1.1~\msun$
 ($\Teff \gtrsim 6000~\textrm{K}$).
 
-\figurename~\ref{fig:binfrac-mh} shows the total close binary fraction for main
+\figurename~\ref{fig:binfrac-mh} shows the total \changes{fraction of detected close binaries} for main
 sequence stars as a function of bulk metallicity, $\mh$.
-As has been recently emphasized, we find that the fraction of close binaries is
+As has been recently emphasized, we find that the \changes{observed} fraction of close binaries is
 significantly anti-correlated with metallicity \citep{Moe:2019, El-Badry:2019a},
 in disagreement with previous work (with a much smaller sample) that had
 found no dependency with metallicity \citep{Jenkins:2015}.
 We find a shallower dependence of these properties, with a slope of $\approx
 -0.1$ as compared to the previously determined slope of $-0.2$ (also for close
-binaries) \citep{Moe:2019}.
+binaries by \citealt{Moe:2019}).
 While we do not expect there to be strong selection biases that imprint on these
 quantities, we emphasize that we have not corrected for detection efficiency or
 completeness with our sample.
 
 
-\subsection{Orbital parameter trends with stellar properties}
+\subsection{Orbital Parameter Trends with Stellar Properties}
 \label{sec:gold-sample}
 
 % Notebook: Figure-gold-sample.ipynb
@@ -987,11 +1000,12 @@ completeness with our sample.
     }
 \end{figure}
 
-\figurename~\ref{fig:Plogg} shows inferred orbital periods for all stars in the
-\goldsample\ as a function of orbital eccentricity (left) and surface gravity
-(right), where the range of periods is clearly limited (at large $P$) by the
+\figurename~\ref{fig:Plogg} shows the inferred orbital periods for all stars in
+the \goldsample\ as a function of orbital eccentricity (left) and surface
+gravity (right), where the range of periods is limited (at large $P$)
+\changes{by the length of the \apogee\ surveys.}
 The left panel clearly shows the impact of tidal circularization
-\citep[e.g.,][]{Zahn:1977, Meibom:2005}.
+\citep[e.g.,][]{Zahn:1977, Meibom:2005}:
 The eccentricities of systems with $P \lesssim 10~\dayd$ are much more peaked
 near $e=0$ as compared to systems with larger orbital periods (e.g., $P\gtrsim
 100~\dayd$).
@@ -1009,10 +1023,10 @@ in the \goldsample\ (with unimodal or bimodal samplings) as a function of
 surface gravity.
 The diagonal lines in this panel show the orbital periods at which the orbital
 pericenter of a $0.3~\msun$ companion is equal to the stellar surface radius for
-a $1.1~\msun$ primary star (the median RGB mass in our sample) at the given
-surface gravity and eccentricity indicated.
+a $1.1~\msun$ primary star (the median red giant branch mass in our sample) at
+the given surface gravity and eccentricity indicated.
 The apparent lack of systems with orbital periods shorter than or within
-$\sim$1~$\mathrm{dex}$ these critical lines (with $\logg \gtrsim 1$) suggests
+$\sim$1~$\mathrm{dex}$ of these critical lines (with $\logg \gtrsim 1$) suggests
 that a substantial fraction of binaries must merge or disrupt during the
 evolution of the primary star.
 The paradoxical points with seemingly small orbital periods at small \logg\
@@ -1032,8 +1046,8 @@ an over-abundance of low-eccentricity points at orbital periods $P\gtrsim
 100~\dayd$.
 \figurename~\ref{fig:Pe-logg-bins} shows histograms of maximum \textsl{a
 posteriori} MAP eccentricity values for sources in the \goldsample\ with MAP
-period values $P > 50~\dayd$ in four bins of surface gravity, from main sequence
-(farthest left) to upper giant branch (farthest right).
+period values $P > 50~\dayd$ in four bins of surface gravity, from the main
+sequence (farthest left) to the upper giant branch (farthest right).
 Note that around the red clump (third panel from the left), there are
 significantly more $e < 0.1$ systems than expected (i.e., as compared to the
 previous bin).
@@ -1050,28 +1064,28 @@ branch.
     \caption{%
     Histograms of maximum \textsl{a posteriori} (MAP) eccentricity values for
     systems with MAP $P > 50~\dayd$.
-    Each panel contains systems with primary star surface gravities indicated in
+    Each panel contains systems with primary-star surface gravities indicated in
     the title.
     \label{fig:Pe-logg-bins}
     }
 \end{figure}
 
 
-\subsection{Interesting low and high mass companions}
+\subsection{Interesting Low and High Mass Companions}
 \label{sec:low-high-mass}
 
-By construction, all sources in the \goldsample\ have primary stellar mass
+By construction, all sources in the \goldsample\ have primary stellar-mass
 estimates, $M_1$, from the \acronym{STARHORSE} catalog \citep{Queiroz:2019}.
 For these systems, we can then also convert the inferred orbital parameters into
 measurements of the minimum companion mass, \mtwomin\ (i.e., $M_2 \, \sin i$
 where the unknown inclination $i$ is set to $90^\circ$).
-\figurename~\ref{fig:m2m1} (left panel) shows these minimum companion mass
+\figurename~\ref{fig:m2m1} (left panel) shows these minimum companion-mass
 estimates as a function of the \acronym{STARHORSE} primary masses for all
 sources in the \goldsample.
 While the uncertainties in these quantities are not shown for most sources, the
 eight highlighted systems (red markers with error bars) show typical values of
 the errors on the masses (but note that the errors will be strongly correlated).
-The two dashed (blue) lines show the approximate hydrogen burning limit (lower
+The two dashed (blue) lines show the approximate hydrogen-burning limit (lower
 horizontal line), and the upper curve shows the line of equality where the
 minimum companion mass is equal to the primary mass.
 Of these, 95 systems have $\mtwomin < 80~\mjup$: Some of these may be
@@ -1092,8 +1106,8 @@ will be discussed in a separate paper (Price-Whelan et al., in prep.).
     \textbf{Left:} Minimum companion masses, $\mtwomin$, as a function of
     primary mass, $M_1$, for all stars in the \goldsample.
     The upper dashed (blue) line shows the line of equality where $\mtwomin =
-    M_2$; Systems near or above this threshold have candidate compact object
-    companions as the more massive secondary is fainter than the primary.
+    M_2$; Systems near or above this threshold have candidate compact-object
+    companions as the more-massive secondary is fainter than the primary.
     The lower dashed (blue) line shows the approximate hydrogen burning limit;
     Sources below this threshold are candidate substellar objects.
     The eight highlighted points (red) are shown below in \figurename
@@ -1113,9 +1127,10 @@ Here, the curved, dashed line shows an estimate of the Roche radius
 \citep{Eggleton:1983}: Systems above this line are likely interacting.
 One such system (\texttt{2M08160493+2858542}), indicated by the square (orange)
 marker in this panel, appears to be strongly photometrically variable in data
-from the \acronym{ASAS-SN} survey \citep{Shappee:2014, Jayasinghe:2019}, however
-most other candidate interacting systems do not have \acronym{ASAS-SN} light
-curves and could instead be followed up with \acronym{TESS} \citep{Ricker:2014}.
+from the \acronym{ASAS-SN} survey \citep{Shappee:2014, Jayasinghe:2019},
+however, most other candidate interacting systems do not have \acronym{ASAS-SN}
+light curves and could instead be followed up with \acronym{TESS}
+\citep{Ricker:2014}.
 
 % Notebook: Figure-highmass-lowmass.ipynb
 \begin{figure}[!t]
@@ -1123,7 +1138,7 @@ curves and could instead be followed up with \acronym{TESS} \citep{Ricker:2014}.
     \includegraphics[width=0.8\textwidth]{example-brown-dwarfs.pdf}
     \end{center}
     \caption{%
-    Example binary star systems from the \goldsample\ with low-mass companions
+    Example binary-star systems from the \goldsample\ with low-mass companions
     that are candidate substellar objects.
     Each row is a different source (indicated in the left panels).
     The left panels show the raw visit velocity data (black markers)
@@ -1166,7 +1181,7 @@ pass the strict cuts we used to construct the \goldsample.
     \includegraphics[width=0.8\textwidth]{example-compact-objects.pdf}
     \end{center}
     \caption{%
-    The same as \figurename~\ref{fig:brown-dwarfs}, but for example binary star
+    The same as \figurename~\ref{fig:brown-dwarfs}, but for example binary-star
     systems from the \goldsample\ with faint, high-mass companions that are
     candidate compact objects.
     \label{fig:compact-objects}
@@ -1174,7 +1189,7 @@ pass the strict cuts we used to construct the \goldsample.
 \end{figure}
 
 
-\subsection{Hierarchical inference of the eccentricity distribution}
+\subsection{Hierarchical Inference of the Eccentricity Distribution}
 \label{sec:hierarch-ecc}
 
 Most of the results highlighted above make use of the catalogs created from
@@ -1193,7 +1208,7 @@ parametric model.
 
 We first select all $53\,790$ sources with samplings from \thejoker\ (or
 subsequent MCMC) with $4000~\textrm{K} < \Teff < 7000~\textrm{K}$ and $-2 < \mh
-< 0.5$ in order to select main sequence, FGK-type stars.
+< 0.5$ in order to select main-sequence, FGK-type stars.
 We then only keep $8\,599$ sources that have $>128$ samples with $P > 100~\dayd$
 and $K > 1~\kms$, of which 158 sources have unimodal samplings (i.e., generated
 with MCMC).
@@ -1204,18 +1219,18 @@ just make a cut on the posterior samplings.
 For each $j$ source in this sample of binaries with FGK-type primary stars, we
 then have $M_j$ (up to 512) samples in orbital eccentricity, $e_{jm}$.
 We parametrize the eccentricity distribution using a beta distribution,
-$B(a,b)$, and use the importance sampling trick to reweight the $e_{jm}$ samples
+$B(a,b)$, and use the importance-sampling trick to reweight the $e_{jm}$ samples
 to infer the hyperparameters $(a, b)$ \citep{Hogg:2010}.
 
 In detail, we would like to evaluate or generate samples from the posterior
 probability distribution over the hyperparameters of the eccentricity
 distribution
 \begin{equation}
-    p(a, b \given D) \propto p(D \given a, b) \, p(a, b)\label{eq:hierarch-post}
+    p(a, b \given D) \propto p(D \given a, b) \, p(a, b) \quad , \label{eq:hierarch-post}
 \end{equation}
 where $D$ represents all visit data for all sources, i.e.,
 \begin{equation}
-    p(D \given a, b) = \prod_j p(D_j \given a, b)
+    p(D \given a, b) = \prod_j p(D_j \given a, b) \quad ,
 \end{equation}
 and $(a, b)$ are the parameters of our assumed beta distribution model.
 There is no obvious way to evaluate this posterior probability---especially the
@@ -1228,14 +1243,14 @@ distributions over eccentricity,
     e_{jm} &\sim p(e \given D_j, \alpha_0)
 \end{align}
 where $\alpha_0$ is meant to represent the parameters of our assumed ``interim''
-prior over eccentricity that we used to generate the per-source samplings (i.e.,
-see \tablename~\ref{tbl:prior}), and here ``$\sim$'' means ``is sampled from.''
+prior over eccentricity that we used to generate the per-source samplings (see
+\tablename~\ref{tbl:prior}), and here ``$\sim$'' means ``is sampled from.''
 Through math that is explained in more detail in other work
 \citep[e.g.,][]{Hogg:2010, Price-Whelan:2018}, it turns out that the
 hierarchical likelihood can be written as a sum over the ratio of probabilities
 \begin{equation}
     p(D_j \given a, b) \approx \frac{\mathcal{Z}}{M_j} \,
-        \sum_k^M \frac{p(e_{jm} \given a, b)}{p(e_{jm} \given \alpha_0)}
+        \sum_k^M \frac{p(e_{jm} \given a, b)}{p(e_{jm} \given \alpha_0)} \quad ,
 \end{equation}
 where $\mathcal{Z}$ is a normalization constant.
 In practice, we evaluate the hierarchical log-likelihood, $\ln p(D_j \given a,
@@ -1254,14 +1269,14 @@ b)$, as
     \includegraphics[width=0.85\textwidth]{eccentricity-distr.pdf}
     \end{center}
     \caption{%
-    \textbf{Left:} The inferred eccentricity distribution for binary star
+    \textbf{Left:} The inferred eccentricity distribution for binary-star
     systems with FGK-type primary stars (black line).
     We use the posterior sampings for $8\,599$ sources within a toy hierarchical
     model of the eccentricity distribution, represented as a beta distribution.
     We also plot common eccentricity distributions from the literature, such as
-    the global exoplanet model from \cite[][; solid, gray line]{Kipping:2013},
-    the (theoretical) thermalized population \citep[][; dashed, blue
-    line]{Jeans:1919}, and a uniform distribution (dotted, orange line).
+    the global exoplanet model from \citet{Kipping:2013}, shown as a solid, gray
+    line, the (theoretical) thermalized population (\citealt{Jeans:1919};
+    dashed, blue line) and a uniform distribution (dotted, orange line).
     \textbf{Right:} The same as the left panel, but showing cumulative
     distribution functions instead.
     \label{fig:eccdist}
@@ -1279,7 +1294,7 @@ to generate posterior samples in the parameters of the eccentricity
 distribution.
 We run the sampler for 1000 steps to tune, then run four chains in parallel,
 each for an additional 2000 steps.
-We assess convergence again by computing the Gelman-Rubin statistic, $\hat{R}$
+We assess convergence again by computing the Gelman-Rubin statistic, $\hat{R}$,
 and find that all parameters have converged samplings at the end of our run.
 
 From these posterior samples, we find $a = 1.749 \pm 0.001$ and $b = 2.008 \pm
@@ -1287,12 +1302,11 @@ From these posterior samples, we find $a = 1.749 \pm 0.001$ and $b = 2.008 \pm
 \figurename~\ref{fig:eccdist} shows the inferred eccentricity distribution
 (black curve, left panel) and the corresponding cumulative distribution function
 (right panel) along with some other eccentricity distributions from the
-literature.
-For example, the (global) exoplanet eccentricity distribution from
+literature: For example, the (global) exoplanet eccentricity distribution from
 \citet{Kipping:2013}, the (theoretical) eccentricity distribution for a
 thermalized population of binaries \citep{Jeans:1919}, and a uniform
 distribution.
-At long periods, binary star systems seem to have moderate eccentricities that
+At long periods, binary-star systems seem to have moderate eccentricities that
 disfavor circular or very eccentric values.
 This is in agreement with past studies that have focused on nearby samples of
 solar-type stars with smaller sample sizes \citep[e.g.,][]{Duquennoy:1991,
@@ -1300,9 +1314,9 @@ Raghavan:2010}.
 Note, however, that this should still be viewed as a demonstration: Future
 analysis should assess the impact of selection effects and detection efficiency
 on the inferred eccentricity distribution using these data.
-We also emphasize that the extremely precise constraints we get on the
-parameters of the beta distribution imply that we have enough data to complexify
-the model, either by using non-parametric forms for the eccentricity
+We also emphasize that the extremely precise constraints we obtain on the
+parameters of the beta distribution imply that we have sufficient data to
+complexify the model, either by using non-parametric forms for the eccentricity
 distribution to move away from rigid models or by parametrizing variations in
 the distribution with stellar parameters.
 
@@ -1312,7 +1326,7 @@ the distribution with stellar parameters.
 In what follows, we discuss some important caveats and considerations for
 interpreting the results and using the catalogs described in this \documentname.
 
-\subsection{Assumptions, caveats, and known failures}
+\subsection{Assumptions, Caveats, and Known Failures}
 \label{sec:caveats}
 
 The assumptions that underlie the sampling procedure described above are
@@ -1327,21 +1341,21 @@ to outliers, or, more generally, any visit velocities with strongly non-Gaussian
 noise properties.
 In \apogee, this might occur for blended sources, multiple-star systems with
 more than one star that contribute significantly to infrared flux, or sources
-with stellar parameters very beyond the grid of template spectra
+with stellar parameters that are beyond the grid of template spectra
 \citep{Nidever:2015}.
 
 Second, related to the first point, we make the strong assumption that all
 sources are single-lined, i.e., that any binary companions do not contribute
 significantly to the observed spectra.
-This is wrong in general: Some systems will be double lined (sometimes only
+This is wrong in general: Some systems will be double-lined (sometimes only
 subtly, but detectable, e.g., \citealt{El-Badry:2018}), and we will be biased in
 cases where these sources are not properly filtered by the quality cuts done
 above.
 This also means that we will definitely miss systems with similar masses (and
 especially ``twin'' binaries; \citealt{El-Badry:2019}).
 We expect this assumption to be worse on the main sequence than on the giant
-branch, because any lower-mass companion to a giant branch star will have a
-luminosity hundreds or thousand times fainter.
+branch, because any lower-mass companion to a giant-branch star will have a
+luminosity hundreds or thousands of times fainter.
 
 Third, the adopted prior \pdf\ over systemic velocities, $v_0$, is reasonable
 for considering all \apogee\ sources (i.e., for a mixture of kinematically
@@ -1360,25 +1374,25 @@ Finally, related to the fourth point, we assume that all velocity variations
 represent orbital motion (i.e., not pulsation or similar intrinsic stellar
 phenomena).
 As highlighted in \figurename~\ref{fig:binary-CMD}, this assumption is clearly
-violated when $\logg \lesssim 1~\kms$ where stellar surface jitter masquerades
+violated when $\logg \lesssim 1$ where stellar surface jitter masquerades
 as orbital motion and leads to (a small amount of) contamination.
 
 
-\subsection{Binary fraction trends with stellar properties}
+\subsection{Binary Fraction Trends with Stellar Properties}
 \label{sec:binary-trends}
 
-We find a number of interesting trends in the binary fraction as a function of
+We find a number of interesting trends in the binary fraction \changes{(or really fraction of stars with binaries detected in this sample)} as a function of
 stellar parameters and chemical composition that have far-reaching implications.
-For one, the binary fraction increases rapidly with decreasing metallicity (as
+For one, the \changes{observed} binary fraction increases rapidly with decreasing metallicity (as
 also noted recently by \citealt{Moe:2019, El-Badry:2019a}).
 Beyond the implications discussed in \cite{Moe:2019}, this also motivates
 appropriate investigation into how a large binary fraction could influence
 inferred properties of dwarf galaxies and globular clusters.
 For example, stellar binarity impacts velocity dispersion measurements, which
 then contaminate estimates of dark matter masses in these systems
-\citep[e.g.,][]{Aaronson:1987, Kouwenhoven:2008, Spencer:2017, Spencer:2018},
-but also impact the long-term stability and dynamical evolution of compact
-stellar systems \citep[e.g.,][]{Hut:1992, Sigurdsson:1993}.
+\citep[e.g.,][]{Aaronson:1987, Kouwenhoven:2008, Martinez:2011, Spencer:2017,
+Spencer:2018, Minor:2019}, but also impact the long-term stability and dynamical
+evolution of compact stellar systems \citep[e.g.,][]{Hut:1992, Sigurdsson:1993}.
 A large binary fraction also impacts the chemical evolution of these systems
 \citep[e.g.,][]{Eldridge:2008, Eldridge:2009}.
 
@@ -1396,18 +1410,18 @@ A large binary fraction also impacts the chemical evolution of these systems
 % These trends undoubtedly also constrain binary star formation physics ...
 
 We caution, however, that any real understanding of the binary fraction (in an
-absolute sense) from the \emph{catalogs} produced here will require a model of
-the \apogee\ selection function and for our detection efficiency.
-Still, we clearly now have samples of binary stars large enough to begin placing
-strong constraints on theories of binary star formation and evolution and their
-impact on galactic stellar populations.
+absolute sense) from the \emph{catalogs} produced here will require models for
+both the \apogee\ selection function and for our detection efficiency.
+Still, we clearly now have samples of binary stars that are sufficiently large
+to begin placing strong constraints on theories of binary-star formation and
+evolution and their impact on Galactic stellar populations.
 
 
-\subsection{Selection, completeness, false positives, and contamination}
+\subsection{Selection, Completeness, False Positives, and Contamination}
 \label{sec:completeness}
 
 As cautioned above, to properly use our catalog of systems for performing
-statistical tests (for example, to interpret the binary fraction values in
+statistical tests (for example, to interpret the binary-fraction values in
 \figurename~\ref{fig:binary-CMD} in an absolute sense), it is critical to have
 estimates of our detection efficiency or completeness as a function of binary
 orbital parameters and stellar parameters.
@@ -1420,7 +1434,7 @@ companion mass, inclination, and separation).
 It will also depend on mass ratio, as many sources with bright companions will
 be dropped by the quality cuts imposed on the \apogee\ data.
 As a consequence of this, the systems considered in this work are primarily
-close binary systems with intermediate mass ratios.
+close-binary systems with intermediate mass ratios.
 
 One way to construct completeness estimates would be to repeat the analysis done
 in this \documentname\ using simulated systems with known parameters.
@@ -1441,27 +1455,30 @@ open source and is also available as a \texttt{Python} package, \texttt{hq}
 % project.
 
 
-\subsection{Below-threshold searches}
+\subsection{Below-threshold Searches}
 \label{sec:subthreshold}
 
 Another problem with a traditional catalog of detected binary companions (like
-ours) is that there are many sources in which the hypothesis of a single star is
-clearly rejected, but not strong enough to qualify as a reliable binary
-``detection.''
+ours) is that there are many sources for which the hypothesis of a single star
+is clearly rejected, but are not sufficiently strongly rejected to qualify as a
+reliable binary ``detection.''
 A user who has informative data for a source that would take a sub-threshold
 source above threshold (in terms of our criteria for including a source in the
-catalog) has no recourse if only given the rigidly-thresholded catalog entries.
-Even for well detected binary systems, in a traditional catalog of orbital
+catalog) has no recourse if only given the rigidly thresholded catalog entries.
+Even for well-detected binary systems, in a traditional catalog of orbital
 parameters, there is no simple way to combine the results with new data to
 improve or adjust parameter estimates.
 The samplings provided here can be used to solve these problems; They can be
 used to combine the \apogee\ information with new data, without requiring an
 \textsl{ab initio} re-analysis of the original \apogee\ data.
-This can be done by repeating the rejection sampling step used in \thejoker\ to
-generate posterior samples, but replacing the prior samples with the posterior
-samples generated with the \apogee\ data alone and replacing the full marginal
-likelihood evaluation with the marginal likelihood of the new data computed at
-each sample.
+\changes{An example of this kind of use is the following: The
+  posterior samples delivered here from the \apogee\ data are declared
+  to be the \emph{prior samples} for a new rejection sampling. In this
+  new rejection sampling, the likelihood we use here is replaced with
+  a likelihood from the new data (say, for example, astrometric data),
+  computed now at each of these new prior samples. The output of this
+  rejection sampling will be a sampling of a posterior pdf that
+  accounts correctly for both the \apogee\ data and the new data.}
 
 In detail, following the notation in Appendix~\ref{app:marginal-likelihood},
 converting the posterior samples released here into posterior samples over the
@@ -1472,7 +1489,7 @@ generating samples from the posterior \pdf
         p(D_1 \given \bs{\theta}) \, p(D_2 \given \bs{\theta}) \,
         p(\bs{\theta})\label{eq:postupdate1}\\
         &\propto p(D_2 \given \bs{\theta}) \,
-        \left[ p(D_1 \given \bs{\theta}) \, p(\bs{\theta}) \right]
+        \left[ p(D_1 \given \bs{\theta}) \, p(\bs{\theta}) \right] \quad ,
         \label{eq:postupdate2}
 \end{align}
 where we have assumed that the new data are independent of the \apogee\ data.
@@ -1488,8 +1505,8 @@ The ability to perform sub-threshold searches or add external information is
 limited by detailed shape of the posterior \pdf\ and the number of samples we
 deliver (here, \Kminval).
 If the new data are highly informative, or favor a mode in the posterior \pdf\
-that is not well sampled, the posterior samplings we deliver will not be dense
-enough to provide support for the updated posterior \pdf.
+that is not well-sampled, the posterior samplings we deliver will not be
+sufficiently dense to provide support for the updated posterior \pdf.
 This puts limitations on the scope of sub-threshold searches, but at least they
 are possible with these outputs, in some regime of applicability.
 
@@ -1498,9 +1515,9 @@ are possible with these outputs, in some regime of applicability.
 
 Our key results and conclusions are summarized below:
 \begin{description}
-    \item[The close binary fraction depends on the stellar parameters of the
-    primary star] \figurename~\ref{fig:binary-CMD} shows a simple estimate of
-    the close binary fraction over the color--magnitude diagram, utilizing all
+    \item[The close-binary fraction depends on the stellar parameters of the
+    primary star] \figurename~\ref{fig:binary-CMD} shows a \changes{na\"ive} estimate of
+    the close-binary fraction over the color--magnitude diagram, utilizing all
     \nsources\ \apogee\ sources used in this work. There is a notable dearth of
     close companions around the red clump, where companions may have been
     engulfed when the primary star ascended the upper giant branch. We also
@@ -1508,49 +1525,53 @@ Our key results and conclusions are summarized below:
     the main sequence (i.e., stellar mass), and show that the binary fraction on
     the giant branch depends on the surface gravity (i.e., surface size) of the
     primary, also indicating that companion engulfment is an important outcome
-    of close binary star evolution.
+    of close-binary stellar evolution.
     \item[The binary fraction is anti-correlated with metallicity] We find that
-    the binary fraction decreases linearly with bulk metallicity with a slope of
-    $-0.1~\textrm{dex}^{-1}$ over the domain $-1 \lesssim \mh \lesssim 0.4$, as
-    shown in \figurename~\ref{fig:binfrac-mh}.
-    \item[We detect the clear signature of tidal circularization in field main
+    the binary fraction decreases linearly with bulk metallicity, with a slope
+    of $-0.1~\textrm{dex}^{-1}$, over the domain $-1 \lesssim \mh \lesssim 0.4$,
+    as shown in \figurename~\ref{fig:binfrac-mh}.
+    \changes{This result and the previous result are technically about
+      the observed or detected binary fraction within this sample, not
+      the absolute binary fraction, integrating over all possible
+      amplitudes and mass ratios.}
+  \item[We detect the clear signature of tidal circularization in field main
     sequence and red giant branch stars] \figurename~\ref{fig:Plogg} (left)
     shows inferred periods and eccentricities for systems with
-    uniquely-determined orbits in the \goldsample.
+    uniquely determined orbits in the \goldsample.
     The abundances of low-eccentricity sources at short periods is a
     manifestation of tidal circularization, which should operate at longer
-    periods for larger, more convective (i.e., giant branch) stars.
+    periods for larger, more convective (i.e., giant-branch) stars.
     \item[We identify 95 candidate brown dwarf companions] Using simplistic cuts
     on the \goldsample\ of high-quality sources with unimodal posterior
     samplings, we identify candidate brown dwarf companions by selecting sources
-    with median minimum companion mass (\mtwomin) values below the hydrogen
-    burning limit, $\mtwomin < 80~\mjup$. \figurename~\ref{fig:m2m1} (left)
-    shows these sources as points below the horizontal dashed line. We highlight
-    a few of these systems in \figurename~\ref{fig:brown-dwarfs}.
-    \item[We identify 40 candidate non-interacting compact object companions]
+    with median minimum companion mass (\mtwomin) values below the
+    hydrogen-burning limit, $\mtwomin < 80~\mjup$. \figurename~\ref{fig:m2m1}
+    (left) shows these sources as points below the horizontal dashed line. We
+    highlight a few of these systems in \figurename~\ref{fig:brown-dwarfs}.
+    \item[We identify 40 candidate non-interacting compact-object companions]
     Again using simplistic cuts on the \goldsample\ of high-quality sources with
-    unimodal posterior samplings, we identify candidate compact object
+    unimodal posterior samplings, we identify candidate compact-object
     companions by selecting sources with $\mtwomin > M_1$.
     \figurename~\ref{fig:m2m1} (left) shows these sources as points above the
     upper, curved dashed line. We highlight a few of these systems in
     \figurename~\ref{fig:compact-objects}.
     \item[The binary-star eccentricity distribution is peaked at
     moderate eccentricities] We execute a toy hierarchical inference using the
-    posterior samplings for $\sim 8\,600$ FGK-type main sequence stars to infer
+    posterior samplings for $\sim 8\,600$ FGK-type main-sequence stars to infer
     the eccentricity distribution of long-period ($P>100~\dayd$),
     intermediate-mass main-sequence star binary systems. By representing the
     distribution using a beta distribution, we derive precise posterior
     constraints on the parameters using this hierarchical model and find $a =
     1.749 \pm 0.001$ and $b = 2.008 \pm 0.001$. \figurename~\ref{fig:eccdist}
     shows our inferred eccentricity distribution, indicating that long-period
-    binary star systems prefer moderate eccentricities.
-    \item[We release a sample of $20\,000$ binary star systems and posterior
+    binary-star systems prefer moderate eccentricities.
+    \item[We release a sample of $20\,000$ binary-star systems and posterior
     samplings over orbital parameters for $\nsources$ \apogee\ sources] Finally,
-    we release a catalog of \nbinary\ high-confidence binary star systems
+    we release a catalog of \nbinary\ high-confidence binary-star systems
     (\tablename~\ref{tbl:metadata}). The majority of these systems have poorly
     constrained orbital parameters, but we release posterior samplings over
-    these parameters for all \nsources\ \apogee\ sources to enable other
-    probabilistic inferences with these data. We also define and release a
+    these parameters for all \nsources\ \apogee\ sources, in order to enable
+    other probabilistic inferences with these data. We also define and release a
     \goldsample\ containing \ngold\ systems with high-quality, unimodal
     posterior samplings that can be used and summarized more simply.
 \end{description}
@@ -1566,7 +1587,8 @@ Lars Bildsten (KITP),
 Dan Foreman-Mackey (Flatiron),
 Will Farr (Flatiron),
 Marla Geha (Yale),
-and Adam Jermyn (Flatiron) for useful discussions.
+Adam Jermyn (Flatiron),
+and Josh Winn (Princeton) for useful comments and discussions.
 APW acknowledgements support and space from the Max-Planck-Institut f\"ur
 Astronomie during initial work on this project.
 PMF acknowledge support for this research from the National Science Foundation
@@ -1578,6 +1600,8 @@ Ministry of Science, Innovation and Universities (MCIU) and the European
 Regional Development Fund (FEDER) under grant AYA2017-88254-P.
 SH is supported by an NSF Astronomy and Astrophysics Postdoctoral Fellowship
 under award AST-1801940.
+TCB acknowledges  partial support from grant PHY 14-30152 (Physics Frontier
+Center/JINA-CEE), awarded by the U.S. National Science Foundation.
 % We thank the anonymous referee for constructive comments that improved this
 % manuscript.
 
@@ -1640,14 +1664,14 @@ As noted above (see \sectionname~\ref{sec:joker-update}), the assumptions in
 We therefore here re-derive the marginal likelihood that forms the basis of the
 implementation of \thejoker\ used in this work.
 
-For each \apogee\ source, we have a set of $N$ radial velocity measurements
+For each \apogee\ source, we have a set of $N$ radial-velocity measurements
 (visits) $v_n$ at times $t_n$ with uncertainties $\sigma_n$.
-Under the assumption that the source is in a binary star system, our model for
+Under the assumption that the source is in a binary-star system, our model for
 the true radial velocity of the source at any time is given by
 \equationname~\ref{eq:kepler} above.
 Our goal (as in \citealt{thejoker}) is to analytically marginalize over the
 linear parameters in \equationname~\ref{eq:kepler}---$(K, v_0)$---under the
-assumption that the uncertainties on each radial velocity measurement are
+assumption that the uncertainties on each radial-velocity measurement are
 Gaussian and independent.
 To do this, we must write down expressions for the likelihood, and for the prior
 probability distribution over the parameters that we will be marginalizing over
@@ -1659,8 +1683,8 @@ Under these assumptions, the solution to this marginalization is given in
 Hogg et al. (in prep.).
 
 To see the relation between the specific problem solved by \thejoker\ and the
-derivation in Hogg et al. (in prep.), it will be convenient to repackage our
-data and linear parameters as
+derivation in Hogg et al. (in prep.), it is convenient to repackage our data and
+linear parameters as
 \begin{align}
     \vec{y} &= \transpose{(v_1, v_2, \ldots, v_N)}\\
     \vec{x} &= \transpose{(K, v_0)}\\
@@ -1670,7 +1694,7 @@ data and linear parameters as
             0 & \sigma_2^2 & \cdots & 0\\
              &  & \ddots & \\
             0 & 0 & \cdots & \sigma_N^2\\
-        \end{pmatrix}
+        \end{pmatrix} \quad ,
 \end{align}
 and to assume that the mean and covariance matrix of the prior over the linear
 parameters are given by $\vec{\mu}, \mat{\Lambda}$, respectively.
@@ -1683,7 +1707,7 @@ will also need to define a design matrix, $\mat{M}$,
             \zeta(t_2 \,;\, \vec{\theta}) & 1\\
             \vdots & \vdots\\
             \zeta(t_N \,;\, \vec{\theta}) & 1
-        \end{pmatrix}
+        \end{pmatrix} \quad ,
 \end{equation}
 where $\zeta(\cdot)$ is given by \equationname~\ref{eq:zeta}.
 With these assumptions, the marginalized likelihood, $Q$, for a source, given
@@ -1697,12 +1721,12 @@ nonlinear parameters $\vec{\theta}$, can be written
         \norm(\vec{y} \given \vec{b}, \mat{B})\\
     &= \norm(\vec{y} \given \vec{b}, \mat{B})\\
     \vec{b} &= \mat{M} \cdot \vec{\mu}\\
-    \mat{B} &= \mat{C} + \mat{M} \cdot \mat{\Lambda} \cdot \transpose{\mat{M}}
+    \mat{B} &= \mat{C} + \mat{M} \cdot \mat{\Lambda} \cdot \transpose{\mat{M}} \quad ,
 \end{align}
 where the integral becomes simple because the second normal distribution,
 $\norm(\vec{y} \given \vec{b}, \mat{B})$, does not depend on the integration
 variables, $\vec{x}$, and the integral over the first normal distribution is 1
-Hogg et al. (in prep.).
+(Hogg et al., in prep.).
 A final point that is relevant to additional enhancements discussed in
 \sectionname~\ref{sec:joker-update} (and is exploited in this \documentname) is
 to note that $\vec{\mu}$ and $\mat{\Lambda}$ \emph{can} depend on the nonlinear
@@ -1715,7 +1739,7 @@ The primary data product released with this \documentname\ are the posterior
 samplings generated for each of \nsources\ sources in \apogee\ \dr{16}.
 However, we also compute summary information and statistics about these
 samplings and provide these data in \tablename~\ref{tbl:metadata}.
-We also define a \goldsample\ of high-quality, uniquely-solved binary star
+We also define a \goldsample\ of high-quality, uniquely solved binary-star
 systems (see \sectionname~\ref{sec:gold-sample}) and release summary information
 along with cross-matched data from \gaia\ \dr{2} and the \acronym{STARHORSE}
 catalog of stellar parameters in \tablename~\ref{tbl:goldsample}.

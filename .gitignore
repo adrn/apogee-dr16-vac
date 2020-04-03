@@ -15,6 +15,10 @@ gitstuff.tex
 submit
 catalogs
 *.fits
+*.zip
+arxiv
+
+data/
 
 # Hogg
 *~
