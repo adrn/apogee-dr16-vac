@@ -857,8 +857,9 @@ Summary information and a list of sources in the \goldsample\ are included in
     indicates the corresponding equal-mass binary sequence for main-sequence
     stars.
     %
-    The panels in this figure are meant to be illustrative and should only be
-    compared in a relative sense.
+    \changes{The panels in this figure are meant to be illustrative only, since
+    the observed binary fraction is not precisely the true, complete binary
+    fraction (see \sectionname~\ref{sec:catalog} for selection criteria).}
     \label{fig:binary-CMD}
     }
 \end{figure}
@@ -913,7 +914,7 @@ The solid (orange) line shows a $5~\mathrm{Gyr}$ \acronym{MIST} isochrone
 metallicity indicated in the figure legend.
 The dashed line shows the equal-mass binary sequence for this isochrone,
 $0.75~\mathrm{mag}$ above the main sequence.
-Note that, as expected, the binary fraction is higher in this region of the CMD,
+Note that, as expected, the \changes{observed} binary fraction is higher in this region of the CMD,
 and is higher towards younger and more massive main-sequence stars.
 Note also that the red clump (around $(J-K) \approx 0.6$, $H \approx -1.8$) has
 a \emph{low} binary fraction (as noted in \citealt{Badenes:2018}).
@@ -935,7 +936,7 @@ spread in metallicities in the \apogee\ sample.
 \end{figure}
 
 The top left panel of \figurename~\ref{fig:binary-CMD} shows another view of the
-binary fraction, here shown as a 1D function of surface gravity for stars in the
+\changes{observed} binary fraction, here shown as a 1D function of surface gravity for stars in the
 giant branch selection region shown in \figurename~\ref{fig:specHR}.
 There is a clear and sharp dip in the occurrence of binary systems near the red
 clump, and the close-binary fraction decreases appreciably with decreasing
@@ -949,8 +950,8 @@ binary fraction for larger stars.
 The bottom-left panel shows the same, but as a function of effective temperature
 (as a proxy for the mass of the primary) for stars in the main sequence
 selection region shown in \figurename~\ref{fig:specHR}.
-As has been noted in many past studies, we find that the binary fraction
-(companion frequency) increases with stellar mass (effective temperature) along
+As has been noted in many past studies, we find that the \changes{observed} binary fraction
+(\changes{detected} companion frequency) increases with stellar mass (effective temperature) along
 the main sequence \citep[e.g.,][]{Duchene:2013}.
 Like the compilation of companion frequencies shown in \cite{Duchene:2013} and a
 number of studies of local samples of binary systems
@@ -958,9 +959,9 @@ number of studies of local samples of binary systems
 fraction increases steeply for primary stellar masses $M_1 \gtrsim 1.1~\msun$
 ($\Teff \gtrsim 6000~\textrm{K}$).
 
-\figurename~\ref{fig:binfrac-mh} shows the total close-binary fraction for main
+\figurename~\ref{fig:binfrac-mh} shows the total \changes{fraction of detected close binaries} for main
 sequence stars as a function of bulk metallicity, $\mh$.
-As has been recently emphasized, we find that the fraction of close binaries is
+As has been recently emphasized, we find that the \changes{observed} fraction of close binaries is
 significantly anti-correlated with metallicity \citep{Moe:2019, El-Badry:2019a},
 in disagreement with previous work (with a much smaller sample) that had
 found no dependency with metallicity \citep{Jenkins:2015}.
@@ -1380,9 +1381,9 @@ as orbital motion and leads to (a small amount of) contamination.
 \subsection{Binary Fraction Trends with Stellar Properties}
 \label{sec:binary-trends}
 
-We find a number of interesting trends in the binary fraction as a function of
+We find a number of interesting trends in the binary fraction \changes{(or really fraction of stars with binaries detected in this sample)} as a function of
 stellar parameters and chemical composition that have far-reaching implications.
-For one, the binary fraction increases rapidly with decreasing metallicity (as
+For one, the \changes{observed} binary fraction increases rapidly with decreasing metallicity (as
 also noted recently by \citealt{Moe:2019, El-Badry:2019a}).
 Beyond the implications discussed in \cite{Moe:2019}, this also motivates
 appropriate investigation into how a large binary fraction could influence
@@ -1470,11 +1471,14 @@ improve or adjust parameter estimates.
 The samplings provided here can be used to solve these problems; They can be
 used to combine the \apogee\ information with new data, without requiring an
 \textsl{ab initio} re-analysis of the original \apogee\ data.
-This can be done by repeating the rejection sampling step used in \thejoker\ to
-generate posterior samples, but replacing the prior samples with the posterior
-samples generated with the \apogee\ data alone and replacing the full marginal
-likelihood evaluation with the marginal likelihood of the new data computed at
-each sample.
+\changes{An example of this kind of use is the following: The
+  posterior samples delivered here from the \apogee\ data are declared
+  to be the \emph{prior samples} for a new rejection sampling. In this
+  new rejection sampling, the likelihood we use here is replaced with
+  a likelihood from the new data (say, for example, astrometric data),
+  computed now at each of these new prior samples. The output of this
+  rejection sampling will be a sampling of a posterior pdf that
+  accounts correctly for both the \apogee\ data and the new data.}
 
 In detail, following the notation in Appendix~\ref{app:marginal-likelihood},
 converting the posterior samples released here into posterior samples over the
@@ -1512,7 +1516,7 @@ are possible with these outputs, in some regime of applicability.
 Our key results and conclusions are summarized below:
 \begin{description}
     \item[The close-binary fraction depends on the stellar parameters of the
-    primary star] \figurename~\ref{fig:binary-CMD} shows a simple estimate of
+    primary star] \figurename~\ref{fig:binary-CMD} shows a \changes{na\"ive} estimate of
     the close-binary fraction over the color--magnitude diagram, utilizing all
     \nsources\ \apogee\ sources used in this work. There is a notable dearth of
     close companions around the red clump, where companions may have been
@@ -1526,7 +1530,11 @@ Our key results and conclusions are summarized below:
     the binary fraction decreases linearly with bulk metallicity, with a slope
     of $-0.1~\textrm{dex}^{-1}$, over the domain $-1 \lesssim \mh \lesssim 0.4$,
     as shown in \figurename~\ref{fig:binfrac-mh}.
-    \item[We detect the clear signature of tidal circularization in field main
+    \changes{This result and the previous result are technically about
+      the observed or detected binary fraction within this sample, not
+      the absolute binary fraction, integrating over all possible
+      amplitudes and mass ratios.}
+  \item[We detect the clear signature of tidal circularization in field main
     sequence and red giant branch stars] \figurename~\ref{fig:Plogg} (left)
     shows inferred periods and eccentricities for systems with
     uniquely determined orbits in the \goldsample.
