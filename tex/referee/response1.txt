@@ -1,0 +1,95 @@
+TODO: we thank the referee....
+
+
+- Sect. 2.2: the renormalization of the error bars in Eq. (1) is critical for the work presented here. The listed reference Brown+ for this equation is indicated as being in preparation. It would be important to give a summary of the reasons for adopting this expression that significantly increases the uncertainties.
+
+The cause of the systematics are not fully known, but this has been noted empirically by Cottaar et al. 2014 and Badenes et al. 2018 by looking at the statistical properties of the visit velocity measurements of stars that should be stable (from a radial velocity perspective). The form of the equation is assumed: This equation enforces a "floor" to the visit-velocity errors and allows them to be increased or decreased by a multiplicative factor that scales with the pipeline-reported error value itself. We have added text to the data subsection to explain these decisions.
+
+
+- Sect. 5, Eq. (5): What is the influence of the choice of renormalization of the velocity error bars (Eq. (1)) on the log-likelihood value ?
+
+Generically, this will lower the likelihood values globally because the velocity error bars are all increased. The main implication of this is that the samplings for each source will be more conservative, and more strongly multi-modal.
+
+
+- Sect. 5.1: The range of effective temperatures for the gold sample appear limited: why not consider, e.g., 3000 to 10000 K or more ? The chosen limits should in general be better justified in the text.
+
+The 8000 K was an arbitrary round number: the hottest star we have after the other cuts is ~7300 K, but I extended this range to 10000 K in the text. While the new APOGEE MARCS grids go to ~3000 K, there are very few stellar parameter calibrators below 3500 K (on the main sequence or giant branch), so the stellar parameters noticeably become less precise down there (see, e.g., Figure 3 in the SDSS DR16 paper https://arxiv.org/abs/1912.02905). Even so, there are only 8 stars that pass the other cuts with TEFF < 3500, so there is not much to gain (in numbers) by adding these in to the sample.
+
+
+- Sect. 6.1, Fig. 5 and text: The distinction between the "binary fraction" and the "fraction of detected binaries" is not always sufficiently clear.
+For instance, the upper left panel of Fig. 5 could be interpreted as an increasing sensitivity of the radial velocity detection technique as a function of log g (from 0.8 to 3.5), rather than an increase in binary fraction. Higher log g stars may also be (for example) generally nearer and brighter (in terms of apparent magnitude) in the survey sample than the giants, resulting in a higher RV accuracy and sensitivity to companions. This could induce an "artificial" higher binary fraction. This is likely not the case, but in the current text this is difficult to apprehend.
+It would be informative to take advantage of the relatively large sample of targets to determine the sensitivity of the binary detection technique as a function of different parameters. As rightly mentioned in Sect. 7.2: "any real understanding of the binary fraction (...) will require a model of the APOGEE selection function".
+The last sentence in the caption of Fig. 5 is unclear and should be better explained.
+
+TODO:
+
+
+- Fig. 5, right panel: the chosen color scale is difficult to read (particularly in print), as well as the colors for the plotted isochrones. I also suspect that this choice of color scales will be a problem for color-blind readers.
+
+TODO:
+
+
+- Sect. 6.1, Fig. 6: The rather low binary fraction found for solar metallicity dwarfs (around 0.07) seems in contradiction with other works (related, e.g. to exoplanet research). It would be important to further review the literature and evaluate if this is due to a limited sensitivity of the present wurvey, or to different definitions of binarity (e.g., in terms of minimum companion mass).
+
+TODO:
+
+
+- Sect. 6.2, Fig. 7: The figures are quite difficult to read, both in print and on screen.
+
+TODO:
+
+
+- Sect. 6.2, last sentence: This hypothesis appears speculative considering the uncertainties displayed in the histograms of Fig. 8.
+
+TODO:
+
+
+- Sect. 6.3: The identification of possible companions with higher masses than the primary is an interesting result of the study. But considering that they are almost not discussed in the text, proposing that they are compact objects (or even black hole) candidates in the text and in the abstract is premature. I would suggest to change the phrasing of the abstract and text in this respect, unless a more argumented discussion is added to the paper. A separate paper is listed as in preparation on this topic, and the proposed identifications could also be simply postponed to this work.
+
+TODO:
+
+
+- Fig. 10 and 11: These candidate detections are nice, congratulations ! But how unique are the parameters ? For instance, in the upper panels of Fig. 11: what excludes a RV curve with a twice lower amplitude and a twice shorter period ? After a quick check on Vizier of 2MASSJ13090983+1711572, in Price-Whelan+ (2018), this same system had a period of 14.3 days, and a semi-amplitude of 45 km/s, which is about half of the new estimate. The reliability of the parameter estimates should be better justified.
+
+TODO:
+
+
+- Sect. 6.4: it would be useful to explain in more details the concept of "hierarchical modeling of binary-star populations". At the end of Sect. 6.4, it is stated that "Further analysis should assess the impact of selection effects and detection efficiency (...)", which is true. The analysis is presented as an example application, which is fine, but it is not yet sufficiently robust to be claimed as an astrophysical result in my opinion.
+
+TODO:
+
+
+- Sect. 7.1: This section would be better placed in the Methods section (Sect. 3), as it describes the intrinsic limitations of the adopted hypotheses. This would allow the reader to interpret more objectively the candidate detections.
+Pulsation (and other types of intrinsic radial velocity variability) often induce a photometric variability. This is in principle easy to observe in the data from multi-epochs global surveys as Gaia, or even the SDSS (of which APOGEE is part). As a suggestion, the authors may consider the possibility to cross check the photometric variability of the APOGEE DR16 sources and flag the variable stars in their catalog. The "simple line" radial velocity model that they adopt relies on the "simplicity" of the sources, and a photometric variability could indicate an unreliable record (for different reasons).
+
+TODO:
+
+
+- Sect. 7.4: The sentence "This can be done by repeating the rejection sampling (...)" is unclear.
+
+TODO:
+
+
+- Sect. 8: The nature of M2>M1 detections as compact objects is questionable and I suggest to adopt a more prudent phrasing. From the available data, they could possibly be hierarchical triple stellar systems with pairs of relatively low mass stellar companions mimicking high mass secondaries, pulsating stars, or instabilities in the parameter computation (as for 2MASSJ13090983+1711572)
+Following the same reasoning, the very low mass objects could be close to face-on inclination, stellar mass companions. On a purely statistical basis, this seems quite plausible.
+
+TODO:
+
+
+- Suggestion: the signature of binarity in the Gaia DR2 using a combination of Hipparcos and Gaia astrometry has been studied, e.g., by Brandt (2018, ApJS 239, 31) and Kervella+ (2019, A&A 623, A72). Although the overlap with the APOGEE sources may be small, in some cases a cross-identification with this distinct approach to binarity could be valuable. Even if not implemented in this catalog, the possibility of a combined use of these data sets could be suggested in the text. The coming Gaia DR3 will bring a valuable basis for the validation of the APOGEE candidate companions.
+
+TODO:
+
+
+Typos:
+- Sect. 6.2, line 4: part of sentence is missing.
+
+Fixed.
+
+- Fig. 12, caption: from (Kipping
+
+Fixed.
+
+- end of Sect. 7.2: log g compared to 1 km/s
+
+Fixed.
