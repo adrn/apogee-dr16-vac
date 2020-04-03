@@ -21,7 +21,7 @@ For instance, the upper left panel of Fig. 5 could be interpreted as an increasi
 It would be informative to take advantage of the relatively large sample of targets to determine the sensitivity of the binary detection technique as a function of different parameters. As rightly mentioned in Sect. 7.2: "any real understanding of the binary fraction (...) will require a model of the APOGEE selection function".
 The last sentence in the caption of Fig. 5 is unclear and should be better explained.
 
-TODO:
+These are all good points; this requires emphasis and attention. To emphasize this we put uotation marks around "binary fraction" on the plot labels APW DID YOU DO THIS??, and the point that it is the observed fraction is indicated in the caption. We agree that it would be great to understand the full selection function, but we consider this to be out of scope for the current contribution. Instead, we emphasized the difference between binary fraction and observed binary fraction in many locations in the text, including the conclusion summary. We also fixed the last sentence of this figure caption to be totally unambiguous, and to further emphasize this point.
 
 
 - Fig. 5, right panel: the chosen color scale is difficult to read (particularly in print), as well as the colors for the plotted isochrones. I also suspect that this choice of color scales will be a problem for color-blind readers.
