@@ -1258,10 +1258,19 @@ defining selections on the posterior samplings generated with \thejoker.
 However, the real power in the individual system posterior samplings is that
 they enable further \emph{hierarchical} modeling of binary-star population
 properties without having to make hard cuts on the samples.
-In future work, we will use these samplings to construct a joint model for the
-period, eccentricity, and mass ratio distributions of binary stars as a function
-of stellar parameters, but this will also require modeling the sample selection
-function and our detection efficiency.
+
+\changes{In performing a hierarchical inference, the idea is to replace the
+rigid priors over per-source parameters (i.e., the priors we used to do the
+samplings described in \sectionname~\ref{sec:methods}) with a parametrized
+prior that represent the population of binaries.
+After defining hyper-priors over the hyper-parameters of the population model,
+inference of the population properties is equivalent to, e.g., generating
+posterior samplings over the hyper-parameters.}
+In future work, we will use the per-source samplings generated in this work to
+construct a joint model for the period, eccentricity, and mass ratio
+distributions of binary stars as a function of stellar parameters, but this will
+also require modeling the sample selection function and our detection
+efficiency.
 While the full hierarchical inference is out of scope for this \documentname,
 here we demonstrate how this could be done using a simpler, toy problem:
 Inferring the eccentricity distribution of long-period binary stars using a
@@ -1372,14 +1381,18 @@ disfavor circular or very eccentric values.
 This is in agreement with past studies that have focused on nearby samples of
 solar-type stars with smaller sample sizes \citep[e.g.,][]{Duquennoy:1991,
 Raghavan:2010}.
-Note, however, that this should still be viewed as a demonstration: Future
-analysis should assess the impact of selection effects and detection efficiency
-on the inferred eccentricity distribution using these data.
-We also emphasize that the extremely precise constraints we obtain on the
-parameters of the beta distribution imply that we have sufficient data to
-complexify the model, either by using non-parametric forms for the eccentricity
-distribution to move away from rigid models or by parametrizing variations in
-the distribution with stellar parameters.
+
+Future analysis should assess the impact of selection effects and detection
+efficiency on the inferred eccentricity distribution using these data. We also
+emphasize that the extremely precise constraints we obtain on the parameters of
+the beta distribution imply that we have sufficient data to complexify the
+model, either by using non-parametric forms for the eccentricity distribution to
+move away from rigid models or by parametrizing variations in the distribution
+with stellar parameters.
+\changes{What we have shown here is meant to be a demonstration of hierarchical
+inference that utilizes the per-source posterior samplings released with this
+paper; We do not consider the results of this inference to be one of the key
+astrophysical results of this paper.}
 
 
 \section{Discussion}\label{sec:discussion}
@@ -1520,8 +1533,8 @@ This puts limitations on the scope of sub-threshold searches, but at least they
 are possible with these outputs, in some regime of applicability.
 
 
-\subsection{Interpreting the Posterior Samplings TODO: name?}
-\label{sec:}
+\subsection{Stability of the Posterior Samplings}
+\label{sec:stability}
 
 \changes{
 For any finite-sized radial-velocity data set for a binary-star system, the
@@ -1556,6 +1569,20 @@ for this source, our new, stricter quality cuts for this work
 (\sectionname~\ref{sec:data}) filtered out 5 suspect velocity measurements, and
 the remaining 11 visit velocities used to generate the samplings used here led
 to a posterior pdf with different mode amplitudes.
+
+The stability of the posterior samplings described above has some consequences
+for users of the catalogs and samplings released here.
+For one, the procedure described above for performing sub-threshold searches
+(\sectionname~\ref{sec:subthreshold}) is risky, because for some sources our
+samplings are not dense enough to fully capture the support of the posterior pdf
+and its detailed multi-modal structure.
+For these sources, it may be necessary to re-run the sampler on the updated data
+instead of post-processing our samples.
+Another consequence is that, as the velocity data for a given source evolves in
+terms of the measured values, error properties, or total number of visits, some
+results presented here will change in detail.
+These caveats are important to keep in mind for any users of the samplings and
+catalogs released with this article.
 }
 
 
