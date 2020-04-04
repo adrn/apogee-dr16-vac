@@ -46,7 +46,7 @@ We have added the qualification that "asteroseismic observations would be requir
 
 - Sect. 6.3: The identification of possible companions with higher masses than the primary is an interesting result of the study. But considering that they are almost not discussed in the text, proposing that they are compact objects (or even black hole) candidates in the text and in the abstract is premature. I would suggest to change the phrasing of the abstract and text in this respect, unless a more argumented discussion is added to the paper. A separate paper is listed as in preparation on this topic, and the proposed identifications could also be simply postponed to this work.
 
-TODO:
+We believe that we have been responsible in that we have only referred to these systems as "candidates," and we mainly mention these systems to build interest in helping to monitor and reobserve these systems to fully determine their properties. We have added two sentences to the relevant bullet point in the conclusions to re-emphasize this point.
 
 
 - Fig. 10 and 11: These candidate detections are nice, congratulations ! But how unique are the parameters ? For instance, in the upper panels of Fig. 11: what excludes a RV curve with a twice lower amplitude and a twice shorter period ? After a quick check on Vizier of 2MASSJ13090983+1711572, in Price-Whelan+ (2018), this same system had a period of 14.3 days, and a semi-amplitude of 45 km/s, which is about half of the new estimate. The reliability of the parameter estimates should be better justified.
@@ -57,6 +57,8 @@ We agree that the discrepancy with this system is surprising, so we have added a
 - Sect. 6.4: it would be useful to explain in more details the concept of "hierarchical modeling of binary-star populations". At the end of Sect. 6.4, it is stated that "Further analysis should assess the impact of selection effects and detection efficiency (...)", which is true. The analysis is presented as an example application, which is fine, but it is not yet sufficiently robust to be claimed as an astrophysical result in my opinion.
 
 TODO:
+First part: Add more sentences to hierarchical modeling section?
+Second part: Or don't react?
 
 
 - Sect. 7.1: This section would be better placed in the Methods section (Sect. 3), as it describes the intrinsic limitations of the adopted hypotheses. This would allow the reader to interpret more objectively the candidate detections.
