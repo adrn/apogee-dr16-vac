@@ -604,6 +604,61 @@ to HMC when the system parameters are highly constrained (as discussed below).
 \end{table}
 
 
+\subsection{Assumptions, Caveats, and Known Failures}
+\label{sec:caveats}
+
+The assumptions that underlie the sampling procedure described above are
+enumerated in \sectionname~3.1 in \cite{Price-Whelan:2018}.
+We therefore briefly rephrase the most important implications of these
+assumptions as a set of caveats and points of caution for any users of the
+posterior samplings released with this \documentname.
+
+First, despite allowing for a per-source, additive (in variance) extra
+uncertainty parameter ($s$ in \tablename~\ref{tbl:prior}), we are very sensitive
+to outliers, or, more generally, any visit velocities with strongly non-Gaussian
+noise properties.
+In \apogee, this might occur for blended sources, multiple-star systems with
+more than one star that contribute significantly to infrared flux, or sources
+with stellar parameters that are beyond the grid of template spectra
+\citep{Nidever:2015}.
+
+Second, related to the first point, we make the strong assumption that all
+sources are single-lined, i.e., that any binary companions do not contribute
+significantly to the observed spectra.
+This is wrong in general: Some systems will be double-lined (sometimes only
+subtly, but detectable, e.g., \citealt{El-Badry:2018}), and we will be biased in
+cases where these sources are not properly filtered by the quality cuts done
+above.
+This also means that we will definitely miss systems with similar masses (and
+especially ``twin'' binaries; \citealt{El-Badry:2019}).
+We expect this assumption to be worse on the main sequence than on the giant
+branch, because any lower-mass companion to a giant-branch star will have a
+luminosity hundreds or thousands of times fainter.
+
+Third, the adopted prior \pdf\ over systemic velocities, $v_0$, is reasonable
+for considering all \apogee\ sources (i.e., for a mixture of kinematically
+disk-like and halo-like sources), but may lead to biased posterior samplings for
+sources in globular clusters or dwarf galaxies.
+For such systems, it would be safer to re-run \thejoker\ with specialized priors
+over systemic velocity for each individual host system.
+
+Fourth, in this work, we assume that all systems are binary systems, so triples
+or higher-order stellar multiplets will generally have incorrect samplings.
+We will generate samplings for systems that are consistent with being
+hierarchical triple-star systems, but this is beyond the scope of the
+general-use catalog considered here.
+
+Finally, related to the fourth point, we assume that all velocity variations
+represent orbital motion (i.e., not pulsation or similar intrinsic stellar
+phenomena).
+% As highlighted in \figurename~\ref{fig:binary-CMD}, this assumption is clearly
+% violated when $\logg \lesssim 1$ where stellar surface jitter masquerades
+% as orbital motion and leads to (a small amount of) contamination.
+\changes{As shown later, this assumption is violated when $\logg \lesssim 1$,
+where stellar surface jitter masquerades as orbital motion and leads to (a small
+amount of) contamination in our sample of binary-star systems.}
+
+
 \section{Running \thejoker\ on \apogee\ \dr{16}} \label{sec:rundr16}
 
 For each of the \nsources\ sources in the parent catalog of sources selected
@@ -1058,9 +1113,9 @@ Note that around the red clump (third panel from the left), there are
 significantly more $e < 0.1$ systems than expected (i.e., as compared to the
 previous bin).
 We therefore posit that systems with a primary around the red clump that have
-low eccentricities have likely already ascended the giant branch, whereas
-systems with large eccentricities are likely on their first ascent up the giant
-branch.
+low eccentricities (especially $e \lesssim 0.2$) have likely already ascended
+the giant branch, \changes{but asteroseismic observations would be required to
+test this hypothesis.}
 
 % Notebook: Figure-gold-sample.ipynb
 \begin{figure}[t]
@@ -1332,58 +1387,6 @@ the distribution with stellar parameters.
 In what follows, we discuss some important caveats and considerations for
 interpreting the results and using the catalogs described in this \documentname.
 
-\subsection{Assumptions, Caveats, and Known Failures}
-\label{sec:caveats}
-
-The assumptions that underlie the sampling procedure described above are
-enumerated in \sectionname~3.1 in \cite{Price-Whelan:2018}.
-We therefore briefly rephrase the most important implications of these
-assumptions as a set of caveats and points of caution for any users of the
-posterior samplings released with this \documentname.
-
-First, despite allowing for a per-source, additive (in variance) extra
-uncertainty parameter ($s$ in \tablename~\ref{tbl:prior}), we are very sensitive
-to outliers, or, more generally, any visit velocities with strongly non-Gaussian
-noise properties.
-In \apogee, this might occur for blended sources, multiple-star systems with
-more than one star that contribute significantly to infrared flux, or sources
-with stellar parameters that are beyond the grid of template spectra
-\citep{Nidever:2015}.
-
-Second, related to the first point, we make the strong assumption that all
-sources are single-lined, i.e., that any binary companions do not contribute
-significantly to the observed spectra.
-This is wrong in general: Some systems will be double-lined (sometimes only
-subtly, but detectable, e.g., \citealt{El-Badry:2018}), and we will be biased in
-cases where these sources are not properly filtered by the quality cuts done
-above.
-This also means that we will definitely miss systems with similar masses (and
-especially ``twin'' binaries; \citealt{El-Badry:2019}).
-We expect this assumption to be worse on the main sequence than on the giant
-branch, because any lower-mass companion to a giant-branch star will have a
-luminosity hundreds or thousands of times fainter.
-
-Third, the adopted prior \pdf\ over systemic velocities, $v_0$, is reasonable
-for considering all \apogee\ sources (i.e., for a mixture of kinematically
-disk-like and halo-like sources), but may lead to biased posterior samplings for
-sources in globular clusters or dwarf galaxies.
-For such systems, it would be safer to re-run \thejoker\ with specialized priors
-over systemic velocity for each individual host system.
-
-Fourth, in this work, we assume that all systems are binary systems, so triples
-or higher-order stellar multiplets will generally have incorrect samplings.
-We will generate samplings for systems that are consistent with being
-hierarchical triple-star systems, but this is beyond the scope of the
-general-use catalog considered here.
-
-Finally, related to the fourth point, we assume that all velocity variations
-represent orbital motion (i.e., not pulsation or similar intrinsic stellar
-phenomena).
-As highlighted in \figurename~\ref{fig:binary-CMD}, this assumption is clearly
-violated when $\logg \lesssim 1$ where stellar surface jitter masquerades
-as orbital motion and leads to (a small amount of) contamination.
-
-
 \subsection{Binary Fraction Trends with Stellar Properties}
 \label{sec:binary-trends}
 
@@ -1515,6 +1518,45 @@ that is not well-sampled, the posterior samplings we deliver will not be
 sufficiently dense to provide support for the updated posterior \pdf.
 This puts limitations on the scope of sub-threshold searches, but at least they
 are possible with these outputs, in some regime of applicability.
+
+
+\subsection{Interpreting the Posterior Samplings TODO: name?}
+\label{sec:}
+
+\changes{
+For any finite-sized radial-velocity data set for a binary-star system, the
+posterior probability distribution function over Keplerian orbital parameters
+will be multimodal.
+Why, then, do we discuss systems as having ``unimodal'' or ``bimodal''
+samplings?
+For a given data set, the relative amplitudes or integrated probabilities in the
+modes of the posterior pdf can be vastly different depending on the precision of
+the data, number of data points, and phase coverage.
+When the data are very informative, typically one or a few modes dominate,
+meaning that for a finite-resolution sampling (like those delivered here), the
+posterior pdf can appear to be unimodal or only slightly multimodal.
+However, even in these cases, there are many other less significant modes
+``hidden'' by the finite sizes of the samplings.
+This fact can lead to paradoxical or surprising effects for a given source when
+a sampling is recomputed after including new data, or when (especially precise)
+data change slightly, such as after updates to data reduction procedures.
+
+One implication of this is that adding a new velocity measurement for a source,
+subtly changing all of the velocity values, or even just changing the error bars
+on the data can cause the strength of a posterior pdf mode to change
+dramatically.
+An example of this behavior can be seen with the source
+\texttt{2M13090983+1711572} (top row of \figurename~\ref{fig:compact-objects}),
+which appears in our \goldsample\ with an orbital period $P \approx 28.6~\dayd$.
+This source also appeared in our previous catalog of systems with unimodal
+samplings from \apogee\ \dr{14} \citep{Price-Whelan:2018}, but with an orbital
+period $P \approx 14.3~\dayd$.
+Though the same 16 visits appear in the \apogee\ \dr{14} and \dr{16} catalogs
+for this source, our new, stricter quality cuts for this work
+(\sectionname~\ref{sec:data}) filtered out 5 suspect velocity measurements, and
+the remaining 11 visit velocities used to generate the samplings used here led
+to a posterior pdf with different mode amplitudes.
+}
 
 
 \section{Conclusions}

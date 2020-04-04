@@ -51,7 +51,7 @@ TODO:
 
 - Fig. 10 and 11: These candidate detections are nice, congratulations ! But how unique are the parameters ? For instance, in the upper panels of Fig. 11: what excludes a RV curve with a twice lower amplitude and a twice shorter period ? After a quick check on Vizier of 2MASSJ13090983+1711572, in Price-Whelan+ (2018), this same system had a period of 14.3 days, and a semi-amplitude of 45 km/s, which is about half of the new estimate. The reliability of the parameter estimates should be better justified.
 
-TODO:
+We agree that the discrepancy with this system is surprising, so we have added a subsection to the discussion to note that cases like this can arise when data change between data releases (as data reduction pipelines are modified) or as new data are added into the analysis. We thank the referee to pointing this out, as we believe that this has led to an improved discussion!
 
 
 - Sect. 6.4: it would be useful to explain in more details the concept of "hierarchical modeling of binary-star populations". At the end of Sect. 6.4, it is stated that "Further analysis should assess the impact of selection effects and detection efficiency (...)", which is true. The analysis is presented as an example application, which is fine, but it is not yet sufficiently robust to be claimed as an astrophysical result in my opinion.
@@ -84,6 +84,11 @@ In the text and in figure titles and captions, we always precede the terms "comp
 - Suggestion: the signature of binarity in the Gaia DR2 using a combination of Hipparcos and Gaia astrometry has been studied, e.g., by Brandt (2018, ApJS 239, 31) and Kervella+ (2019, A&A 623, A72). Although the overlap with the APOGEE sources may be small, in some cases a cross-identification with this distinct approach to binarity could be valuable. Even if not implemented in this catalog, the possibility of a combined use of these data sets could be suggested in the text. The coming Gaia DR3 will bring a valuable basis for the validation of the APOGEE candidate companions.
 
 We agree that this is an exciting and interesting line of research! However, there are a sufficient number of subtleties such that we feel that this is beyond the scope of this paper. For example, of the 21 systems in our Gold Sample that also appear in the Brandt/Kervella catalogs, all have periods much shorter than the time baseline over which the astrometric acceleration is estimated. However, we agree that this should provide some additional constraints on the orbits of these systems and this should absolutely be investigated in future work.
+
+TODO:
+- Add subsection in discussion about suggested follow-up work
+- Also mention overlap and utility of astrometric data
+- Explicitly say we are encouraging help on this
 
 
 Typos:
