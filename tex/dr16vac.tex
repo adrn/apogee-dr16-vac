@@ -468,7 +468,7 @@ where $\sigma_v$ is the adopted visit-velocity error for a given visit, and
 \texttt{VRELERR} is the uncertainty reported in the \apogee\ \dr{16} catalog.
 \changes{The form of this expression --- $(a\,\sigma_v^b)^2 + c^2$ --- comes
 from the assumption that the visit-velocity noise variance values have a finite
-minimum value (i.e., a noise ``floor'') and should either be increased or
+minimum value (i.e., a noise ``floor''), and should either be increased or
 decreased by a multiplicative factor that scales with the pipeline-reported
 value of the uncertainty.
 The values of the constants in this function ($a,b,c$) come from robustly
@@ -915,7 +915,7 @@ sources in the \goldsample\ are included in
     stars.
     %
     \changes{The panels in this figure are meant to be illustrative only, since
-    the observed binary fraction is not precisely the true, complete binary
+    the observed binary fraction is not the same as the true, complete binary
     fraction (see \sectionname~\ref{sec:catalog} for selection criteria).}
     \label{fig:binary-CMD}
     }
@@ -992,7 +992,7 @@ spread in metallicities in the \apogee\ sample.
     selection function of the \apogee\ surveys and detection efficiency of our
     selection criteria (see \sectionname~\ref{sec:binary-fraction}).
     As the binary fraction is uncorrected for completeness, we tend to measure
-    smaller binary fractions at, e.g., solar metallicity as compared to other
+    smaller binary fractions at, e.g., solar metallicity, as compared to other
     work \citep[e.g.,][]{Raghavan:2010}.}
     \label{fig:binfrac-mh}
     }
@@ -1273,7 +1273,7 @@ properties without having to make hard cuts on the samples.
 \changes{In performing a hierarchical inference, the idea is to replace the
 rigid priors over per-source parameters (i.e., the priors we used to do the
 samplings described in \sectionname~\ref{sec:methods}) with a parametrized
-prior that represent the population of binaries.
+prior that represents the population of binaries.
 After defining hyper-priors over the hyper-parameters of the population model,
 inference of the population properties is equivalent to, e.g., generating
 posterior samplings over the hyper-parameters.}
@@ -1414,10 +1414,13 @@ interpreting the results and using the catalogs described in this \documentname.
 \subsection{Binary Fraction Trends with Stellar Properties}
 \label{sec:binary-trends}
 
-We find a number of interesting trends in the binary fraction \changes{(or really fraction of stars with binaries detected in this sample)} as a function of
-stellar parameters and chemical composition that have far-reaching implications.
-For one, the \changes{observed} binary fraction increases rapidly with decreasing metallicity (as
-also noted recently by \citealt{Moe:2019, El-Badry:2019a}).
+We find a number of interesting trends in the binary fraction \changes{(or
+actually the fraction of stars with binaries detected in this sample)} as a
+function of stellar parameters and chemical composition that have far-reaching
+implications.
+For one, the \changes{observed} binary fraction increases rapidly with
+decreasing metallicity (as also noted recently by \citealt{Moe:2019,
+El-Badry:2019a}).
 Beyond the implications discussed in \cite{Moe:2019}, this also motivates
 appropriate investigation into how a large binary fraction could influence
 inferred properties of dwarf galaxies and globular clusters.
@@ -1554,8 +1557,8 @@ will be multimodal.
 Why, then, do we discuss systems as having ``unimodal'' or ``bimodal''
 samplings?
 For a given data set, the relative amplitudes or integrated probabilities in the
-modes of the posterior pdf can be vastly different depending on the precision of
-the data, number of data points, and phase coverage.
+modes of the posterior pdf can be vastly different, depending on the precision
+of the data, number of data points, and phase coverage.
 When the data are very informative, typically one or a few modes dominate,
 meaning that for a finite-resolution sampling (like those delivered here), the
 posterior pdf can appear to be unimodal or only slightly multimodal.
@@ -1567,7 +1570,7 @@ data change slightly, such as after updates to data reduction procedures.
 
 One implication of this is that adding a new velocity measurement for a source,
 subtly changing all of the velocity values, or even just changing the error bars
-on the data can cause the strength of a posterior pdf mode to change
+on the data, can cause the strength of a posterior pdf mode to change
 dramatically.
 An example of this behavior can be seen with the source
 \texttt{2M13090983+1711572} (top row of \figurename~\ref{fig:compact-objects}),
@@ -1585,8 +1588,8 @@ The stability of the posterior samplings described above has some consequences
 for users of the catalogs and samplings released here.
 For one, the procedure described above for performing sub-threshold searches
 (\sectionname~\ref{sec:subthreshold}) is risky, because for some sources our
-samplings are not dense enough to fully capture the support of the posterior pdf
-and its detailed multi-modal structure.
+samplings are not sufficiently dense to fully capture the support of the
+posterior pdf and its detailed multi-modal structure.
 For these sources, it may be necessary to re-run the sampler on the updated data
 instead of post-processing our samples.
 Another consequence is that, as the velocity data for a given source evolves in
@@ -1615,8 +1618,8 @@ Our key results and conclusions are summarized below:
     engulfment is an important outcome of close-binary stellar evolution.
     \item[The binary fraction is anti-correlated with metallicity] We find that
     the binary fraction decreases linearly with bulk metallicity, with a slope
-    of $-0.1~\textrm{dex}^{-1}$, over the domain $-1 \lesssim \mh \lesssim 0.4$,
-    as shown in \figurename~\ref{fig:binfrac-mh}.
+    of $-0.1~\textrm{dex}^{-1}$, over the domain $-1 \lesssim \mh \lesssim
+    +0.4$, as shown in \figurename~\ref{fig:binfrac-mh}.
     \changes{This result and the previous result are technically about
       the observed or detected binary fraction within this sample, not
       the absolute binary fraction, integrating over all possible
