@@ -909,7 +909,7 @@ sources in the \goldsample\ are included in
     \textbf{Right:} The extinction-corrected \acronym{2MASS} color-magnitude
     diagram (CMD) for all \apogee\ sources, colored by the fraction of sources
     identified as binary-star systems (\sectionname~\ref{sec:catalog}).
-    The solid (orange) line shows a \acronym{MIST} isochrone for a
+    The solid (dark purple) line shows a \acronym{MIST} isochrone for a
     $5~\mathrm{Gyr}$ stellar population with $\feh = -0.2$, and the dashed line
     indicates the corresponding equal-mass binary sequence for main-sequence
     stars.
@@ -999,8 +999,9 @@ spread in metallicities in the \apogee\ sample.
 \end{figure}
 
 The top left panel of \figurename~\ref{fig:binary-CMD} shows another view of the
-\changes{observed} binary fraction, here shown as a 1D function of surface gravity for stars in the
-giant branch selection region shown in \figurename~\ref{fig:specHR}.
+\changes{observed} binary fraction, here shown as a 1D function of surface
+gravity for stars in the giant branch selection region shown in
+\figurename~\ref{fig:specHR}.
 There is a clear and sharp dip in the occurrence of binary systems near the red
 clump, and the close-binary fraction decreases appreciably with decreasing
 surface gravity (i.e., increased size).
@@ -1009,6 +1010,10 @@ giant stars evolve up the giant branch, any companions with orbital semi-major
 axes smaller than a few times the surface size of the primary star could be
 consumed \citep{Ivanova:2013}, therefore leading to an overall decrease in the
 binary fraction for larger stars.
+\changes{Note that the apparent upturn of the observed binary fraction at low
+\logg\ is most likely dominated by contamination: Intrinsic radial-velocity
+noise is interpreted as a binary system detection by the simplistic definition
+of binary fraction defined above.}
 
 The bottom-left panel shows the same, but as a function of effective temperature
 (as a proxy for the mass of the primary) for stars in the main sequence
@@ -1078,8 +1083,12 @@ $P>30~\dayd$ tend to have lower \logg\ values (darker points) as compared to
 systems with $P<10~\dayd$.
 In this panel, we visually inspected the small number of systems with $P\lesssim
 5~\dayd$ and $e \gtrsim 0.4$ and found that most of these cases appear to result
-from systematic errors with the visit velocity data that were not removed by the
-quality cuts.
+from \changes{(unexplained)} systematic errors with the visit velocity data that
+were not removed by the quality cuts.
+\changes{Some of these cases also arise from failures of our assumption of
+binarity: When the data shows signs of more complex velocity variations, such as
+from a higher-order multiple-star system, the samplings returned by \thejoker\
+will be erroneous.}
 
 The right panel of \figurename~\ref{fig:Plogg} shows orbital periods of systems
 in the \goldsample\ (with unimodal or bimodal samplings) as a function of
@@ -1397,7 +1406,7 @@ paper; We do not consider the results of this inference to be one of the key
 astrophysical results of this paper.}
 
 
-\section{Discussion}\label{sec:discussion}
+\section{Discussion, Caveats, and Limitations}\label{sec:discussion}
 
 In what follows, we discuss some important caveats and considerations for
 interpreting the results and using the catalogs described in this \documentname.
@@ -1593,16 +1602,17 @@ catalogs released with this article.
 Our key results and conclusions are summarized below:
 \begin{description}
     \item[The close-binary fraction depends on the stellar parameters of the
-    primary star] \figurename~\ref{fig:binary-CMD} shows a \changes{na\"ive} estimate of
-    the close-binary fraction over the color--magnitude diagram, utilizing all
-    \nsources\ \apogee\ sources used in this work. There is a notable dearth of
-    close companions around the red clump, where companions may have been
-    engulfed when the primary star ascended the upper giant branch. We also
-    rediscover trends in the binary fraction with effective temperature along
-    the main sequence (i.e., stellar mass), and show that the binary fraction on
-    the giant branch depends on the surface gravity (i.e., surface size) of the
-    primary, also indicating that companion engulfment is an important outcome
-    of close-binary stellar evolution.
+    primary star] \figurename~\ref{fig:binary-CMD} shows the \changes{observed
+    (uncorrected for completeness)} estimate of the close-binary fraction over
+    the color--magnitude diagram, utilizing all \nsources\ \apogee\ sources used
+    in this work.
+    There is a notable dearth of close companions around the red clump, where
+    companions may have been engulfed when the primary star ascended the upper
+    giant branch. We also rediscover trends in the binary fraction with
+    effective temperature along the main sequence (i.e., stellar mass), and show
+    that the binary fraction on the giant branch depends on the surface gravity
+    (i.e., surface size) of the primary, also indicating that companion
+    engulfment is an important outcome of close-binary stellar evolution.
     \item[The binary fraction is anti-correlated with metallicity] We find that
     the binary fraction decreases linearly with bulk metallicity, with a slope
     of $-0.1~\textrm{dex}^{-1}$, over the domain $-1 \lesssim \mh \lesssim 0.4$,
