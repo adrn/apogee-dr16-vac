@@ -1,5 +1,7 @@
 We thank the referee for a constructive report. Below, the referee's comments are indented with ">>>" and our responses immediately follow. We have made changes to the paper text and flagged these changes by coloring the text purple.
 
+Note that we have added 4 new authors to the manuscript: As this is an SDSS collaboration paper, I am following the SDSS collaboration policy, which lets survey architects join on to a paper if they contributed significantly to the survey. The new authors are scientists who contributed significantly to the APOGEE survey, and joined on to the paper after submission.
+
 
 >>> Sect. 2.2: the renormalization of the error bars in Eq. (1) is critical for the work presented here. The listed reference Brown+ for this equation is indicated as being in preparation. It would be important to give a summary of the reasons for adopting this expression that significantly increases the uncertainties.
 
