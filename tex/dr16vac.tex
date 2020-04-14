@@ -29,14 +29,14 @@
 \newcommand{\changes}[1]{{\color{violet}#1}}
 
 % Numbers:
-\newcommand{\nsources}{\ensuremath{232\,531}}
+\newcommand{\nsources}{\ensuremath{232\,495}}
 \newcommand{\Kmin}{M_{\rm min}}
 \newcommand{\Kminval}{512}
 \newcommand{\nbinary}{\ensuremath{19\,635}}
 
 \newcommand{\goldsample}{\textit{Gold Sample}}
 \newcommand{\ngold}{\ensuremath{1\,032}}
-\newcommand{\nbimodal}{\ensuremath{492}}
+\newcommand{\nbimodal}{\ensuremath{127}}
 
 \graphicspath{{figures/}}
 \input{preamble.tex}
@@ -1835,8 +1835,10 @@ parameters.
 \label{sec:datatables}
 
 The primary data product released with this \documentname\ are the posterior
-samplings generated for each of \nsources\ sources in \apogee\ \dr{16}.
-However, we also compute summary information and statistics about these
+samplings generated for each of \nsources\ sources in \apogee\ \dr{16};
+\changes{These samplings will be released in the upcoming intermediate SDSS data
+release ``DR16+'' (expected in mid-2020).}
+However, we also compute summary information and statistics aboutf these
 samplings and provide these data in \tablename~\ref{tbl:metadata}.
 We also define a \goldsample\ of high-quality, uniquely solved binary-star
 systems (see \sectionname~\ref{sec:gold-sample}) and release summary information
